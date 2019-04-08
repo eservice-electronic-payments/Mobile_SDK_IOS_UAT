@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import IPG
 
 final class StatusViewController: UIViewController {
     
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var statusDescriptionLabel: UILabel!
     
-    var status: IPGPaymentStatus!
+    var status: IPG.PaymentStatus!
     
     override func viewDidLoad() {
         super.viewDidLoad()

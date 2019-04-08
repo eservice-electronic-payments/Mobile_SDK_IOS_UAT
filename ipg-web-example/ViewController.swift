@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import IPG
 
 final class ViewController: UIViewController {
 
-    private var paymentStatus: IPGPaymentStatus?
+    private var paymentStatus: IPG.PaymentStatus?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,7 @@ final class ViewController: UIViewController {
         
         // You can either use a dedicated IPGWebViewController to display a full screen payment
         // or embed IPGWebView manually anywhere in your controllers
-        let ipgWebViewController = IPGWebViewController(mode: .demo) { [weak self] status in
+        let ipgWebViewController = IPGWebViewController(mode: .online(.userAcceptanceTesting)) { [weak self] status in
             self?.paymentStatus = status
             
             self?.dismiss(animated: true) {

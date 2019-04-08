@@ -8,32 +8,32 @@
 
 import UIKit
 
-final class IPGWebViewController: UIViewController {
+open class IPGWebViewController: UIViewController {
     
     private let statusCallback: IPGWebView.StatusCallback
-    private let mode: IPGMode
+    private let mode: IPG.Mode
     
-    var ipgWebView: IPGWebView? {
+    open var ipgWebView: IPGWebView? {
         return view as? IPGWebView
     }
     
-    override func loadView() {
+    override open func loadView() {
         super.loadView()
         let ipgWebView = IPGWebView()
         self.view = ipgWebView
     }
     
-    init(mode: IPGMode = .normal, statusCallback: IPGWebView.StatusCallback) {
+    public init(mode: IPG.Mode = .production, statusCallback: IPGWebView.StatusCallback) {
         self.mode = mode
         self.statusCallback = statusCallback
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         ipgWebView?.start(mode: mode,
                           statusCallback: { [weak self] status in
                             self?.statusCallback?(status)
