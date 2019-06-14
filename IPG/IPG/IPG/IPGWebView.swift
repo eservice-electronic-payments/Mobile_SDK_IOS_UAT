@@ -16,7 +16,7 @@ open class IPGWebView: UIView {
     private(set) var webView: WKWebView?
     
     private var connection: IPGConnection?
-    private var sessionToken: IPG.SessionToken? { return connection?.sessionToken }
+    private var sessionData: IPG.SessionData? { return connection?.sessionData }
     private var environment: IPG.Environment?
     
     override init(frame: CGRect) {
@@ -41,11 +41,11 @@ open class IPGWebView: UIView {
             self.environment = env
             
             let data = IPG.SessionTokenRequestData.testUser
-            connection.requestSessionToken(data: data) { [weak self] result in
+            connection.requestSessionData(data: data) { [weak self] result in
                 onMainQueue {
                     switch result {
-                    case .success(let token):
-                        self?.continueToPayments(using: token)
+                    case .success(let data):
+                        self?.continueToPayments(using: data)
                     case .error(let error):
                         dPrint(error)
                         statusCallback?(.failed)
@@ -67,8 +67,8 @@ open class IPGWebView: UIView {
         static let demoPage = PageSource.local(htmlName: "demo")
     }
     
-    private func continueToPayments(using token: String?) {
-        guard let token = token ?? self.sessionToken else {
+    private func continueToPayments(using data: IPG.SessionData?) {
+        guard let data = data ?? self.sessionData else {
             assertionFailure("Session token not available")
             statusCallback?(.failed)
             return
@@ -80,11 +80,15 @@ open class IPGWebView: UIView {
             return
         }
         
-        #if DEBUG
-        dPrint("Using token \(token)")
-        #endif
+        dPrint("Using token \(data.token)")
         
-        load(.url(url: env.startMobilePaymentURL, queryParameters: ["token": token]))
+        let queryParams: [String: String] = [
+            "token": data.token,
+            "merchantId": String(data.merchantId),
+            "stylesSheetUrl": "orlen.css"
+        ]
+        
+        load(.url(url: env.startMobilePaymentURL, queryParameters: queryParams))
     }
     
     private func load(_ source: PageSource) {

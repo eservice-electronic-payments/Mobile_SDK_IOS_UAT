@@ -9,7 +9,7 @@
 import Foundation
 
 public extension IPG {
-    public enum PaymentStatus: String {
+    enum PaymentStatus: String {
         case success = "success"
         case cancelled = "cancelled"
         case failed = "failed"

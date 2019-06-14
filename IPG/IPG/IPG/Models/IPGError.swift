@@ -9,14 +9,15 @@
 import Foundation
 
 public extension IPG {
-    public struct SystemError: CustomStringConvertible {
+    struct SystemError: CustomStringConvertible {
         public let description: String
     }
     
-    public enum Error: Swift.Error {
+    enum Error: Swift.Error {
         case buildRequestError(String)
         case system(SystemError)
         case responseMissing
+        case responseInvalid
         case parsingError(Swift.Error)
         case connection(Swift.Error?)
         case statusCode(Swift.Error?)

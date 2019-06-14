@@ -16,7 +16,7 @@ func dPrint(_ s: Any) {
 
 /// All IPG constant structs/enums are extensions to this enum
 public enum IPG {
-    public typealias SessionToken = String
+    //public typealias SessionToken = String
 }
 
 public protocol IPGCompatible {
@@ -25,7 +25,7 @@ public protocol IPGCompatible {
 }
 
 public extension IPGCompatible {
-    public var ipg: IPGExtension<Self> {
+    var ipg: IPGExtension<Self> {
         get { return IPGExtension(self) }
     }
 }

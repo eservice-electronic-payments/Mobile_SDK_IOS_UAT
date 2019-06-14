@@ -9,9 +9,10 @@
 import Foundation
 
 final class IPGConnection {
-    typealias CompletionHandler = ((IPG.Result<IPG.SessionToken>) -> Void)?
+    typealias CompletionHandler = ((IPG.Result<IPG.SessionData>) -> Void)?
+    private typealias TokenCompletionHandler = ((IPG.Result<String>) -> Void)?
     
-    private(set) var sessionToken: IPG.SessionToken?
+    private(set) var sessionData: IPG.SessionData?
     
     private let environment: IPG.Environment
     private let factory: IPGRequestFactory
@@ -21,8 +22,8 @@ final class IPGConnection {
         self.factory = IPGRequestFactory(environment: environment)
     }
     
-    func requestSessionToken(data: IPG.SessionTokenRequestData,
-                             completionHandler: CompletionHandler) {
+    func requestSessionData(data: IPG.SessionTokenRequestData,
+                            completionHandler: CompletionHandler) {
         
         var params = [String: CustomStringConvertible]()
         params["merchantId"] = data.merchantID
@@ -35,8 +36,7 @@ final class IPGConnection {
         params["currency"] = data.currency
         params["country"] = data.country
         params["paymentSolutionId"] = data.paymentSolution.rawValue
-        
-        if let customerId = data.customerID { params["customerId"] = customerId }
+        params["customerId"] = data.customerID
         
         guard let request = factory.sessionTokenRequest(parameters: params) else {
             completionHandler?(.error(
@@ -45,12 +45,21 @@ final class IPGConnection {
             return
         }
         
-        send(request: request, completionHandler: completionHandler)
+        send(request: request) { result in
+            switch result {
+            case .success(let token):
+                let session = IPG.SessionData(token: token,
+                                              merchantId: data.merchantID)
+                completionHandler?(.success(session))
+            case .error(let error):
+                completionHandler?(.error(error))
+            }
+        }
     }
     
     // MARK: Private
     
-    private func send(request: URLRequest, completionHandler: CompletionHandler) {
+    private func send(request: URLRequest, completionHandler: TokenCompletionHandler) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let response = response as? HTTPURLResponse, error == nil else {
                 completionHandler?(.error(.connection(error)))
@@ -67,13 +76,10 @@ final class IPGConnection {
                 return
             }
             
-            do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(IPG.SessionTokenResponseData.self, from: data)
-                completionHandler?(.success(response.token))
-            } catch {
-                completionHandler?(.error(.parsingError(error)))
-                return
+            if let token = String(data: data, encoding: .utf8) {
+                completionHandler?(.success(token))
+            } else {
+                completionHandler?(.error(.responseInvalid))
             }
         }
         

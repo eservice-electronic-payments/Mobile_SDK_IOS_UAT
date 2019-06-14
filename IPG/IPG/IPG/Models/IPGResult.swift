@@ -9,7 +9,7 @@
 import Foundation
 
 public extension IPG {
-    public enum Result<T> {
+    enum Result<T> {
         case success(T)
         case error(IPG.Error)
     }

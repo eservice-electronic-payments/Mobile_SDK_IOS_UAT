@@ -9,7 +9,7 @@
 import Foundation
 
 public extension IPG {
-    public struct SessionTokenRequestData {
+    struct SessionTokenRequestData {
         enum Action: String {
             case capture = "CAPTURE"
             case auth = "AUTH"
@@ -60,7 +60,6 @@ public extension IPG {
             self.currency = currency
             self.country = country
             self.paymentSolution = paymentSolution
-            
             self.customerID = customerID
             
         }

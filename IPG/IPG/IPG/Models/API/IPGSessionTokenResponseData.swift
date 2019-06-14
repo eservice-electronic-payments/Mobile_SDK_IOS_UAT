@@ -9,6 +9,7 @@
 import Foundation
 
 extension IPG {
+    @available(*, deprecated, message: "Response is now a single token string instead")
     struct SessionTokenResponseData: Codable {
         let result: String
         let resultId: String
