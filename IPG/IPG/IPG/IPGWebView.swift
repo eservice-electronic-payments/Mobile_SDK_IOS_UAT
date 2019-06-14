@@ -136,9 +136,13 @@ extension IPGWebView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard message.name == messageHandlerName else { return }
         
-        if let statusString = message.body as? String,
-            let status = IPG.PaymentStatus(rawValue: statusString) {
-            statusCallback?(status)
+        if let statusString = message.body as? String {
+            if let status = IPG.PaymentStatus(rawValue: statusString) {
+                statusCallback?(status)
+            } else {
+                statusCallback?(.failed)
+                dPrint("Unknown status received: \"\(statusString)\"")
+            }
         }
     }
 }
