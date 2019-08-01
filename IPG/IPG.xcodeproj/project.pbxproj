@@ -10,17 +10,11 @@
 		61FD3E3D225B777E0093F847 /* IPG.h in Headers */ = {isa = PBXBuildFile; fileRef = 61FD3E3B225B777E0093F847 /* IPG.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61FD3E55225B783A0093F847 /* IPGWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E4F225B778A0093F847 /* IPGWebViewController.swift */; };
 		61FD3E56225B783C0093F847 /* IPGWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E50225B778A0093F847 /* IPGWebView.swift */; };
-		61FD3E58225B78420093F847 /* IPGConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E52225B778A0093F847 /* IPGConnection.swift */; };
-		61FD3E59225B78450093F847 /* IPGRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E53225B778A0093F847 /* IPGRequestFactory.swift */; };
 		61FD3E5A225B78580093F847 /* URL+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E4D225B778A0093F847 /* URL+.swift */; };
 		61FD3E5B225B785B0093F847 /* IPG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E46225B778A0093F847 /* IPG.swift */; };
 		61FD3E5C225B785E0093F847 /* IPGPaymentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E47225B778A0093F847 /* IPGPaymentStatus.swift */; };
-		61FD3E5D225B78600093F847 /* IPGMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E48225B778A0093F847 /* IPGMode.swift */; };
-		61FD3E5E225B78640093F847 /* IPGEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E49225B778A0093F847 /* IPGEnvironment.swift */; };
 		61FD3E5F225B78660093F847 /* IPGResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E4A225B778A0093F847 /* IPGResult.swift */; };
 		61FD3E60225B78690093F847 /* IPGError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E4B225B778A0093F847 /* IPGError.swift */; };
-		61FD3E61225B786F0093F847 /* IPGSessionTokenRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E43225B778A0093F847 /* IPGSessionTokenRequestData.swift */; };
-		61FD3E62225B78710093F847 /* IPGSessionTokenResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD3E44225B778A0093F847 /* IPGSessionTokenResponseData.swift */; };
 		C9AD3BA522B39DF4001B8665 /* IPGSessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AD3BA422B39DF4001B8665 /* IPGSessionData.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,19 +22,13 @@
 		61FD3E38225B777E0093F847 /* IPG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IPG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61FD3E3B225B777E0093F847 /* IPG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPG.h; sourceTree = "<group>"; };
 		61FD3E3C225B777E0093F847 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		61FD3E43225B778A0093F847 /* IPGSessionTokenRequestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPGSessionTokenRequestData.swift; sourceTree = "<group>"; };
-		61FD3E44225B778A0093F847 /* IPGSessionTokenResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGSessionTokenResponseData.swift; sourceTree = "<group>"; };
 		61FD3E46225B778A0093F847 /* IPG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPG.swift; sourceTree = "<group>"; };
 		61FD3E47225B778A0093F847 /* IPGPaymentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGPaymentStatus.swift; sourceTree = "<group>"; };
-		61FD3E48225B778A0093F847 /* IPGMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGMode.swift; sourceTree = "<group>"; };
-		61FD3E49225B778A0093F847 /* IPGEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGEnvironment.swift; sourceTree = "<group>"; };
 		61FD3E4A225B778A0093F847 /* IPGResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGResult.swift; sourceTree = "<group>"; };
 		61FD3E4B225B778A0093F847 /* IPGError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGError.swift; sourceTree = "<group>"; };
 		61FD3E4D225B778A0093F847 /* URL+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+.swift"; sourceTree = "<group>"; };
 		61FD3E4F225B778A0093F847 /* IPGWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGWebViewController.swift; sourceTree = "<group>"; };
 		61FD3E50225B778A0093F847 /* IPGWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGWebView.swift; sourceTree = "<group>"; };
-		61FD3E52225B778A0093F847 /* IPGConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGConnection.swift; sourceTree = "<group>"; };
-		61FD3E53225B778A0093F847 /* IPGRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGRequestFactory.swift; sourceTree = "<group>"; };
 		C9AD3BA422B39DF4001B8665 /* IPGSessionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPGSessionData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,23 +69,11 @@
 			path = IPG;
 			sourceTree = "<group>";
 		};
-		61FD3E45225B778A0093F847 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				61FD3E43225B778A0093F847 /* IPGSessionTokenRequestData.swift */,
-				61FD3E44225B778A0093F847 /* IPGSessionTokenResponseData.swift */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
 		61FD3E4C225B778A0093F847 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				61FD3E45225B778A0093F847 /* API */,
 				61FD3E46225B778A0093F847 /* IPG.swift */,
 				61FD3E47225B778A0093F847 /* IPGPaymentStatus.swift */,
-				61FD3E48225B778A0093F847 /* IPGMode.swift */,
-				61FD3E49225B778A0093F847 /* IPGEnvironment.swift */,
 				61FD3E4A225B778A0093F847 /* IPGResult.swift */,
 				61FD3E4B225B778A0093F847 /* IPGError.swift */,
 				C9AD3BA422B39DF4001B8665 /* IPGSessionData.swift */,
@@ -120,8 +96,6 @@
 				61FD3E4E225B778A0093F847 /* Extensions */,
 				61FD3E4F225B778A0093F847 /* IPGWebViewController.swift */,
 				61FD3E50225B778A0093F847 /* IPGWebView.swift */,
-				61FD3E52225B778A0093F847 /* IPGConnection.swift */,
-				61FD3E53225B778A0093F847 /* IPGRequestFactory.swift */,
 			);
 			path = IPG;
 			sourceTree = "<group>";
@@ -207,17 +181,11 @@
 				61FD3E5A225B78580093F847 /* URL+.swift in Sources */,
 				61FD3E56225B783C0093F847 /* IPGWebView.swift in Sources */,
 				61FD3E55225B783A0093F847 /* IPGWebViewController.swift in Sources */,
-				61FD3E58225B78420093F847 /* IPGConnection.swift in Sources */,
 				61FD3E5C225B785E0093F847 /* IPGPaymentStatus.swift in Sources */,
 				C9AD3BA522B39DF4001B8665 /* IPGSessionData.swift in Sources */,
 				61FD3E5F225B78660093F847 /* IPGResult.swift in Sources */,
-				61FD3E61225B786F0093F847 /* IPGSessionTokenRequestData.swift in Sources */,
-				61FD3E5D225B78600093F847 /* IPGMode.swift in Sources */,
 				61FD3E5B225B785B0093F847 /* IPG.swift in Sources */,
-				61FD3E5E225B78640093F847 /* IPGEnvironment.swift in Sources */,
-				61FD3E59225B78450093F847 /* IPGRequestFactory.swift in Sources */,
 				61FD3E60225B78690093F847 /* IPGError.swift in Sources */,
-				61FD3E62225B78710093F847 /* IPGSessionTokenResponseData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,7 +320,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = NL359V5ZKQ;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -379,7 +347,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = NL359V5ZKQ;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

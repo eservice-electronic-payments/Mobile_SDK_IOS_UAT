@@ -11,7 +11,6 @@ import UIKit
 open class IPGWebViewController: UIViewController {
     
     private let statusCallback: IPGWebView.StatusCallback
-    private let mode: IPG.Mode
     
     open var ipgWebView: IPGWebView? {
         return view as? IPGWebView
@@ -23,8 +22,7 @@ open class IPGWebViewController: UIViewController {
         self.view = ipgWebView
     }
     
-    public init(mode: IPG.Mode = .production, statusCallback: IPGWebView.StatusCallback) {
-        self.mode = mode
+    public init(statusCallback: IPGWebView.StatusCallback) {
         self.statusCallback = statusCallback
         super.init(nibName: nil, bundle: nil)
     }
@@ -34,8 +32,7 @@ open class IPGWebViewController: UIViewController {
     }
     
     override open func viewDidLoad() {
-        ipgWebView?.start(mode: mode,
-                          statusCallback: { [weak self] status in
+        ipgWebView?.start(statusCallback: { [weak self] status in
                             self?.statusCallback?(status)
         })
     }

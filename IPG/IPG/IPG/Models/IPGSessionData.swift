@@ -10,6 +10,7 @@ import Foundation
 
 public extension IPG {
     struct SessionData {
+        let url: URL
         let token: String
         let merchantId: Int
     }

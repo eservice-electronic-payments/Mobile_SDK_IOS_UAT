@@ -1,5 +1,5 @@
 //
-//  IPGConnection.swift
+//  Connection.swift
 //  ipg-web-example
 //
 //  Created by Paweł Wojtkowiak on 08/04/2019.
@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import IPG
 
-final class IPGConnection {
+final class Connection {
     typealias CompletionHandler = ((IPG.Result<IPG.SessionData>) -> Void)?
     private typealias TokenCompletionHandler = ((IPG.Result<String>) -> Void)?
     

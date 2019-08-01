@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6109822422F3004E00B9D736 /* SessionTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109822222F3004E00B9D736 /* SessionTokenRequest.swift */; };
+		6109822722F300C000B9D736 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109822622F300BF00B9D736 /* Connection.swift */; };
+		6109822922F300E400B9D736 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109822822F300E400B9D736 /* RequestFactory.swift */; };
 		615CF92F223939CD00631F83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CF92E223939CD00631F83 /* AppDelegate.swift */; };
 		615CF931223939CD00631F83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CF930223939CD00631F83 /* ViewController.swift */; };
 		615CF934223939CD00631F83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 615CF932223939CD00631F83 /* Main.storyboard */; };
 		615CF936223939CE00631F83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 615CF935223939CE00631F83 /* Assets.xcassets */; };
 		615CF939223939CE00631F83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 615CF937223939CE00631F83 /* LaunchScreen.storyboard */; };
-		615CF94322393FA200631F83 /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = 615CF94222393FA200631F83 /* demo.html */; };
 		615CF9472239453800631F83 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CF9462239453800631F83 /* StatusViewController.swift */; };
 		61FD3E65225B7CFE0093F847 /* IPG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61FD3E64225B7CFE0093F847 /* IPG.framework */; };
 		61FD3E67225B7D120093F847 /* IPG.framework in Embed frameworks */ = {isa = PBXBuildFile; fileRef = 61FD3E64225B7CFE0093F847 /* IPG.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -33,6 +35,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6109822222F3004E00B9D736 /* SessionTokenRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTokenRequest.swift; sourceTree = "<group>"; };
+		6109822622F300BF00B9D736 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		6109822822F300E400B9D736 /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		615CF92B223939CD00631F83 /* ipg-web-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ipg-web-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		615CF92E223939CD00631F83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		615CF930223939CD00631F83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +45,6 @@
 		615CF935223939CE00631F83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		615CF938223939CE00631F83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		615CF93A223939CE00631F83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		615CF94222393FA200631F83 /* demo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
 		615CF9462239453800631F83 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		61FD3E64225B7CFE0093F847 /* IPG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IPG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -57,6 +61,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6109821A22F2F39F00B9D736 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6109822022F3004E00B9D736 /* API */,
+				6109822622F300BF00B9D736 /* Connection.swift */,
+				6109822822F300E400B9D736 /* RequestFactory.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6109822022F3004E00B9D736 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				6109822222F3004E00B9D736 /* SessionTokenRequest.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		615CF922223939CD00631F83 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +99,7 @@
 		615CF92D223939CD00631F83 /* ipg-web-example */ = {
 			isa = PBXGroup;
 			children = (
+				6109821A22F2F39F00B9D736 /* Models */,
 				615CF92E223939CD00631F83 /* AppDelegate.swift */,
 				615CF930223939CD00631F83 /* ViewController.swift */,
 				615CF9462239453800631F83 /* StatusViewController.swift */,
@@ -84,7 +107,6 @@
 				615CF935223939CE00631F83 /* Assets.xcassets */,
 				615CF937223939CE00631F83 /* LaunchScreen.storyboard */,
 				615CF93A223939CE00631F83 /* Info.plist */,
-				615CF94222393FA200631F83 /* demo.html */,
 			);
 			path = "ipg-web-example";
 			sourceTree = "<group>";
@@ -157,7 +179,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				615CF939223939CE00631F83 /* LaunchScreen.storyboard in Resources */,
-				615CF94322393FA200631F83 /* demo.html in Resources */,
 				615CF936223939CE00631F83 /* Assets.xcassets in Resources */,
 				615CF934223939CD00631F83 /* Main.storyboard in Resources */,
 			);
@@ -170,9 +191,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6109822422F3004E00B9D736 /* SessionTokenRequest.swift in Sources */,
 				615CF931223939CD00631F83 /* ViewController.swift in Sources */,
 				615CF92F223939CD00631F83 /* AppDelegate.swift in Sources */,
+				6109822922F300E400B9D736 /* RequestFactory.swift in Sources */,
 				615CF9472239453800631F83 /* StatusViewController.swift in Sources */,
+				6109822722F300C000B9D736 /* Connection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
