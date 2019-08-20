@@ -8,10 +8,13 @@
 
 import Foundation
 
-func dPrint(_ s: Any) {
-    #if DEBUG
-    print(s)
-    #endif
+/// Turn on to log system events to the console
+let evoLoggingEnabled = true
+
+func dLog(_ s: Any) {
+    if evoLoggingEnabled {
+        print("[EvoPayments] \(s)")
+    }
 }
 
 /// This is a "namespace" for this library

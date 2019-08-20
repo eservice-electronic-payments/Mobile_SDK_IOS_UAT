@@ -90,9 +90,10 @@ extension EVOWebView: WKScriptMessageHandler {
         if let statusString = message.body as? String {
             if let status = Evo.PaymentStatus(rawValue: statusString) {
                 callStatus(status)
+                dLog("Received status: \(status)")
             } else {
                 callStatus(.failed)
-                dPrint("Unknown status received: \"\(statusString)\"")
+                dLog("Unknown status received: \"\(statusString)\"")
             }
         }
     }

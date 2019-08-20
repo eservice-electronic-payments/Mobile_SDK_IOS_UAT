@@ -9,6 +9,7 @@
 import Foundation
 import EvoPayments
 
+/// Example Evo.Session provider implementation
 final class SessionProvider {
     typealias Result<Response> = Swift.Result<Response, SessionProvider.Error>
     typealias CompletionHandler = ((Result<Evo.Session>) -> Void)?
@@ -26,10 +27,7 @@ final class SessionProvider {
     func requestSession(using data: SessionRequestData,
                         completionHandler: CompletionHandler) {
         
-        let parameters: [String: CustomStringConvertible] = [
-            "merchantId": data.merchantId,
-            "customerId": data.customerId
-        ]
+        let parameters = data.toDictionary()
         
         guard let request = sessionTokenRequest(url: data.tokenUrl,
                                                 parameters: parameters) else {

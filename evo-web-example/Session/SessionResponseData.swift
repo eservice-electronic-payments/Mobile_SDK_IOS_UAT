@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Data returned by example token request in SessionProvider
 struct SessionResponseData: Codable {
     let merchantId: String
     let cashierUrl: URL
