@@ -10,17 +10,6 @@ import UIKit
 import EvoPayments
 
 final class ViewController: UIViewController {
-    struct Content {
-        let action: String
-        let merchantID: String
-        let password: String
-        let customerID: String
-        let amount: String
-        let currency: String
-        let country: String
-        let language: String
-    }
-
     @IBOutlet private weak var scrollView: UIScrollView!
     
     @IBOutlet private weak var actionField: PickerTextField!
@@ -32,23 +21,31 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var countryField: UITextField!
     @IBOutlet private weak var languageField: UITextField!
     @IBOutlet private weak var startButton: UIButton!
+    @IBOutlet private weak var webUITestButton: UIButton!
     
-    private lazy var viewModel: ViewModel = {
-        let viewModel = ViewModel()
-        viewModel.delegate = self
-        return viewModel
+    @IBOutlet private weak var tokenURLTextView: UITextView!
+    @IBOutlet private weak var cashierURLTextView: UITextView!
+    
+    private let viewModel = ViewModel()
+    
+    private(set) lazy var amountFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.locale = .current
+        formatter.maximumFractionDigits = 2
+        return formatter
     }()
     
-    private var textFields: [UITextField] {
+    private var textFields: [ScrollingFormTextField] {
         return [actionField, merchantIDField, merchantPasswordField,
                 customerIDField, amountField, currencyField,
-                countryField, languageField].compactMap { $0 }
+                countryField, languageField, tokenURLTextView, cashierURLTextView].compactMap { $0 }
     }
     
     private let scrollingFormController = ScrollingFormController()
     private let cancelEditingRecognizer = CancelEditingRecognizer()
     
-    private var paymentStatus: Evo.PaymentStatus?
+    private var paymentStatus: Evo.Status?
     
     // MARK: - UIViewController
     
@@ -70,7 +67,9 @@ final class ViewController: UIViewController {
     
     private func setupUI() {
         setupActionField()
-        setupStartButton()
+        setupAmountField()
+        setupTextViews()
+        setupButtons()
         
         scrollingFormController.setup(withScrollView: scrollView, fields: textFields)
         cancelEditingRecognizer.attach(to: self)
@@ -83,13 +82,31 @@ final class ViewController: UIViewController {
         }
     }
     
-    private func setupStartButton() {
+    private func setupAmountField() {
+        amountField.text = amountFormatter.string(from: NSNumber(value: 1.0))
+    }
+    
+    private func setupTextViews() {
+        for textView in [tokenURLTextView, cashierURLTextView] {
+            textView!.layer.cornerRadius = 5
+            textView!.layer.borderWidth = 1
+            textView!.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.3).cgColor
+        }
+    }
+    
+    private func setupButtons() {
         let tintColor: UIColor = .blue
-        startButton.backgroundColor = .clear
-        startButton.setTitleColor(tintColor, for: .normal)
+        let textColor: UIColor = .white
+        
+        startButton.backgroundColor = tintColor
+        startButton.setTitleColor(textColor, for: .normal)
         startButton.layer.cornerRadius = 8
-        startButton.layer.borderWidth = 1
-        startButton.layer.borderColor = tintColor.cgColor
+        
+        webUITestButton.backgroundColor = .clear
+        webUITestButton.setTitleColor(tintColor, for: .normal)
+        webUITestButton.layer.cornerRadius = 8
+        webUITestButton.layer.borderWidth = 1
+        webUITestButton.layer.borderColor = tintColor.cgColor
     }
     
     private func didSelectAction(at index: Int) {
@@ -99,36 +116,12 @@ final class ViewController: UIViewController {
         amountField.isEnabled = !isVerify
         if isVerify {
             // force 0
-            amountField.text = viewModel.amountFormatter.string(from: 0)
+            amountField.text = amountFormatter.string(from: 0)
         }
     }
     
-    // MARK: - Private - Routing
+    // MARK: - Private - Presentation & Routing
     
-    private func showStatus(_ status: Evo.PaymentStatus) {
-        paymentStatus = status
-        performSegue(withIdentifier: "StatusSegue", sender: nil)
-    }
-    
-    // MARK: - Private - IBAction
-    
-    @IBAction private func startDemoTapped(_ sender: Any) {
-        let content = Content(
-            action: actionField.text ?? "",
-            merchantID: merchantIDField.text ?? "",
-            password: merchantPasswordField.text ?? "",
-            customerID: customerIDField.text ?? "",
-            amount: amountField.text ?? "",
-            currency: currencyField.text ?? "",
-            country: countryField.text ?? "",
-            language: languageField.text ?? ""
-        )
-        
-        viewModel.startDemo(withContent: content)
-    }
-}
-
-extension ViewController: ViewModelDelegate {
     /// Start cashier URL
     ///
     /// A EVOWebView can be used to put this in any of your controllers
@@ -136,7 +129,7 @@ extension ViewController: ViewModelDelegate {
     /// a fullscreen UIViewController
     ///
     /// This example uses EVOWebViewController
-    func startCashier(withSession session: Evo.Session) {
+    private func showDemo(withSession session: Evo.Session) {
         let webViewController = EVOWebViewController(session: session) { [weak self] status in
             self?.dismiss(animated: true) {
                 self?.showStatus(status)
@@ -148,11 +141,53 @@ extension ViewController: ViewModelDelegate {
         present(navigationController, animated: true)
     }
     
-    /// Show error alert
-    func showAlert(withErrorMessage errorMessage: String) {
-        let alert = UIAlertController(title: "Error",
-                                      message: errorMessage,
+    /// Show alert
+    private func showAlert(withTitle title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
                                       preferredStyle: .alert)
         present(alert, animated: true)
+    }
+    
+    private func showStatus(_ status: Evo.Status) {
+        paymentStatus = status
+        performSegue(withIdentifier: "StatusSegue", sender: nil)
+    }
+    
+    // MARK: - Private - IBAction
+    
+    @IBAction private func startDemoTapped(_ sender: Any) {
+        guard let amount = amountFormatter.number(from: amountField.text ?? "")?.doubleValue else {
+            showAlert(withTitle: "Error", message: "Please enter valid amount")
+            return
+        }
+        
+        let content = FormContent(
+            action: actionField.text ?? "",
+            merchantID: merchantIDField.text ?? "",
+            password: merchantPasswordField.text ?? "",
+            customerID: customerIDField.text ?? "",
+            amount: amount,
+            currency: currencyField.text ?? "",
+            country: countryField.text ?? "",
+            language: languageField.text ?? "",
+            tokenURL: tokenURLTextView.text ?? "",
+            cashierURL: cashierURLTextView.text ?? ""
+        )
+        
+        viewModel.startSession(withContent: content) { [weak self] result in
+            switch result {
+            case .success(let session): self?.showDemo(withSession: session)
+            case .failure(let error): self?.showAlert(withTitle: "Error", message: error.errorMessage)
+            }
+        }
+    }
+    
+    @IBAction private func webUITestButtonTapped(_ sender: Any) {
+        let defaultURL = URL(string: "https://cashierui-responsivedev.test.myriadpayments.com/react-frontend/index.html")!
+        let url = URL(string: cashierURLTextView.text ?? "") ?? defaultURL
+        
+        let testSession = Evo.Session(cashierUrl: url, token: "", merchantId: "")
+        showDemo(withSession: testSession)
     }
 }

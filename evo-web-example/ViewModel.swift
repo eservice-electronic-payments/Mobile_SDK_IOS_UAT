@@ -9,12 +9,9 @@
 import Foundation
 import EvoPayments
 
-protocol ViewModelDelegate: class {
-    func startCashier(withSession session: Evo.Session)
-    func showAlert(withErrorMessage errorMessage: String)
-}
-
 final class ViewModel {
+    typealias SessionRequestCompletionHandler = ((Result<Evo.Session, SessionRequestError>) -> Void)
+    
     struct Action: PickerTextFieldItemProtocol {
         enum Kind {
             case verify
@@ -30,14 +27,6 @@ final class ViewModel {
         }
     }
     
-    private(set) lazy var amountFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.decimalSeparator = "."
-        return formatter
-    }()
-    
-    weak var delegate: ViewModelDelegate?
-    
     let actions = [
         Action(title: "AUTH"),
         Action(title: "PURCHASE"),
@@ -48,55 +37,63 @@ final class ViewModel {
     
     /// Obtain a session token from a demo provider
     /// This is an example implementation
-    func startDemo(withContent content: ViewController.Content) {
+    func startSession(withContent content: FormContent,
+                      completionHandler: @escaping SessionRequestCompletionHandler) {
         
-        let url = "https://cashierui-responsivedev.test.myriadpayments.com/ajax/tokenJson"
-        let data = prepareSessionData(
-            withTokenURL: url,
-            content: content
-        )
+        let data = prepareSessionData(withContent: content)
+        let customCashierURL: String? = content.cashierURL.isEmpty ? nil : content.cashierURL
         
         let provider = SessionProvider()
         provider.requestSession(using: data) { [weak self] result in
+            guard let sself = self else {
+                completionHandler(.failure(.unknown))
+                return
+            }
+            
             switch result {
-            case .success(let session): self?.delegate?.startCashier(withSession: session)
-            case .failure(let error): self?.showError(error)
+            case .success(let responseSession):
+                let session = sself.setupSession(responseSession, customCashierURL: customCashierURL)
+                completionHandler(.success(session))
+            case .failure(let error):
+                completionHandler(.failure(.provider(error)))
             }
         }
     }
     
-    /// Prepare error message to be shown in ViewController's alert
-    /// This is an example implementation
-    func showError(_ error: SessionProvider.Error) {
-        let message: String
-        
-        switch error {
-        case .buildRequestFailed: message = "Could not build session request"
-        case .connectionError(let error): message = "Connection error (\(String(describing: error))"
-        case .decodingError(let error): message = "Could not decode session (\(String(describing: error))"
-        case .invalidStatusCode(let statusCode): message = "Invalid status code \(statusCode)"
-        case .responseMissing: message = "Response not received"
-        }
-        
-        delegate?.showAlert(withErrorMessage: message)
-    }
-    
     // MARK: - Private
     
-    private func prepareSessionData(withTokenURL tokenURL: String,
-                                    content: ViewController.Content) -> SessionRequestData {
+    /// Apply CustomURL to the session struct if provided
+    private func setupSession(_ responseSession: Evo.Session,
+                              customCashierURL url: String? = nil) -> Evo.Session {
+        guard let customURLString = url else {
+            // No custom CashierURL provided, ignore
+            return responseSession
+        }
         
+        if let customURL = URL(string: customURLString) {
+            return Evo.Session(
+                cashierUrl: customURL,
+                token: responseSession.token,
+                merchantId: responseSession.merchantId
+            )
+        } else {
+            print("♦️ Invalid Cashier URL: \(customURLString). Using default CashierURL.")
+            return responseSession
+        }
+    }
+    
+    private func prepareSessionData(withContent content: FormContent) -> SessionRequestData {
         let action = !content.action.isEmpty ? content.action : nil
         let merchantID = content.merchantID
         let merchantPassword = !content.password.isEmpty ? content.password : nil
         let customerID = content.customerID
-        let amount = !content.amount.isEmpty ? amountFormatter.number(from: content.amount)?.doubleValue : nil
+        let amount = content.amount
         let currency = !content.currency.isEmpty ? content.currency : nil
         let country = !content.country.isEmpty ? content.country : nil
         let language = !content.language.isEmpty ? content.language : nil
         
         return SessionRequestData(
-            tokenUrl: tokenURL,
+            tokenUrl: content.tokenURL,
             action: action,
             merchantID: merchantID,
             merchantPassword: merchantPassword,

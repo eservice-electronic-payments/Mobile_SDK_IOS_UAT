@@ -10,9 +10,9 @@ import Foundation
 
 public extension Evo {
     struct Session {
-        let cashierUrl: URL
-        let token: String
-        let merchantId: String
+        public let cashierUrl: URL
+        public let token: String
+        public let merchantId: String
         
         public init(cashierUrl: URL, token: String, merchantId: String) {
             self.cashierUrl = cashierUrl

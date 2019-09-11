@@ -19,6 +19,7 @@ struct SessionRequestData {
     let currency: String?
     let country: String?
     let language: String?
+    let myriadFlowId: String
     
     init(tokenUrl: String,
          action: String? = nil,
@@ -39,6 +40,11 @@ struct SessionRequestData {
         self.currency = currency
         self.country = country
         self.language = language
+        
+        let sessionNumber = Int.random(in: 0...0xFFFFFF)
+        var flowId = String.init(sessionNumber, radix: 16, uppercase: true)
+        while flowId.count < 6 { flowId.insert("0", at: flowId.startIndex) }
+        self.myriadFlowId = "iOS-\(flowId)"
     }
     
     func toDictionary() -> [String: CustomStringConvertible] {
@@ -48,11 +54,12 @@ struct SessionRequestData {
         ]
         
         dict["action"] = action
-        dict["merchantPassword"] = merchantPassword
+        dict["password"] = merchantPassword
         dict["amount"] = amount
         dict["currency"] = currency
         dict["country"] = country
         dict["language"] = language
+        dict["myriadFlowId"] = myriadFlowId
         
         return dict
     }

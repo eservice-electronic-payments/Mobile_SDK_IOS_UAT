@@ -51,7 +51,8 @@ open class EVOWebViewController: UIViewController {
     }
     
     override open func viewDidLoad() {
-        evoWebView?.start(session: session, statusCallback: { [weak self] status in
+        evoWebView?.start(session: session,
+                          statusCallback: { [weak self] status in
             self?.statusCallback(status)
         })
     }

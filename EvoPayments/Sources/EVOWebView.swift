@@ -8,12 +8,14 @@
 
 import UIKit
 import WebKit
+import SafariServices
 
 /// A WKWebView wrapper that handled EvoPayments callbacks out of the box
 open class EVOWebView: UIView {
-    public typealias StatusCallback = ((Evo.PaymentStatus) -> Void)
+    public typealias StatusCallback = ((Evo.Status) -> Void)
     
     private(set) var webView: WKWebView?
+    private let safariWindow = UIWindow(frame: UIScreen.main.bounds)
     
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
@@ -27,7 +29,8 @@ open class EVOWebView: UIView {
     }
     
     /// Make sure to start from main thread
-    open func start(session: Evo.Session, statusCallback: @escaping StatusCallback) {
+    open func start(session: Evo.Session,
+                    statusCallback: @escaping StatusCallback) {
         setupWebView()
         
         self.session = session
@@ -79,22 +82,63 @@ open class EVOWebView: UIView {
 
 extension EVOWebView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        func callStatus(_ status: Evo.PaymentStatus) {
-            DispatchQueue.main.async {
-                self.statusCallback?(status)
-            }
-        }
-        
         guard message.name == messageHandlerName else { return }
         
-        if let statusString = message.body as? String {
-            if let status = Evo.PaymentStatus(rawValue: statusString) {
-                callStatus(status)
-                dLog("Received status: \(status)")
-            } else {
-                callStatus(.failed)
-                dLog("Unknown status received: \"\(statusString)\"")
-            }
+        dLog("Received JS notification: \(message.body)")
+        
+        guard let body = message.body as? [String: Any] else {
+            dLog("Error: Notification expected to be a dictionary")
+            return
         }
+        
+        do {
+            let eventType = try Evo.EventType(from: body)
+            handleEventType(eventType)
+        } catch {
+            callStatus(.failed)
+            dLog("An error has occurred: \(error), event: \"\(body)\"")
+        }
+    }
+    
+    private func handleEventType(_ eventType: Evo.EventType) {
+        switch eventType {
+        case .action(let action):
+            switch action {
+            case .redirection(let url):
+                openSafari(at: url)
+                dLog("Redirecting to \(url)")
+            case .close:
+                closeSafari()
+                break
+            }
+        case .status(let status):
+            callStatus(status)
+            dLog("Received status: \(status)")
+        }
+    }
+    
+    private func callStatus(_ status: Evo.Status) {
+        DispatchQueue.main.async {
+            self.statusCallback?(status)
+        }
+    }
+    
+    private func openSafari(at url: URL) {
+        let safari = SFSafariViewController(url: url)
+        safari.delegate = self
+        
+        safariWindow.windowLevel = UIWindow.Level(rawValue: 1000)
+        safariWindow.rootViewController = safari
+        safariWindow.makeKeyAndVisible()
+    }
+    
+    private func closeSafari() {
+        safariWindow.isHidden = true
+    }
+}
+
+extension EVOWebView: SFSafariViewControllerDelegate {
+    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        closeSafari()
     }
 }
