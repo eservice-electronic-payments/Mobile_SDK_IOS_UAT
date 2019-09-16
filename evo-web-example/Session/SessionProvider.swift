@@ -16,10 +16,11 @@ final class SessionProvider {
     private typealias TokenCompletionHandler = ((Result<SessionResponseData>) -> Void)?
     
     enum Error: Swift.Error {
-        case connectionError(Swift.Error?)
+        case connectionError(Swift.Error)
         case invalidStatusCode(Int)
         case buildRequestFailed
         case responseMissing
+        case dataMissing
         case decodingError(Swift.Error)
     }
     
@@ -59,8 +60,13 @@ final class SessionProvider {
     
     private func send(request: URLRequest, completionHandler: TokenCompletionHandler) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let response = response as? HTTPURLResponse, error == nil else {
+            if let error = error {
                 completionHandler?(.failure(.connectionError(error)))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                completionHandler?(.failure(.responseMissing))
                 return
             }
             
@@ -70,7 +76,7 @@ final class SessionProvider {
             }
             
             guard let data = data else {
-                completionHandler?(.failure(.responseMissing))
+                completionHandler?(.failure(.dataMissing))
                 return
             }
             

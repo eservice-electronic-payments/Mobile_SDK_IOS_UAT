@@ -8,16 +8,7 @@
 
 import Foundation
 
-extension Evo {
-    public enum Status: String {
-        case success = "success"
-        case cancelled = "cancel"
-        case failed = "failure"
-        case timeout = "timeout"
-        case undetermined = "undetermined"
-        case started = "paymentStarted"
-    }
-    
+internal extension Evo {
     enum EventError: Error {
         case eventKeyNotFound
         case invalidParameters(String)

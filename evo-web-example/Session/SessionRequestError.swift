@@ -20,10 +20,11 @@ enum SessionRequestError: Error {
         case .provider(let providerError):
             switch providerError {
             case .buildRequestFailed: message = "Could not build session request"
-            case .connectionError(let error): message = "Connection error (\(String(describing: error))"
-            case .decodingError(let error): message = "Could not decode session (\(String(describing: error))"
+            case .connectionError(let error): message = "Connection error (\(error.localizedDescription))"
+            case .decodingError(let error): message = "Could not decode session (\(error.localizedDescription))"
             case .invalidStatusCode(let statusCode): message = "Invalid status code \(statusCode)"
             case .responseMissing: message = "Response not received"
+            case .dataMissing: message = "Response data not received"
             }
         case .unknown:
             message = "An error has occurred"

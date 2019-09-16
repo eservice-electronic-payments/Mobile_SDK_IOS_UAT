@@ -33,6 +33,7 @@
 		C99A57432329209F00A0AFA0 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99A57422329209F00A0AFA0 /* ProgressHUD.swift */; };
 		C99A57462329264700A0AFA0 /* SessionRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99A57452329264700A0AFA0 /* SessionRequestError.swift */; };
 		C99A57482329265800A0AFA0 /* FormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99A57472329265800A0AFA0 /* FormContent.swift */; };
+		C99A574A232998BD00A0AFA0 /* EVOStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99A5749232998BD00A0AFA0 /* EVOStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		C99A57422329209F00A0AFA0 /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		C99A57452329264700A0AFA0 /* SessionRequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRequestError.swift; sourceTree = "<group>"; };
 		C99A57472329265800A0AFA0 /* FormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormContent.swift; sourceTree = "<group>"; };
+		C99A5749232998BD00A0AFA0 /* EVOStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVOStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 			children = (
 				6109823622F3269400B9D736 /* SessionResponseData.swift */,
 				6109823722F3269400B9D736 /* SessionRequestData.swift */,
+				C99A57452329264700A0AFA0 /* SessionRequestError.swift */,
 				6109823822F3269400B9D736 /* SessionProvider.swift */,
 			);
 			path = Session;
@@ -162,9 +165,10 @@
 		6109825E22F327AD00B9D736 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C99A5749232998BD00A0AFA0 /* EVOStatus.swift */,
+				6109826122F327AD00B9D736 /* EVOSession.swift */,
 				6109825F22F327AD00B9D736 /* EVOEvent.swift */,
 				6109826022F327AD00B9D736 /* EVO.swift */,
-				6109826122F327AD00B9D736 /* EVOSession.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -219,7 +223,6 @@
 		C99A57442329263C00A0AFA0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C99A57452329264700A0AFA0 /* SessionRequestError.swift */,
 				C99A57472329265800A0AFA0 /* FormContent.swift */,
 			);
 			path = Models;
@@ -344,6 +347,7 @@
 				6109826422F327AD00B9D736 /* EVOWebView.swift in Sources */,
 				6109826722F327AD00B9D736 /* EVO.swift in Sources */,
 				6109826622F327AD00B9D736 /* EVOEvent.swift in Sources */,
+				C99A574A232998BD00A0AFA0 /* EVOStatus.swift in Sources */,
 				6109826822F327AD00B9D736 /* EVOSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

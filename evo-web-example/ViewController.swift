@@ -146,6 +146,8 @@ final class ViewController: UIViewController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
     
@@ -175,10 +177,15 @@ final class ViewController: UIViewController {
             cashierURL: cashierURLTextView.text ?? ""
         )
         
+        ProgressHUD.show()
         viewModel.startSession(withContent: content) { [weak self] result in
+            ProgressHUD.hide()
+            
             switch result {
-            case .success(let session): self?.showDemo(withSession: session)
-            case .failure(let error): self?.showAlert(withTitle: "Error", message: error.errorMessage)
+            case .success(let session):
+                self?.showDemo(withSession: session)
+            case .failure(let error):
+                self?.showAlert(withTitle: "Error", message: error.errorMessage)
             }
         }
     }

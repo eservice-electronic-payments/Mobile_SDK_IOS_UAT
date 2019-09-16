@@ -16,23 +16,22 @@ final class ProgressHUD {
     static func hide() { shared.hide() }
     
     private let window = UIWindow(frame: UIScreen.main.bounds)
-    private let indicator = UIActivityIndicatorView(style: .white)
+    private let indicator = UIActivityIndicatorView(style: .whiteLarge)
     private let background = UIView()
     
     init() {
-        let centerMask: UIView.AutoresizingMask = [
-            .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin
-        ]
-        
-        background.autoresizingMask = centerMask
+        background.autoresizingMask = []
         background.backgroundColor = .black
-        background.center = CGPoint(x: window.bounds.size.width/2, y: window.bounds.size.height/2)
         background.frame.size = CGSize(width: 80, height: 80)
+        background.center = window.center
+        background.layer.cornerRadius = 6
         window.addSubview(background)
         
-        indicator.autoresizingMask = centerMask
+        indicator.autoresizingMask = []//centerMask
+        indicator.sizeToFit()
         indicator.startAnimating()
-        indicator.center = background.center
+        indicator.center = CGPoint(x: background.bounds.size.width/2,
+                                   y: background.bounds.size.height/2)
         background.addSubview(indicator)
         
         window.windowLevel = .statusBar
