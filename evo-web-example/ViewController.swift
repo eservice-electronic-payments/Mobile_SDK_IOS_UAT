@@ -95,7 +95,7 @@ final class ViewController: UIViewController {
     }
     
     private func setupButtons() {
-        let tintColor: UIColor = .blue
+        let tintColor: UIColor = .systemBlue
         let textColor: UIColor = .white
         
         startButton.backgroundColor = tintColor
