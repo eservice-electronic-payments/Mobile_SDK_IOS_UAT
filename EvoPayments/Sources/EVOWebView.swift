@@ -112,6 +112,8 @@ extension EVOWebView: WKScriptMessageHandler {
                 break
             }
         case .status(let status):
+            closeSafari()
+            
             callStatus(status)
             dLog("Received status: \(status)")
         }
