@@ -154,7 +154,9 @@ extension EVOWebView: WKScriptMessageHandler {
 }
 
 extension EVOWebView: SFSafariViewControllerDelegate {
+    ///User pressed done button, cancel transaction
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         closeSafari()
+        handleEventType(.status(.cancelled))
     }
 }
