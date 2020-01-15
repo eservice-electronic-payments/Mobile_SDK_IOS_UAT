@@ -15,7 +15,7 @@ open class EVOWebView: UIView {
     public typealias StatusCallback = ((Evo.Status) -> Void)
     
     private(set) var webView: WKWebView?
-    private let safariWindow = UIWindow(frame: UIScreen.main.bounds)
+    private var safariWindow: UIWindow?
     
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
@@ -107,6 +107,7 @@ extension EVOWebView: WKScriptMessageHandler {
             case .redirection(let url):
                 openSafari(at: url)
                 dLog("Redirecting to \(url)")
+//                dLog("Saari Window Visible After redirect: \(safariWindow?.isKeyWindow)")
             case .close:
                 closeSafari()
                 break
@@ -129,18 +130,33 @@ extension EVOWebView: WKScriptMessageHandler {
         let safari = SFSafariViewController(url: url)
         safari.delegate = self
         
-        safariWindow.windowLevel = UIWindow.Level(rawValue: 1000)
+        if #available(iOS 13.0, *), let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            safariWindow = UIWindow(windowScene: scene)
+        } else {
+            safariWindow = UIWindow(frame: UIScreen.main.bounds)
+        }
+        guard let safariWindow = safariWindow else {
+            dLog("Safari Window nil")
+            assertionFailure()
+            return
+        }
+        safariWindow.windowLevel = .statusBar + 1
         safariWindow.rootViewController = safari
         safariWindow.makeKeyAndVisible()
+//        dLog("Safari Window Frame: \(safariWindow.frame)")
+//        dLog("Safari Window Visible: \(safariWindow.isKeyWindow)")
     }
     
     private func closeSafari() {
-        safariWindow.isHidden = true
+        safariWindow?.isHidden = true
+        safariWindow = nil
     }
 }
 
 extension EVOWebView: SFSafariViewControllerDelegate {
+    ///User pressed done button, cancel transaction
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         closeSafari()
+        handleEventType(.status(.cancelled))
     }
 }
