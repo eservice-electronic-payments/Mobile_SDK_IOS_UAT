@@ -12,7 +12,8 @@ import PassKit //https://developer.apple.com/library/archive/ApplePay_Guide/Auth
 extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate {
     ///Cancelled
     public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
-        
+        closeOverlay()
+        handleEventType(.status(.cancelled))
     }
     
     ///Authorized

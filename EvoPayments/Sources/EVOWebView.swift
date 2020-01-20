@@ -15,7 +15,7 @@ open class EVOWebView: UIView {
     public typealias StatusCallback = ((Evo.Status) -> Void)
     
     private(set) var webView: WKWebView?
-    private var safariWindow: UIWindow?
+    private var overlayWindow: UIWindow?
     
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
@@ -100,24 +100,27 @@ extension EVOWebView: WKScriptMessageHandler {
         }
     }
     
-    private func handleEventType(_ eventType: Evo.EventType) {
+    internal func handleEventType(_ eventType: Evo.EventType) {
         switch eventType {
         case .action(let action):
             switch action {
             case .redirection(let url):
                 openSafari(at: url)
                 dLog("Redirecting to \(url)")
-//                dLog("Saari Window Visible After redirect: \(safariWindow?.isKeyWindow)")
+//                dLog("Saari Window Visible After redirect: \(overlayWindow?.isKeyWindow)")
             case .close:
-                closeSafari()
+                closeOverlay()
                 break
             }
         case .status(let status):
-            closeSafari()
+            closeOverlay()
             
             callStatus(status)
             dLog("Received status: \(status)")
         }
+//        let jsString = "action.applepay.result(true,KEY)"
+//        webView?.evaluateJavaScript('\(jsString)', completionHandler: nil)
+//        webview?.evaluateJavaScript("addPerson('\(name)', \(age))", completionHandler: nil)
     }
     
     private func callStatus(_ status: Evo.Status) {
@@ -126,37 +129,70 @@ extension EVOWebView: WKScriptMessageHandler {
         }
     }
     
+    private func getOverlayWindow() -> UIWindow? {
+        closeOverlay()
+        
+        if #available(iOS 13.0, *), let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            overlayWindow = UIWindow(windowScene: scene)
+        } else {
+            overlayWindow = UIWindow(frame: UIScreen.main.bounds)
+        }
+        
+        overlayWindow?.windowLevel = .statusBar + 1
+        
+        return overlayWindow
+    }
+    
     private func openSafari(at url: URL) {
         let safari = SFSafariViewController(url: url)
         safari.delegate = self
         
-        if #available(iOS 13.0, *), let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            safariWindow = UIWindow(windowScene: scene)
-        } else {
-            safariWindow = UIWindow(frame: UIScreen.main.bounds)
-        }
-        guard let safariWindow = safariWindow else {
-            dLog("Safari Window nil")
-            assertionFailure()
-            return
-        }
-        safariWindow.windowLevel = .statusBar + 1
-        safariWindow.rootViewController = safari
-        safariWindow.makeKeyAndVisible()
-//        dLog("Safari Window Frame: \(safariWindow.frame)")
-//        dLog("Safari Window Visible: \(safariWindow.isKeyWindow)")
+        showVcOnOverlay(vc: safari)
+//        dLog("Safari Window Frame: \(overlayWindow.frame)")
+//        dLog("Safari Window Visible: \(overlayWindow.isKeyWindow)")
     }
     
-    private func closeSafari() {
-        safariWindow?.isHidden = true
-        safariWindow = nil
+    internal func closeOverlay() {
+        overlayWindow?.isHidden = true
+        overlayWindow = nil
+    }
+    
+    private func presentApplePay(with request: Evo.ApplePayRequest) {
+        let applePay = Evo.ApplePay()
+        guard let session = session else {
+            //TODO: Callback?
+            return
+        }
+        guard applePay.isAvailable() else {
+            //TODO: Callback?
+            return
+        }
+        
+        let paymentRequest = applePay.setupTransaction(session: session, request: request)
+        guard let vc = applePay.getApplePayController(request: paymentRequest) else {
+            //TODO: Callback?
+            return
+        }
+        vc.delegate = self
+        showVcOnOverlay(vc: vc)
+    }
+    
+    private func showVcOnOverlay(vc: UIViewController) {
+        guard let overlayWindow = getOverlayWindow() else {
+             dLog("Safari Window nil")
+             assertionFailure()
+             return
+         }
+        
+         overlayWindow.rootViewController = vc
+         overlayWindow.makeKeyAndVisible()
     }
 }
 
 extension EVOWebView: SFSafariViewControllerDelegate {
     ///User pressed done button, cancel transaction
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        closeSafari()
+        closeOverlay()
         handleEventType(.status(.cancelled))
     }
 }
