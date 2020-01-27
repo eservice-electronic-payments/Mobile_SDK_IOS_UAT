@@ -18,7 +18,11 @@ extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate {
     
     ///Authorized
     public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+        //TODO: Call JS function with PKPayment.token
         
+        //        let jsString = "action.applepay.result(true,KEY)"
+        //        webView?.evaluateJavaScript('\(jsString)', completionHandler: nil)
+        //        webview?.evaluateJavaScript("addPerson('\(name)', \(age))", completionHandler: nil)
     }
 
 }

@@ -9,7 +9,7 @@
 import Foundation
 import PassKit
 
-internal extension Evo {
+extension Evo {
     struct ApplePayRequest {
         let companyName: String
         let currencyCode: String
@@ -21,7 +21,7 @@ internal extension Evo {
     
     struct ApplePay {
         func isAvailable() -> Bool {
-            return PKPaymentAuthorizationViewController.canMakePayments()// && PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: [PKPaymentNetwork.masterCard], capabilities: PKMerchantCapability.capability3DS)
+            return PKPaymentAuthorizationViewController.canMakePayments()
         }
         
         func setupCard() {

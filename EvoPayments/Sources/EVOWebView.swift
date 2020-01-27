@@ -55,8 +55,9 @@ open class EVOWebView: UIView {
         } else {
             url = cashierURL
         }
+        let applePayUrl = url.evo.addingSupportedPayments()
         
-        webView?.load(URLRequest(url: url))
+        webView?.load(URLRequest(url: applePayUrl ?? url))
     }
     
     private func setupWebView() {
@@ -118,9 +119,6 @@ extension EVOWebView: WKScriptMessageHandler {
             callStatus(status)
             dLog("Received status: \(status)")
         }
-//        let jsString = "action.applepay.result(true,KEY)"
-//        webView?.evaluateJavaScript('\(jsString)', completionHandler: nil)
-//        webview?.evaluateJavaScript("addPerson('\(name)', \(age))", completionHandler: nil)
     }
     
     private func callStatus(_ status: Evo.Status) {
