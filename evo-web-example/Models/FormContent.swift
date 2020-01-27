@@ -10,8 +10,6 @@ import Foundation
 
 struct FormContent {
     let action: String
-    let merchantID: String
-    let password: String
     let customerID: String
     let amount: Double
     let currency: String
