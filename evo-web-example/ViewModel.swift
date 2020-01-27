@@ -73,8 +73,7 @@ final class ViewModel {
         if let customURL = URL(string: customURLString) {
             return Evo.Session(
                 cashierUrl: customURL,
-                token: responseSession.token,
-                merchantId: responseSession.merchantId
+                token: responseSession.token
             )
         } else {
             print("♦️ Invalid Cashier URL: \(customURLString). Using default CashierURL.")

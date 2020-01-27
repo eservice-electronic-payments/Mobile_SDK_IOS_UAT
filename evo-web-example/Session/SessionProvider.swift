@@ -41,8 +41,7 @@ final class SessionProvider {
             switch result {
             case .success(let session):
                 let session = Evo.Session(cashierUrl: session.cashierUrl,
-                                          token: session.token,
-                                          merchantId: session.merchantId)
+                                          token: session.token)
                 
                 DispatchQueue.main.async {
                     completionHandler?(.success(session))
