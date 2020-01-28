@@ -20,6 +20,8 @@ open class EVOWebView: UIView {
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
     
+    private var applePayDidAuthorize = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -35,6 +37,7 @@ open class EVOWebView: UIView {
         
         self.session = session
         self.statusCallback = statusCallback
+        self.applePayDidAuthorize = false
         
         let queryParams: [String: String] = [
             "token": session.token,
@@ -156,6 +159,8 @@ extension EVOWebView: WKScriptMessageHandler {
     }
     
     private func presentApplePay(with request: Evo.ApplePayRequest) {
+        self.applePayDidAuthorize = false
+        
         let applePay = Evo.ApplePay()
         guard let session = session else {
             //TODO: Callback?
@@ -193,4 +198,31 @@ extension EVOWebView: SFSafariViewControllerDelegate {
         closeOverlay()
         handleEventType(.status(.cancelled))
     }
+}
+
+//MARK: Apple Pay
+
+import PassKit //https://developer.apple.com/library/archive/ApplePay_Guide/Authorization.html#//apple_ref/doc/uid/TP40014764-CH4-SW3
+
+extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate {
+        
+    ///Called in any case - Either Cancelled or Authorized
+    public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        closeOverlay()
+        
+        if !applePayDidAuthorize {
+            handleEventType(.status(.cancelled))
+        }
+    }
+    
+    ///Authorized
+    public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+        applePayDidAuthorize = true
+        //TODO: Call JS function with PKPayment.token
+        
+        //        let jsString = "action.applepay.result(true,KEY)"
+        //        webView?.evaluateJavaScript('\(jsString)', completionHandler: nil)
+        //        webview?.evaluateJavaScript("addPerson('\(name)', \(age))", completionHandler: nil)
+    }
+
 }
