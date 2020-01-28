@@ -163,17 +163,20 @@ extension EVOWebView: WKScriptMessageHandler {
         
         let applePay = Evo.ApplePay()
         guard let session = session else {
-            //TODO: Callback?
+            dLog("Session nil")
+            handleEventType(.status(.cancelled))
             return
         }
         guard applePay.isAvailable() else {
-            //TODO: Callback?
+            dLog("Apple Pay not available")
+            handleEventType(.status(.cancelled))
             return
         }
         
         let paymentRequest = applePay.setupTransaction(session: session, request: request)
         guard let vc = applePay.getApplePayController(request: paymentRequest) else {
-            //TODO: Callback?
+            dLog("Error instantiating Apple Pay screen")
+            handleEventType(.status(.cancelled))
             return
         }
         vc.delegate = self
