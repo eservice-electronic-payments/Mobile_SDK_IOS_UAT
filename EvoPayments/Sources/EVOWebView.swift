@@ -158,30 +158,6 @@ extension EVOWebView: WKScriptMessageHandler {
         overlayWindow = nil
     }
     
-    private func presentApplePay(with request: Evo.ApplePayRequest) {
-        self.applePayDidAuthorize = false
-        
-        let applePay = Evo.ApplePay()
-        guard let session = session else {
-            dLog("Session nil")
-            handleEventType(.status(.cancelled))
-            return
-        }
-        guard applePay.isAvailable() else {
-            dLog("Apple Pay not available")
-            handleEventType(.status(.cancelled))
-            return
-        }
-        
-        let paymentRequest = applePay.setupTransaction(session: session, request: request)
-        guard let vc = applePay.getApplePayController(request: paymentRequest) else {
-            dLog("Error instantiating Apple Pay screen")
-            handleEventType(.status(.cancelled))
-            return
-        }
-        vc.delegate = self
-        showVcOnOverlay(vc: vc)
-    }
     
     private func showVcOnOverlay(vc: UIViewController) {
         guard let overlayWindow = getOverlayWindow() else {
@@ -193,6 +169,44 @@ extension EVOWebView: WKScriptMessageHandler {
          overlayWindow.rootViewController = vc
          overlayWindow.makeKeyAndVisible()
     }
+    
+    //MARK: Apple Pay
+    
+    public func presentApplePay(with request: Evo.ApplePayRequest) {
+        self.applePayDidAuthorize = false
+        
+        let applePay = Evo.ApplePay()
+        guard let session = session else {
+            dLog("Session nil")
+            handleEventType(.status(.failed))
+            return
+        }
+        guard applePay.isAvailable() else {
+            dLog("Apple Pay not available")
+            handleEventType(.status(.failed))
+            return
+        }
+        
+        let paymentRequest = applePay.setupTransaction(session: session, request: request)
+        guard let vc = applePay.getApplePayController(request: paymentRequest) else {
+            dLog("Error instantiating Apple Pay screen")
+            handleEventType(.status(.failed))
+            return
+        }
+        vc.delegate = self
+        showVcOnOverlay(vc: vc)
+    }
+    
+    private func sendResultToJs(token: Data) {
+        //https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
+        guard let tokenString = String(data: token, encoding: .utf8) else {
+            dLog("Error converting Apple Pay token")
+            handleEventType(.status(.failed))
+            return
+        }
+        webView?.evaluateJavaScript("applePayResult('\(tokenString)')", completionHandler: nil)
+    }
+
 }
 
 extension EVOWebView: SFSafariViewControllerDelegate {
@@ -221,11 +235,7 @@ extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate {
     ///Authorized
     public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
         applePayDidAuthorize = true
-        //TODO: Call JS function with PKPayment.token
-        
-        //        let jsString = "action.applepay.result(true,KEY)"
-        //        webView?.evaluateJavaScript('\(jsString)', completionHandler: nil)
-        //        webview?.evaluateJavaScript("addPerson('\(name)', \(age))", completionHandler: nil)
+        sendResultToJs(token: payment.token.paymentData)
     }
 
 }
