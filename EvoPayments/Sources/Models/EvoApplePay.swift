@@ -10,7 +10,7 @@ import Foundation
 import PassKit
 
 extension Evo {
-    struct ApplePayRequest {
+    public struct ApplePayRequest {
         let companyName: String
         let currencyCode: String
         let countryCode: String
