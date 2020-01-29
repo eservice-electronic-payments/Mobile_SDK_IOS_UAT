@@ -40,7 +40,7 @@ open class EVOWebView: UIView {
             "token": session.token,
         ]
         
-        load(url: session.cashierUrl, queryParameters: queryParams)
+        load(url: session.mobileCashierUrl, queryParameters: queryParams)
     }
     
     // MARK: Private

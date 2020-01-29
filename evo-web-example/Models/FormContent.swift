@@ -16,5 +16,5 @@ struct FormContent {
     let country: String
     let language: String
     let tokenURL: String
-    let cashierURL: String
+    let mobileCashierURL: String
 }

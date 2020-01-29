@@ -40,7 +40,7 @@ final class SessionProvider {
         send(request: request) { result in
             switch result {
             case .success(let session):
-                let session = Evo.Session(cashierUrl: session.cashierUrl,
+                let session = Evo.Session(mobileCashierUrl: session.mobileCashierUrl,
                                           token: session.token)
                 
                 DispatchQueue.main.async {
