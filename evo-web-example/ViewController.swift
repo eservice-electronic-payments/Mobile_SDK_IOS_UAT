@@ -24,7 +24,7 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var webUITestButton: UIButton!
     
     @IBOutlet private weak var tokenURLTextView: UITextView!
-    @IBOutlet private weak var cashierURLTextView: UITextView!
+    @IBOutlet private weak var mobileCashierURLTextView: UITextView!
     
     private let viewModel = ViewModel()
     
@@ -39,7 +39,7 @@ final class ViewController: UIViewController {
     private var textFields: [ScrollingFormTextField] {
         return [actionField, merchantIDField, merchantPasswordField,
                 customerIDField, amountField, currencyField,
-                countryField, languageField, tokenURLTextView, cashierURLTextView].compactMap { $0 }
+                countryField, languageField, tokenURLTextView, mobileCashierURLTextView].compactMap { $0 }
     }
     
     private let scrollingFormController = ScrollingFormController()
@@ -87,7 +87,7 @@ final class ViewController: UIViewController {
     }
     
     private func setupTextViews() {
-        for textView in [tokenURLTextView, cashierURLTextView] {
+        for textView in [tokenURLTextView, mobileCashierURLTextView] {
             textView!.layer.cornerRadius = 5
             textView!.layer.borderWidth = 1
             textView!.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.3).cgColor
@@ -174,7 +174,7 @@ final class ViewController: UIViewController {
             country: countryField.text ?? "",
             language: languageField.text ?? "",
             tokenURL: tokenURLTextView.text ?? "",
-            cashierURL: cashierURLTextView.text ?? ""
+            mobileCashierURL: mobileCashierURLTextView.text ?? ""
         )
         
         ProgressHUD.show()
@@ -192,9 +192,9 @@ final class ViewController: UIViewController {
     
     @IBAction private func webUITestButtonTapped(_ sender: Any) {
         let defaultURL = URL(string: "https://cashierui-responsivedev.test.myriadpayments.com/react-frontend/index.html")!
-        let url = URL(string: cashierURLTextView.text ?? "") ?? defaultURL
+        let url = URL(string: mobileCashierURLTextView.text ?? "") ?? defaultURL
         
-        let testSession = Evo.Session(cashierUrl: url, token: "", merchantId: "")
+        let testSession = Evo.Session(mobileCashierUrl: url, token: "", merchantId: "")
         showDemo(withSession: testSession)
     }
 }

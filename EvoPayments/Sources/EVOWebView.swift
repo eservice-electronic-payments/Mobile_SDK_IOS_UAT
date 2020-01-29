@@ -41,7 +41,7 @@ open class EVOWebView: UIView {
             "merchantId": session.merchantId
         ]
         
-        load(url: session.cashierUrl, queryParameters: queryParams)
+        load(url: session.mobileCashierUrl, queryParameters: queryParams)
     }
     
     // MARK: Private

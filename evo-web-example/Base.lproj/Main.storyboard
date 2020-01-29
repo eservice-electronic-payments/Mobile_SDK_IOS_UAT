@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5T4-6N-Pyx">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5T4-6N-Pyx">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -284,13 +282,13 @@
                     <connections>
                         <outlet property="actionField" destination="bwX-5B-zMb" id="FGI-D5-BvN"/>
                         <outlet property="amountField" destination="bJk-xq-Iu3" id="Z76-ja-twK"/>
-                        <outlet property="cashierURLTextView" destination="QEX-Ax-k2t" id="qSH-C5-WSY"/>
                         <outlet property="countryField" destination="dtY-ho-3os" id="YaQ-NW-uFX"/>
                         <outlet property="currencyField" destination="Dhh-C1-ftV" id="Axp-ij-orZ"/>
                         <outlet property="customerIDField" destination="jL2-8a-9v7" id="Hgb-fi-bhx"/>
                         <outlet property="languageField" destination="pbQ-Gw-3BS" id="zGR-ke-lsd"/>
                         <outlet property="merchantIDField" destination="dhY-JF-Q8y" id="vrK-tX-6AE"/>
                         <outlet property="merchantPasswordField" destination="7GU-aw-Uxy" id="Ae5-oD-d8v"/>
+                        <outlet property="mobileCashierURLTextView" destination="QEX-Ax-k2t" id="qSH-C5-WSY"/>
                         <outlet property="scrollView" destination="4hT-hC-d9R" id="ixf-6P-Jzh"/>
                         <outlet property="startButton" destination="T4a-mb-KnD" id="zzp-Sh-ArG"/>
                         <outlet property="tokenURLTextView" destination="BSz-9g-hVS" id="2OG-3C-FeP"/>
@@ -307,14 +305,14 @@
             <objects>
                 <viewController id="adi-Nt-cxF" customClass="StatusViewController" customModule="evo_web_example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VZS-As-YMx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="qmj-5z-hA4">
-                                <rect key="frame" x="45" y="256" width="285" height="155.5"/>
+                                <rect key="frame" x="45" y="222.5" width="510" height="155.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="N0b-aN-9Y4">
-                                        <rect key="frame" x="12.5" y="0.0" width="260.5" height="77.5"/>
+                                        <rect key="frame" x="125" y="0.0" width="260.5" height="77.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success :)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9M-bo-myC">
                                                 <rect key="frame" x="0.0" y="0.0" width="260.5" height="41"/>
@@ -367,6 +365,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="5T4-6N-Pyx" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="but-pB-OzG">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

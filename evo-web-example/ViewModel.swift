@@ -41,7 +41,7 @@ final class ViewModel {
                       completionHandler: @escaping SessionRequestCompletionHandler) {
         
         let data = prepareSessionData(withContent: content)
-        let customCashierURL: String? = content.cashierURL.isEmpty ? nil : content.cashierURL
+        let customCashierURL: String? = content.mobileCashierURL.isEmpty ? nil : content.mobileCashierURL
         
         let provider = SessionProvider()
         provider.requestSession(using: data) { [weak self] result in
@@ -72,7 +72,7 @@ final class ViewModel {
         
         if let customURL = URL(string: customURLString) {
             return Evo.Session(
-                cashierUrl: customURL,
+                mobileCashierUrl: customURL,
                 token: responseSession.token,
                 merchantId: responseSession.merchantId
             )
