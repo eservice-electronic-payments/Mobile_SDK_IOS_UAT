@@ -115,7 +115,8 @@ extension EVOWebView: WKScriptMessageHandler {
 //                dLog("Safari Window Visible After redirect: \(overlayWindow?.isKeyWindow)")
             case .close:
                 closeOverlay()
-                break
+            case .applePay(let request):
+                processApplePayPayment(with: request)
             }
         case .status(let status):
             closeOverlay()
@@ -173,8 +174,8 @@ extension EVOWebView: WKScriptMessageHandler {
     
     //MARK: Apple Pay
     
-    ///Public function called by JS to initiate Apple Pay transaction
-    public func processApplePayPayment(with request: Evo.ApplePayRequest) {
+    ///Function called to initiate Apple Pay transaction
+    private func processApplePayPayment(with request: Evo.ApplePayRequest) {
         self.applePayDidAuthorize = false
         
         let applePay = Evo.ApplePay()
