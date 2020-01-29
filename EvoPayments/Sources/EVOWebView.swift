@@ -20,6 +20,7 @@ open class EVOWebView: UIView {
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
     
+    ///Keep track of the state to use in paymentAuthorizationViewControllerDidFinish
     private var applePayDidAuthorize = false
     
     override init(frame: CGRect) {
@@ -111,7 +112,7 @@ extension EVOWebView: WKScriptMessageHandler {
             case .redirection(let url):
                 openSafari(at: url)
                 dLog("Redirecting to \(url)")
-//                dLog("Saari Window Visible After redirect: \(overlayWindow?.isKeyWindow)")
+//                dLog("Safari Window Visible After redirect: \(overlayWindow?.isKeyWindow)")
             case .close:
                 closeOverlay()
                 break
@@ -172,7 +173,8 @@ extension EVOWebView: WKScriptMessageHandler {
     
     //MARK: Apple Pay
     
-    public func presentApplePay(with request: Evo.ApplePayRequest) {
+    ///Public function called by JS to initiate Apple Pay transaction
+    public func processApplePayPayment(with request: Evo.ApplePayRequest) {
         self.applePayDidAuthorize = false
         
         let applePay = Evo.ApplePay()
@@ -188,6 +190,8 @@ extension EVOWebView: WKScriptMessageHandler {
         }
         
         let paymentRequest = applePay.setupTransaction(session: session, request: request)
+        
+        //Show native Apple Pay screen with configured paymentRequst object
         guard let vc = applePay.getApplePayController(request: paymentRequest) else {
             dLog("Error instantiating Apple Pay screen")
             handleEventType(.status(.failed))
@@ -197,14 +201,17 @@ extension EVOWebView: WKScriptMessageHandler {
         showVcOnOverlay(vc: vc)
     }
     
-    private func sendResultToJs(token: Data) {
+    ///Expose Apple Pay transaction result to JS
+    private func sendApplePayResultToJs(token: Data) {
         //https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
+        //Decode token to UTF8 string
         guard let tokenString = String(data: token, encoding: .utf8) else {
             dLog("Error converting Apple Pay token")
             handleEventType(.status(.failed))
             return
         }
-        webView?.evaluateJavaScript("applePayResult('\(tokenString)')", completionHandler: nil)
+        //Call back javascript with transaction result
+        webView?.evaluateJavaScript("onApplePayTokenReceived('\(tokenString)')", completionHandler: nil)
     }
 
 }
@@ -223,7 +230,7 @@ import PassKit //https://developer.apple.com/library/archive/ApplePay_Guide/Auth
 
 extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate {
         
-    ///Called in any case - Either Cancelled or Authorized
+    ///Called in any case - Either Cancelled or Authorized. Because of that we need to keep track of the status of the  transaction and do not cancel it if it got authorized
     public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         closeOverlay()
         
@@ -232,10 +239,10 @@ extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate {
         }
     }
     
-    ///Authorized
+    ///Transaction Authorized
     public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
         applePayDidAuthorize = true
-        sendResultToJs(token: payment.token.paymentData)
+        sendApplePayResultToJs(token: payment.token.paymentData)
     }
 
 }
