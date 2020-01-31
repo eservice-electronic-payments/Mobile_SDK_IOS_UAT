@@ -48,13 +48,33 @@ extension Evo {
                 return nil
             }
             self.token = token
+            
+            //TODO: Define mapping
+            guard let networks: [String] = json["networks"] as? [String] else {
+                dLog("applePay Request token nil")
+                return nil
+            }
+            let paymentNetworks = networks.map{ PKPaymentNetwork(rawValue: $0) }
+            self.networks = paymentNetworks
+            
+            //TODO: Define mapping
+            guard let capabilities: UInt = json["capabilities"] as? UInt else {
+                dLog("applePay Request token nil")
+                return nil
+            }
+            let merchantCapability = PKMerchantCapability(rawValue: capabilities)
+            self.capabilities = merchantCapability
+            
         }
+        
         let companyName: String
         let currencyCode: String
         let countryCode: String
         let merchant: String
         let price: String
         let token: String
+        let networks: [PKPaymentNetwork]
+        let capabilities: PKMerchantCapability
     }
     
     struct ApplePay {
@@ -76,7 +96,8 @@ extension Evo {
             transaction.countryCode = request.countryCode
             transaction.merchantIdentifier = request.merchant
             
-            transaction.merchantCapabilities = .capability3DS
+            transaction.merchantCapabilities = request.capabilities
+            transaction.supportedNetworks = request.networks
             
             transaction.applicationData = Data(base64Encoded: request.token)
             
