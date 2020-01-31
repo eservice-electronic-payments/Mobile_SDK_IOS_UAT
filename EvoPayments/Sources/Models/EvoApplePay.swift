@@ -62,8 +62,12 @@ extension Evo {
             return PKPaymentAuthorizationViewController.canMakePayments()
         }
         
+        func hasAddedCard(for network: [PKPaymentNetwork], with capabilities: PKMerchantCapability) -> Bool {
+            return PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: network, capabilities: capabilities)
+        }
+        
         func setupCard() {
-            
+            PKPassLibrary().openPaymentSetup()
         }
         
         func setupTransaction(session: Evo.Session, request: Evo.ApplePayRequest) -> PKPaymentRequest {

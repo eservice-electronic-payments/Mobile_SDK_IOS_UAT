@@ -179,25 +179,35 @@ extension EVOWebView: WKScriptMessageHandler {
         self.applePayDidAuthorize = false
         
         let applePay = Evo.ApplePay()
+        //We have a valid session
         guard let session = session else {
             dLog("Session nil")
             handleEventType(.status(.failed))
             return
         }
+        //Apple Pay is enabled and available on this device
         guard applePay.isAvailable() else {
             dLog("Apple Pay not available")
             handleEventType(.status(.failed))
             return
         }
+        //The User has a valid card for the merchant's supported network and capabilities
+        guard applePay.hasAddedCard(for: request.network, with: request.capabilities) else {
+            //Prompt to add a valid card
+            applePay.setupCard()
+            return
+        }
         
+        //Convert response object to valid PKPaymentRequest
         let paymentRequest = applePay.setupTransaction(session: session, request: request)
         
-        //Show native Apple Pay screen with configured paymentRequst object
+        //Show native Apple Pay screen with configured PKPaymentRequest object
         guard let vc = applePay.getApplePayController(request: paymentRequest) else {
             dLog("Error instantiating Apple Pay screen")
             handleEventType(.status(.failed))
             return
         }
+        //Set ourselves as delegate to get callbacks on the transaction status
         vc.delegate = self
         showVcOnOverlay(vc: vc)
     }
