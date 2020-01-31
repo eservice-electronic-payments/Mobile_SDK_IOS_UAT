@@ -190,7 +190,7 @@ final class ViewController: UIViewController {
         let defaultURL = URL(string: "https://cashierui-responsivedev.test.myriadpayments.com/react-frontend/index.html")!
         let url = URL(string: mobileCashierURLTextView.text ?? "") ?? defaultURL
         
-        let testSession = Evo.Session(mobileCashierUrl: url, token: "")
+        let testSession = Evo.Session(mobileCashierUrl: url, token: "", merchantId: "")
         showDemo(withSession: testSession)
     }
 }

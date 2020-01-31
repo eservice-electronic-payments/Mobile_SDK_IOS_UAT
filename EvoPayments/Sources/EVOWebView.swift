@@ -38,6 +38,7 @@ open class EVOWebView: UIView {
         
         let queryParams: [String: String] = [
             "token": session.token,
+            "merchantId": session.merchantId
         ]
         
         load(url: session.mobileCashierUrl, queryParameters: queryParams)

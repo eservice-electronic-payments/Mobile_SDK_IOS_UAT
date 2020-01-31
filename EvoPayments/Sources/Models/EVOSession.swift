@@ -12,10 +12,12 @@ public extension Evo {
     struct Session {
         public let mobileCashierUrl: URL
         public let token: String
+        public let merchantId: String
         
-        public init(mobileCashierUrl: URL, token: String) {
+        public init(mobileCashierUrl: URL, token: String, merchantId: String) {
             self.mobileCashierUrl = mobileCashierUrl
             self.token = token
+            self.merchantId = merchantId
         }
     }
 }
