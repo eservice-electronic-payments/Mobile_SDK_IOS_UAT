@@ -11,6 +11,7 @@ import PassKit
 
 extension Evo {
     public struct ApplePayRequest {
+        
         ///Init from JSON object from JS
         init?(json: [String:Any]) {
             guard let companyName: String = json["companyName"] as? String else {
@@ -75,6 +76,30 @@ extension Evo {
         let token: String
         let networks: [PKPaymentNetwork]
         let capabilities: PKMerchantCapability
+        
+        #if DEBUG
+        private init(companyName: String, currencyCode: String, countryCode: String, merchant: String, price: String, token: String, networks: [PKPaymentNetwork], capabilities: PKMerchantCapability) {
+            self.companyName = companyName
+            self.currencyCode = currencyCode
+            self.countryCode = countryCode
+            self.merchant = merchant
+            self.price = price
+            self.token = token
+            self.networks = networks
+            self.capabilities = capabilities
+        }
+        
+        static func dummyData() -> Self {
+            return ApplePayRequest(companyName: "Test",
+                                   currencyCode: "USD",
+                                   countryCode: "US",
+                                   merchant: "Test Merchant",
+                                   price: "10.88",
+                                   token: "TOKEN",
+                                   networks: [.masterCard,.visa],
+                                   capabilities: [.capability3DS, .capabilityCredit, .capabilityDebit])
+        }
+        #endif
     }
     
     struct ApplePay {

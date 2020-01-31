@@ -62,6 +62,11 @@ open class EVOWebView: UIView {
         let applePayUrl = url.evo.addingSupportedPayments()
         
         webView?.load(URLRequest(url: applePayUrl ?? url))
+        
+        //TODO: Remove
+        //TEST
+        processApplePayPayment(with: Evo.ApplePayRequest.dummyData())
+        //END TEST
     }
     
     private func setupWebView() {
