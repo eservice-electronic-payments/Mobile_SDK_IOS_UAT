@@ -97,7 +97,7 @@ final class SessionProvider {
         guard let url = tokenURL.evo.addingQueryParameters(parameters) else { return nil }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         return request
