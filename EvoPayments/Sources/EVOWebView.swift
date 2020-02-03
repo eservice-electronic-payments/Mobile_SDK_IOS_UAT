@@ -210,7 +210,25 @@ extension EVOWebView: WKScriptMessageHandler {
             handleEventType(.status(.failed))
             return
         }
-        showVcOnOverlay(vc: vc)
+        
+        assert(applePay.delegate != nil)
+        assert(applePay.didAuthorize == false)
+        assert(vc.delegate != nil)
+        
+        //disable swipe to dismiss
+        if #available(iOS 13.0, *) {
+            vc.isModalInPresentation = true
+        }
+        
+        //        showVcOnOverlay(vc: vc)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+
+            // topController should now be your topmost view controller
+            topController.present(vc, animated: true, completion: nil)
+        }
     }
     
     ///Expose Apple Pay transaction result to JS

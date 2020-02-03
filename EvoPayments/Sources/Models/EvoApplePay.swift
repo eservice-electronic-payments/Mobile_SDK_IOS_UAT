@@ -83,7 +83,7 @@ extension Evo {
         let networks: [PKPaymentNetwork]
         let capabilities: PKMerchantCapability
         
-        #if DEBUG
+//        #if DEBUG
         private init(companyName: String, currencyCode: String, countryCode: String, merchant: String, price: String, token: String, networks: [PKPaymentNetwork], capabilities: PKMerchantCapability) {
             self.companyName = companyName
             self.currencyCode = currencyCode
@@ -105,10 +105,10 @@ extension Evo {
                                    networks: [.masterCard,.visa],
                                    capabilities: [.capability3DS, .capabilityCredit, .capabilityDebit])
         }
-        #endif
+//        #endif
     }
     
-    final class ApplePay: NSObject { //Needs to inherit from NSObject to be able to implement delegate methods
+    final public class ApplePay: NSObject, PKPaymentAuthorizationViewControllerDelegate { //Needs to inherit from NSObject to be able to implement delegate methods
         init(delegate: EvoApplePayDelegate) {
             self.delegate = delegate
         }
@@ -122,6 +122,8 @@ extension Evo {
         //After we send the result to the server and get the response we need to callback to Apple Pay with the result
         typealias ApplePayCompletion = ((PKPaymentAuthorizationStatus) -> Void)
         private var successCallback: ApplePayCompletion?
+        
+        private var paymentRequest: PKPaymentRequest?
         
         private weak var applePayViewController: PKPaymentAuthorizationViewController? {
             didSet {
@@ -159,6 +161,12 @@ extension Evo {
             
             transaction.applicationData = Data(base64Encoded: request.token)
             
+            if #available(iOS 11.0, *) {
+                transaction.requiredShippingContactFields = Set<PKContactField>()
+                transaction.requiredBillingContactFields = Set<PKContactField>()
+            }
+
+            
             let locale = Locale(identifier: "en_US_POSIX")
             //Decimal from string would not work with numbers having any kind of decimal separator
             //2,333.33 would become 2 even if using en_US_POSIX or en_US locale
@@ -168,6 +176,8 @@ extension Evo {
             let total = PKPaymentSummaryItem(label: request.companyName, amount: subtotal, type: .final)
             
             transaction.paymentSummaryItems = [total]
+            
+            self.paymentRequest = transaction
             
             return transaction
         }
@@ -207,6 +217,44 @@ extension Evo {
                 })
             }
         }
+        
+        ////////////
+
+           
+            ///Called in any case - Either Cancelled or Authorized. Because of that we need to keep track of the status of the  transaction and do not cancel it if it got authorized
+            public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+                fatalError()
+                return;
+                
+                dismissPaymentController()
+                delegate?.onFinish()
+            }
+            
+            ///Transaction Authorized
+        public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController,
+                                 didAuthorizePayment payment: PKPayment,
+                                                  completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+           completion(.success)
+           return;
+           
+           applePayDidAuthorize = true
+           successCallback = completion
+           delegate?.onPaymentAuthorized(payment: payment)
+        }
+
+        @available(iOS 11.0, *)
+        public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController,
+                                 didAuthorizePayment payment: PKPayment,
+                                                     handler: @escaping (PKPaymentAuthorizationResult) -> Void) {
+            handler(PKPaymentAuthorizationResult(status: .success, errors: nil))
+           return;
+           
+           applePayDidAuthorize = true
+//           successCallback = handler//TODO: 
+           delegate?.onPaymentAuthorized(payment: payment)
+        }
+        
+        ///////////
 
     }
     
@@ -214,24 +262,52 @@ extension Evo {
 
 
 //MARK: Apple Pay Callbacks
-
+/*
 extension Evo.ApplePay: PKPaymentAuthorizationViewControllerDelegate {
         
     ///Called in any case - Either Cancelled or Authorized. Because of that we need to keep track of the status of the  transaction and do not cancel it if it got authorized
     public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        return;
+        
         dismissPaymentController()
         delegate?.onFinish()
     }
     
     ///Transaction Authorized
     public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+        completion(.success)
+        return;
+        
         applePayDidAuthorize = true
         successCallback = completion
         delegate?.onPaymentAuthorized(payment: payment)
     }
-
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelectShippingContact contact: PKContact, completion: @escaping (PKPaymentAuthorizationStatus, [PKShippingMethod], [PKPaymentSummaryItem]) -> Void) {
+        guard let paymentRequest = self.paymentRequest else {
+            fatalError()
+        }
+        completion(.success, [], paymentRequest.paymentSummaryItems);
+    }
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelect shippingMethod: PKShippingMethod, completion: @escaping (PKPaymentAuthorizationStatus, [PKPaymentSummaryItem]) -> Void) {
+        completion(.success,[])
+    }
+    @available(iOS 11.0, *)
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelectShippingContact contact: PKContact, handler completion: @escaping (PKPaymentRequestShippingContactUpdate) -> Void) {
+        guard let paymentRequest = self.paymentRequest else {
+            fatalError()
+        }
+        completion(PKPaymentRequestShippingContactUpdate(paymentSummaryItems: paymentRequest.paymentSummaryItems))
+    }
+    @available(iOS 11.0, *)
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didSelect paymentMethod: PKPaymentMethod, handler completion: @escaping (PKPaymentRequestPaymentMethodUpdate) -> Void) {
+        guard let paymentRequest = self.paymentRequest else {
+            fatalError()
+        }
+        completion(PKPaymentRequestPaymentMethodUpdate(paymentSummaryItems: paymentRequest.paymentSummaryItems))
+    }
 }
-
+*/
 
 extension Evo.Status {
     func toApplePayStatus() -> PKPaymentAuthorizationStatus {
