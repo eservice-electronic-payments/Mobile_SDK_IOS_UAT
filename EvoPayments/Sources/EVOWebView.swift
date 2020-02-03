@@ -20,8 +20,7 @@ open class EVOWebView: UIView {
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
     
-    ///Keep track of the state to use in paymentAuthorizationViewControllerDidFinish
-    private var applePayDidAuthorize = false
+    private lazy var applePay: Evo.ApplePay = { Evo.ApplePay(delegate: self) }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,7 +37,6 @@ open class EVOWebView: UIView {
         
         self.session = session
         self.statusCallback = statusCallback
-        self.applePayDidAuthorize = false
         
         let queryParams: [String: String] = [
             "token": session.token,
@@ -59,7 +57,7 @@ open class EVOWebView: UIView {
         } else {
             url = cashierURL
         }
-        let applePayUrl = url.evo.addingSupportedPayments()
+        let applePayUrl = url.evo.addingSupportedPayments(isApplePayAvailable: applePay.isAvailable())
         
         webView?.load(URLRequest(url: applePayUrl ?? url))
         
@@ -132,6 +130,8 @@ extension EVOWebView: WKScriptMessageHandler {
     }
     
     private func callStatus(_ status: Evo.Status) {
+        applePay.onResultReceived(result: status)
+        
         DispatchQueue.main.async {
             self.statusCallback?(status)
         }
@@ -181,9 +181,7 @@ extension EVOWebView: WKScriptMessageHandler {
     
     ///Function called to initiate Apple Pay transaction
     private func processApplePayPayment(with request: Evo.ApplePayRequest) {
-        self.applePayDidAuthorize = false
-        
-        let applePay = Evo.ApplePay()
+        let applePay = Evo.ApplePay(delegate: self)
         //We have a valid session
         guard let session = session else {
             dLog("Session nil")
@@ -197,7 +195,7 @@ extension EVOWebView: WKScriptMessageHandler {
             return
         }
         //The User has a valid card for the merchant's supported network and capabilities
-        guard applePay.hasAddedCard(for: request.network, with: request.capabilities) else {
+        guard applePay.hasAddedCard(for: request.networks, with: request.capabilities) else {
             //Prompt to add a valid card
             applePay.setupCard()
             return
@@ -212,8 +210,6 @@ extension EVOWebView: WKScriptMessageHandler {
             handleEventType(.status(.failed))
             return
         }
-        //Set ourselves as delegate to get callbacks on the transaction status
-        vc.delegate = self
         showVcOnOverlay(vc: vc)
     }
     
@@ -229,8 +225,9 @@ extension EVOWebView: WKScriptMessageHandler {
         //Call back javascript with transaction result
         webView?.evaluateJavaScript("onApplePayTokenReceived('\(tokenString)')", completionHandler: nil)
     }
-
 }
+
+//MARK: Redirection
 
 extension EVOWebView: SFSafariViewControllerDelegate {
     ///User pressed done button, cancel transaction
@@ -244,21 +241,21 @@ extension EVOWebView: SFSafariViewControllerDelegate {
 
 import PassKit //https://developer.apple.com/library/archive/ApplePay_Guide/Authorization.html#//apple_ref/doc/uid/TP40014764-CH4-SW3
 
-extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate {
+extension EVOWebView: EvoApplePayDelegate {
         
-    ///Called in any case - Either Cancelled or Authorized. Because of that we need to keep track of the status of the  transaction and do not cancel it if it got authorized
-    public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+    func onFinish() {
         closeOverlay()
         
-        if !applePayDidAuthorize {
+        if !applePay.didAuthorize {
             handleEventType(.status(.cancelled))
         }
     }
     
-    ///Transaction Authorized
-    public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
-        applePayDidAuthorize = true
+    func onPaymentAuthorized(payment: PKPayment) {
         sendApplePayResultToJs(token: payment.token.paymentData)
+        //TODO: Remove
+        //MOCK
+        applePay.onResultReceived(result: .success)
+        closeOverlay()
     }
-
 }

@@ -9,9 +9,8 @@
 import Foundation
 
 extension URL.Evo {
-    func addingSupportedPayments() -> URL? {
-        let applePayAvailable = Evo.ApplePay().isAvailable()
-        let applePayParameter = ["applePayAvailable": applePayAvailable]
+    func addingSupportedPayments(isApplePayAvailable: Bool) -> URL? {
+        let applePayParameter = ["applePayAvailable": isApplePayAvailable]
         
         return addingQueryParameters(applePayParameter)
     }
