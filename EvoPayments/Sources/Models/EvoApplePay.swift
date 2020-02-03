@@ -125,7 +125,7 @@ extension Evo {
         
         private var paymentRequest: PKPaymentRequest?
         
-        private weak var applePayViewController: PKPaymentAuthorizationViewController? {
+        public weak var applePayViewController: PKPaymentAuthorizationViewController? {
             didSet {
                 dLog("Apple Pay Vc \(applePayViewController)")
                 dLog("Apple Pay Vc Delegate \(applePayViewController?.delegate)")

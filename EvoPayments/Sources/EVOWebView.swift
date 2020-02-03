@@ -210,6 +210,7 @@ extension EVOWebView: WKScriptMessageHandler {
             handleEventType(.status(.failed))
             return
         }
+        vc.delegate = self
         
         assert(applePay.delegate != nil)
         assert(applePay.didAuthorize == false)
@@ -276,4 +277,38 @@ extension EVOWebView: EvoApplePayDelegate {
         applePay.onResultReceived(result: .success)
         closeOverlay()
     }
+}
+
+extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate, PKPaymentAuthorizationControllerDelegate {
+    public func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
+        fatalError()
+    }
+    
+            
+            
+            ////////////
+
+               
+                ///Called in any case - Either Cancelled or Authorized. Because of that we need to keep track of the status of the  transaction and do not cancel it if it got authorized
+                public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+                    fatalError()
+                    return;                }
+                
+                ///Transaction Authorized
+            public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController,
+                                     didAuthorizePayment payment: PKPayment,
+                                                      completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+               completion(.success)
+                fatalError()
+               return;
+            }
+
+            @available(iOS 11.0, *)
+            public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController,
+                                     didAuthorizePayment payment: PKPayment,
+                                                         handler: @escaping (PKPaymentAuthorizationResult) -> Void) {
+                handler(PKPaymentAuthorizationResult(status: .success, errors: nil))
+                fatalError()
+               return;
+            }
 }
