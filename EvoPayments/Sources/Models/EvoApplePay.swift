@@ -99,7 +99,7 @@ extension Evo {
             return ApplePayRequest(companyName: "Test",
                                    currencyCode: "USD",
                                    countryCode: "US",
-                                   merchant: "Test Merchant",
+                                   merchant: "merchant.com.valentinourbano.testApplePay",
                                    price: "10.88",
                                    token: "TOKEN",
                                    networks: [.masterCard,.visa],

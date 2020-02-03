@@ -86,6 +86,7 @@
 		61FD3E64225B7CFE0093F847 /* IPG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IPG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7679CA4223D0689E0050CE07 /* EvoApplePay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvoApplePay.swift; sourceTree = "<group>"; };
 		76D799F123D71F07005A0302 /* URL+ApplePay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ApplePay.swift"; sourceTree = "<group>"; };
+		76D79A5923E80477005A0302 /* evo-web-example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "evo-web-example.entitlements"; sourceTree = "<group>"; };
 		C925E95E23285F0F00C2973D /* ScrollingFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingFormController.swift; sourceTree = "<group>"; };
 		C925E9602328615800C2973D /* InputAccessoryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAccessoryToolbar.swift; sourceTree = "<group>"; };
 		C925E9642328654900C2973D /* PickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerTextField.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 		6109823222F3269400B9D736 /* evo-web-example */ = {
 			isa = PBXGroup;
 			children = (
+				76D79A5923E80477005A0302 /* evo-web-example.entitlements */,
 				C99A57442329263C00A0AFA0 /* Models */,
 				C925E95D23285EEE00C2973D /* UI Helpers */,
 				6109823522F3269400B9D736 /* Session */,
@@ -592,16 +594,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "evo-web-example/evo-web-example.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NL359V5ZKQ;
+				DEVELOPMENT_TEAM = 95MYBJF2PF;
 				INFOPLIST_FILE = "$(SRCROOT)/evo-web-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evopayments.demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.valentinourbano.applePay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -614,16 +617,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "evo-web-example/evo-web-example.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NL359V5ZKQ;
+				DEVELOPMENT_TEAM = 95MYBJF2PF;
 				INFOPLIST_FILE = "$(SRCROOT)/evo-web-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evopayments.demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.valentinourbano.applePay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
