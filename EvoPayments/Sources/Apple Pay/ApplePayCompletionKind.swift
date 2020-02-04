@@ -27,7 +27,11 @@ extension Evo {
             case .completion(let applePayStatus):
                 applePayStatus(result.toApplePayStatus())
             case .handler(let applePayResult):
-                applePayResult(result.toApplePayResult())
+                if #available(iOS 11.0, *) {
+                    applePayResult(result.toApplePayResult())
+                } else {
+                    dLog("toApplePayResult not available")
+                }
             }
         }
         

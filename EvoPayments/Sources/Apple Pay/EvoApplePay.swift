@@ -91,7 +91,7 @@ extension Evo {
         //Success callback from apple pay
         func applePayAuthorized(callback: Evo.ApplePayCompletionKind) {
             applePayDidAuthorize = true
-            successCallback = completion
+            successCallback = callback
         }
         
             //Callback from JS After sendingpayment token

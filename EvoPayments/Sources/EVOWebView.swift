@@ -20,7 +20,8 @@ open class EVOWebView: UIView {
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
     
-    private lazy var applePay: Evo.ApplePay = { Evo.ApplePay(delegate: self) }()
+    //Needs to be internal due to being accessed from an extension
+    var applePay = Evo.ApplePay()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -181,7 +182,9 @@ extension EVOWebView: WKScriptMessageHandler {
     
     ///Function called to initiate Apple Pay transaction
     private func processApplePayPayment(with request: Evo.ApplePayRequest) {
-        let applePay = Evo.ApplePay(delegate: self)
+        //Reset Apple Pay class
+        self.applePay = Evo.ApplePay()
+        
         //We have a valid session
         guard let session = session else {
             dLog("Session nil")
@@ -212,7 +215,6 @@ extension EVOWebView: WKScriptMessageHandler {
         }
         vc.delegate = self
         
-        assert(applePay.delegate != nil)
         assert(applePay.didAuthorize == false)
         assert(vc.delegate != nil)
         
@@ -233,7 +235,7 @@ extension EVOWebView: WKScriptMessageHandler {
     }
     
     ///Expose Apple Pay transaction result to JS
-    private func sendApplePayResultToJs(token: Data) {
+    func sendApplePayResultToJs(token: Data) {
         //https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
         //Decode token to UTF8 string
         guard let tokenString = String(data: token, encoding: .utf8) else {
