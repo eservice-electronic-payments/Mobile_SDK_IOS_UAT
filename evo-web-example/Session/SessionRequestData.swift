@@ -12,8 +12,6 @@ import Foundation
 struct SessionRequestData {
     let tokenUrl: URL
     let action: String?
-    let merchantID: String
-    let merchantPassword: String?
     let customerID: String
     let amount: Double?
     let currency: String?
@@ -23,8 +21,6 @@ struct SessionRequestData {
     
     init(tokenUrl: String,
          action: String? = nil,
-         merchantID: String,
-         merchantPassword: String? = nil,
          customerID: String,
          amount: Double? = nil,
          currency: String? = nil,
@@ -33,8 +29,6 @@ struct SessionRequestData {
         self.tokenUrl = URL(string: tokenUrl)!
         
         self.action = action
-        self.merchantID = merchantID
-        self.merchantPassword = merchantPassword
         self.customerID = customerID
         self.amount = amount
         self.currency = currency
@@ -49,12 +43,10 @@ struct SessionRequestData {
     
     func toDictionary() -> [String: CustomStringConvertible] {
         var dict: [String: CustomStringConvertible] = [
-            "merchantId": merchantID,
             "customerId": customerID
         ]
         
         dict["action"] = action
-        dict["password"] = merchantPassword
         dict["amount"] = amount
         dict["currency"] = currency
         dict["country"] = country

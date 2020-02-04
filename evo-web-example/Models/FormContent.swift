@@ -10,13 +10,11 @@ import Foundation
 
 struct FormContent {
     let action: String
-    let merchantID: String
-    let password: String
     let customerID: String
     let amount: Double
     let currency: String
     let country: String
     let language: String
     let tokenURL: String
-    let cashierURL: String
+    let mobileCashierURL: String
 }
