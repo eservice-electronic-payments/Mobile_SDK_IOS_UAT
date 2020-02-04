@@ -178,7 +178,19 @@ extension EVOWebView: WKScriptMessageHandler {
          overlayWindow.makeKeyAndVisible()
     }
     
-    //MARK: Apple Pay
+    private func showAsTopmostController(vc: UIViewController) {
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            // topController should now be your topmost view controller
+            topController.present(vc, animated: true, completion: nil)
+        } else {
+            dLog("Topmost Controller for Apple Pay nil")
+        }
+    }
+    
+    //MARK: Apple Pay Request
     
     ///Function called to initiate Apple Pay transaction
     private func processApplePayPayment(with request: Evo.ApplePayRequest) {
@@ -223,28 +235,7 @@ extension EVOWebView: WKScriptMessageHandler {
             vc.isModalInPresentation = true
         }
         
-        //        showVcOnOverlay(vc: vc)
-        if var topController = UIApplication.shared.keyWindow?.rootViewController {
-            while let presentedViewController = topController.presentedViewController {
-                topController = presentedViewController
-            }
-
-            // topController should now be your topmost view controller
-            topController.present(vc, animated: true, completion: nil)
-        }
-    }
-    
-    ///Expose Apple Pay transaction result to JS
-    func sendApplePayResultToJs(token: Data) {
-        //https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
-        //Decode token to UTF8 string
-        guard let tokenString = String(data: token, encoding: .utf8) else {
-            dLog("Error converting Apple Pay token")
-            handleEventType(.status(.failed))
-            return
-        }
-        //Call back javascript with transaction result
-        webView?.evaluateJavaScript("onApplePayTokenReceived('\(tokenString)')", completionHandler: nil)
+        showAsTopmostController(vc: vc)
     }
 }
 

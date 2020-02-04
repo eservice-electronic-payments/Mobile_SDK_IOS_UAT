@@ -12,6 +12,23 @@ import PassKit
 //https://developer.apple.com/library/archive/ApplePay_Guide/Authorization.html#//apple_ref/doc/uid/TP40014764-CH4-SW3
 
 private extension EVOWebView {
+    
+    ///Expose Apple Pay transaction result to JS
+    func sendApplePayResultToJs(token: Data) {
+        //https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
+        
+        //Decode token to UTF8 string
+        guard let tokenString = String(data: token, encoding: .utf8) else {
+            dLog("Error converting Apple Pay token")
+            handleEventType(.status(.failed))
+            return
+        }
+        
+        //Call back javascript with transaction result
+        webView?.evaluateJavaScript("onApplePayTokenReceived('\(tokenString)')", completionHandler: nil)
+    }
+    
+    //MARK: Callbacks from Apple Pay
         
     func onFinish() {
         applePay.dismissPaymentController()
