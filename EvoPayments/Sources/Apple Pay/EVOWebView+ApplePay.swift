@@ -21,16 +21,17 @@ private extension EVOWebView {
         }
     }
     
-    func onPaymentAuthorized(payment: PKPayment) {
+    func onPaymentAuthorized(payment: PKPayment, handler: Evo.ApplePayCompletionKind) {
+        applePay.applePayAuthorized(callback: handler)
+        
         sendApplePayResultToJs(token: payment.token.paymentData)
         
         //TODO: Remove
         //MOCK
         applePay.onResultReceived(result: .success)
         //END MOCK
-        
-        closeOverlay()
     }
+    
 }
 
 //MARK: Apple Pay Callbacks
@@ -52,17 +53,13 @@ extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate, PKPaymentAut
     public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController,
                              didAuthorizePayment payment: PKPayment,
                                               completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
-       completion(.success)
-        fatalError()
-       return;
+        onPaymentAuthorized(payment: payment, handler: .completion(completion))
     }
 
     @available(iOS 11.0, *)
     public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController,
                              didAuthorizePayment payment: PKPayment,
                                                  handler: @escaping (PKPaymentAuthorizationResult) -> Void) {
-        handler(PKPaymentAuthorizationResult(status: .success, errors: nil))
-        fatalError()
-       return;
+        onPaymentAuthorized(payment: payment, handler: .handler(handler))
     }
 }

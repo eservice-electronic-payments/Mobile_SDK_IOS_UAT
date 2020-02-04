@@ -8,6 +8,7 @@
 
 import Foundation
 import PassKit
+
 //https://developer.apple.com/library/archive/ApplePay_Guide/Authorization.html#//apple_ref/doc/uid/TP40014764-CH4-SW3
 
 //Protocol namespacing still not allowed in Swift https://forums.swift.org/t/namespacing-protocols-to-other-types/7328/7
@@ -94,7 +95,7 @@ extension Evo {
             successCallback = callback
         }
         
-            //Callback from JS After sendingpayment token
+        //Callback from JS After sendingpayment token
         func onResultReceived(result: Evo.Status) {
             guard didAuthorize else {
                 return
@@ -103,7 +104,7 @@ extension Evo {
             successCallback?.execute(with: result)
         }
 
-            //Callback after failure, cancellation or finihed transaction
+        //Callback after failure, cancellation or finihed transaction
         func dismissPaymentController() {
             DispatchQueue.main.async {
                 self.applePayViewController?.dismiss(animated: true, completion: { [weak self] in
@@ -112,7 +113,7 @@ extension Evo {
             }
         }
         
-            //MARK: Private
+        //MARK: Private
             
         private func reset() {
             self.applePayViewController = nil
