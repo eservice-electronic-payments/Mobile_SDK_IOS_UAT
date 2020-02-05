@@ -131,6 +131,7 @@ extension EVOWebView: WKScriptMessageHandler {
     }
     
     private func callStatus(_ status: Evo.Status) {
+        //We need to call on result received each time since apple pay requires us to give it back the result. If no apple pay transaction is taking place this has no effects.
         applePay.onResultReceived(result: status)
         
         DispatchQueue.main.async {

@@ -20,12 +20,14 @@ extension Evo {
             }
             self.companyName = companyName
 
+            //3 digits
             guard let currencyCode: String = json["currencyCode"] as? String else {
                 dLog("currencapplePay Request yCode nil")
                 return nil
             }
             self.currencyCode = currencyCode
 
+            //2 digits
             guard let countryCode: String = json["countryCode"] as? String else {
                 dLog("countrapplePay Request yCode nil")
                 return nil
