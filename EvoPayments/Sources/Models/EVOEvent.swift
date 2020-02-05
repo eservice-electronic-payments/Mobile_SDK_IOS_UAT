@@ -30,8 +30,8 @@ internal extension Evo {
                 }
             case "close":
                 self = .close
-            case "applePay":
-                if let dic = parameters["applePayRequest"] as? [String:Any], let request = ApplePayRequest(json: dic) {
+            case "processApplePayPayment":
+                if let dic = parameters["applePayRequest"] as? [String: Any], let request = ApplePayRequest(json: dic) {
                     self = .applePay(request)
                 } else {
                     throw EventError.invalidParameters("Apple Pay parameter not found or invalid")
