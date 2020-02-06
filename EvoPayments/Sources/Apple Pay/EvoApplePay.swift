@@ -16,8 +16,7 @@ import PassKit
 extension Evo {
     final class ApplePay {
         //didFinish callback always gets called so we need to be able to distinguish between a failure and a success state
-        private var applePayDidAuthorize = false
-        var didAuthorize: Bool { applePayDidAuthorize }
+        private(set) var applePayDidAuthorize = false
         
         //After we send the result to the server and get the response we need to callback to Apple Pay with the result
         private var successCallback: ApplePayCompletionKind?
@@ -97,7 +96,7 @@ extension Evo {
         
         //Callback from JS After sendingpayment token
         func onResultReceived(result: Evo.Status) {
-            guard didAuthorize else {
+            guard applePayDidAuthorize else {
                 return
             }
             

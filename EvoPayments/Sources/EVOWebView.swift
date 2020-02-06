@@ -228,7 +228,7 @@ extension EVOWebView: WKScriptMessageHandler {
         }
         vc.delegate = self
         
-        assert(applePay.didAuthorize == false)
+        assert(applePay.applePayDidAuthorize == false)
         assert(vc.delegate != nil)
         
         //disable swipe to dismiss

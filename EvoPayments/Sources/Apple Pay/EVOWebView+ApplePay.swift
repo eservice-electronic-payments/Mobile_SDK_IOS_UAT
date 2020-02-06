@@ -33,7 +33,7 @@ private extension EVOWebView {
     func onFinish() {
         applePay.dismissPaymentController()
         
-        if !applePay.didAuthorize {
+        if !applePay.applePayDidAuthorize {
             handleEventType(.status(.cancelled))
         }
     }
