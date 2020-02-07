@@ -76,6 +76,7 @@ extension Evo {
         let networks: [PKPaymentNetwork]
         let capabilities: PKMerchantCapability
         
+        //TODO: Readd debug flag
 //        #if DEBUG
         private init(companyName: String, currencyCode: String, countryCode: String, merchant: String, price: String, networks: [PKPaymentNetwork], capabilities: PKMerchantCapability) {
             self.companyName = companyName
