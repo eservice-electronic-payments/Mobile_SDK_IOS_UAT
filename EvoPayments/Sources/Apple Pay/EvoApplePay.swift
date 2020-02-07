@@ -53,7 +53,9 @@ extension Evo {
             
             transaction.applicationData = Data(base64Encoded: request.token)
             
+                        
             if #available(iOS 11.0, *) {
+                //Not required
                 transaction.requiredShippingContactFields = Set<PKContactField>()
                 transaction.requiredBillingContactFields = Set<PKContactField>()
             }

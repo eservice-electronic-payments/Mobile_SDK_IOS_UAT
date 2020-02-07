@@ -53,20 +53,23 @@ extension Evo {
             }
             self.token = token
             
-            //TODO: Define mapping
             guard let networks: [String] = json["networks"] as? [String] else {
-                dLog("applePay Request token nil")
+                dLog("applePay Request networks nil")
                 return nil
             }
-            let paymentNetworks = networks.map{ PKPaymentNetwork(rawValue: $0) }
+            let networkMapper = PKPaymentNetworkMapper()
+            let paymentNetworks = networks.map{ networkMapper.network(from: $0) }
             self.networks = paymentNetworks
             
-            //TODO: Define mapping
-            guard let capabilities: UInt = json["capabilities"] as? UInt else {
-                dLog("applePay Request token nil")
+            guard let capabilities: String = json["capabilities"] as? String else {
+                dLog("applePay Request capabilities nil")
                 return nil
             }
-            let merchantCapability = PKMerchantCapability(rawValue: capabilities)
+            let capabilityMapper = PKMerchantCapabilityMapper()
+            guard let merchantCapability = capabilityMapper.capability(from: capabilities) else {
+                dLog("applePay Request capabilities not mappable to PKMerchantCapability")
+                return nil
+            }
             self.capabilities = merchantCapability
             
         }
