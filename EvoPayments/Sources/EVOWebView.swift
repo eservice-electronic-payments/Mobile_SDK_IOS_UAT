@@ -64,6 +64,7 @@ open class EVOWebView: UIView {
         
         //TODO: Remove
         //TEST
+        PKPaymentNetworkMapper.debugPrint()
         processApplePayPayment(with: Evo.ApplePayRequest.dummyData())
         //END TEST
     }
