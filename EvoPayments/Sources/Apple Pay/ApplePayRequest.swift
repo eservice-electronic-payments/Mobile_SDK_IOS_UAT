@@ -46,12 +46,6 @@ extension Evo {
                 return nil
             }
             self.price = price
-
-            guard let token: String = json["token"] as? String else {
-                dLog("applePay Request token nil")
-                return nil
-            }
-            self.token = token
             
             guard let networks: [String] = json["networks"] as? [String] else {
                 dLog("applePay Request networks nil")
@@ -79,18 +73,16 @@ extension Evo {
         let countryCode: String
         let merchant: String
         let price: String
-        let token: String
         let networks: [PKPaymentNetwork]
         let capabilities: PKMerchantCapability
         
 //        #if DEBUG
-        private init(companyName: String, currencyCode: String, countryCode: String, merchant: String, price: String, token: String, networks: [PKPaymentNetwork], capabilities: PKMerchantCapability) {
+        private init(companyName: String, currencyCode: String, countryCode: String, merchant: String, price: String, networks: [PKPaymentNetwork], capabilities: PKMerchantCapability) {
             self.companyName = companyName
             self.currencyCode = currencyCode
             self.countryCode = countryCode
             self.merchant = merchant
             self.price = price
-            self.token = token
             self.networks = networks
             self.capabilities = capabilities
         }
@@ -101,7 +93,6 @@ extension Evo {
                                    countryCode: "US",
                                    merchant: "merchant.com.evopayments.showcase",
                                    price: "10.88",
-                                   token: "TOKEN",
                                    networks: [.masterCard, .visa],
                                    capabilities: [.capability3DS, .capabilityCredit, .capabilityDebit])
         }

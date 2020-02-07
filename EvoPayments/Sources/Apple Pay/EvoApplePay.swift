@@ -50,9 +50,6 @@ extension Evo {
             
             transaction.merchantCapabilities = request.capabilities
             transaction.supportedNetworks = request.networks
-            
-            transaction.applicationData = Data(base64Encoded: request.token)
-            
                         
             if #available(iOS 11.0, *) {
                 //Not required
