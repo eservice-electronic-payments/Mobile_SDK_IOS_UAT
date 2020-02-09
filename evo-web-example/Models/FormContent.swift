@@ -11,6 +11,8 @@ import Foundation
 struct FormContent {
     let action: String
     let customerID: String
+    let customerFirstName: String
+    let customerLastName: String
     let amount: Double
     let currency: String
     let country: String

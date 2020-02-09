@@ -14,6 +14,8 @@ final class ViewController: UIViewController {
     
     @IBOutlet private weak var actionField: PickerTextField!
     @IBOutlet private weak var customerIDField: UITextField!
+    @IBOutlet weak var customerFirstNameField: UITextField!
+    @IBOutlet weak var customerLastNameField: UITextField!
     @IBOutlet private weak var amountField: UITextField!
     @IBOutlet private weak var currencyField: UITextField!
     @IBOutlet private weak var countryField: UITextField!
@@ -36,7 +38,7 @@ final class ViewController: UIViewController {
     
     private var textFields: [ScrollingFormTextField] {
         return [actionField,
-                customerIDField, amountField, currencyField,
+                customerIDField, customerFirstNameField, customerLastNameField, amountField, currencyField,
                 countryField, languageField, tokenURLTextView, mobileCashierURLTextView].compactMap { $0 }
     }
     
@@ -165,6 +167,8 @@ final class ViewController: UIViewController {
         let content = FormContent(
             action: actionField.text ?? "",
             customerID: customerIDField.text ?? "",
+            customerFirstName: customerFirstNameField.text ?? "",
+            customerLastName: customerLastNameField.text ?? "",
             amount: amount,
             currency: currencyField.text ?? "",
             country: countryField.text ?? "",
