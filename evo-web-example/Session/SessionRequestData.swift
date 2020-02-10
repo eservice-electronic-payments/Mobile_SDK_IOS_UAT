@@ -74,6 +74,11 @@ struct SessionRequestData {
         dict["currency"] = currency
         dict["country"] = country
         dict["language"] = language
+        
+        dict["merchantNotificationUrl"] = merchantNotificationUrl
+        dict["merchantLandingPageUrl"] = merchantLandingPageUrl
+        dict["allowOriginUrl"] = allowOriginUrl
+        
         dict["myriadFlowId"] = myriadFlowId
         
         return dict
