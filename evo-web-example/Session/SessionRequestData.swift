@@ -13,6 +13,8 @@ struct SessionRequestData {
     let tokenUrl: URL
     let action: String?
     let customerID: String
+    let customerFirstName: String?
+    let customerLastName: String?
     let amount: Double?
     let currency: String?
     let country: String?
@@ -22,6 +24,8 @@ struct SessionRequestData {
     init(tokenUrl: String,
          action: String? = nil,
          customerID: String,
+         customerFirstName: String? = nil,
+         customerLastName: String? = nil,
          amount: Double? = nil,
          currency: String? = nil,
          country: String? = nil,
@@ -30,6 +34,8 @@ struct SessionRequestData {
         
         self.action = action
         self.customerID = customerID
+        self.customerFirstName = customerFirstName
+        self.customerLastName = customerLastName
         self.amount = amount
         self.currency = currency
         self.country = country
@@ -46,6 +52,8 @@ struct SessionRequestData {
             "customerId": customerID
         ]
         
+        dict["customerFirstName"] = customerFirstName
+        dict["customerLastName"] = customerLastName
         dict["action"] = action
         dict["amount"] = amount
         dict["currency"] = currency

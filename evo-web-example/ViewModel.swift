@@ -85,6 +85,8 @@ final class ViewModel {
     private func prepareSessionData(withContent content: FormContent) -> SessionRequestData {
         let action = !content.action.isEmpty ? content.action : nil
         let customerID = content.customerID
+        let customerFirstName = !content.customerFirstName.isEmpty ? content.customerFirstName : nil
+        let customerLastName = !content.customerLastName.isEmpty ? content.customerLastName : nil
         let amount = content.amount
         let currency = !content.currency.isEmpty ? content.currency : nil
         let country = !content.country.isEmpty ? content.country : nil
@@ -94,6 +96,8 @@ final class ViewModel {
             tokenUrl: content.tokenURL,
             action: action,
             customerID: customerID,
+            customerFirstName: customerFirstName,
+            customerLastName: customerLastName,
             amount: amount,
             currency: currency,
             country: country,
