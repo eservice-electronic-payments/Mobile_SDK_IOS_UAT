@@ -41,7 +41,7 @@ final class ViewModel {
                       completionHandler: @escaping SessionRequestCompletionHandler) {
         
         let data = prepareSessionData(withContent: content)
-        let customCashierURL: String? = content.cashierURL.isEmpty ? nil : content.cashierURL
+        let customCashierURL: String? = content.mobileCashierURL.isEmpty ? nil : content.mobileCashierURL
         
         let provider = SessionProvider()
         provider.requestSession(using: data) { [weak self] result in
@@ -72,7 +72,7 @@ final class ViewModel {
         
         if let customURL = URL(string: customURLString) {
             return Evo.Session(
-                cashierUrl: customURL,
+                mobileCashierUrl: customURL,
                 token: responseSession.token,
                 merchantId: responseSession.merchantId
             )
@@ -84,9 +84,9 @@ final class ViewModel {
     
     private func prepareSessionData(withContent content: FormContent) -> SessionRequestData {
         let action = !content.action.isEmpty ? content.action : nil
-        let merchantID = content.merchantID
-        let merchantPassword = !content.password.isEmpty ? content.password : nil
         let customerID = content.customerID
+        let customerFirstName = !content.customerFirstName.isEmpty ? content.customerFirstName : nil
+        let customerLastName = !content.customerLastName.isEmpty ? content.customerLastName : nil
         let amount = content.amount
         let currency = !content.currency.isEmpty ? content.currency : nil
         let country = !content.country.isEmpty ? content.country : nil
@@ -95,9 +95,9 @@ final class ViewModel {
         return SessionRequestData(
             tokenUrl: content.tokenURL,
             action: action,
-            merchantID: merchantID,
-            merchantPassword: merchantPassword,
             customerID: customerID,
+            customerFirstName: customerFirstName,
+            customerLastName: customerLastName,
             amount: amount,
             currency: currency,
             country: country,

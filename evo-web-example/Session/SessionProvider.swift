@@ -40,7 +40,7 @@ final class SessionProvider {
         send(request: request) { result in
             switch result {
             case .success(let session):
-                let session = Evo.Session(cashierUrl: session.cashierUrl,
+                let session = Evo.Session(mobileCashierUrl: session.mobileCashierUrl,
                                           token: session.token,
                                           merchantId: session.merchantId)
                 
@@ -97,7 +97,7 @@ final class SessionProvider {
         guard let url = tokenURL.evo.addingQueryParameters(parameters) else { return nil }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         return request

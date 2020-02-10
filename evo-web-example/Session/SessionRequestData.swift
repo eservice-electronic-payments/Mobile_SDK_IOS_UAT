@@ -12,9 +12,9 @@ import Foundation
 struct SessionRequestData {
     let tokenUrl: URL
     let action: String?
-    let merchantID: String
-    let merchantPassword: String?
     let customerID: String
+    let customerFirstName: String?
+    let customerLastName: String?
     let amount: Double?
     let currency: String?
     let country: String?
@@ -23,9 +23,9 @@ struct SessionRequestData {
     
     init(tokenUrl: String,
          action: String? = nil,
-         merchantID: String,
-         merchantPassword: String? = nil,
          customerID: String,
+         customerFirstName: String? = nil,
+         customerLastName: String? = nil,
          amount: Double? = nil,
          currency: String? = nil,
          country: String? = nil,
@@ -33,9 +33,9 @@ struct SessionRequestData {
         self.tokenUrl = URL(string: tokenUrl)!
         
         self.action = action
-        self.merchantID = merchantID
-        self.merchantPassword = merchantPassword
         self.customerID = customerID
+        self.customerFirstName = customerFirstName
+        self.customerLastName = customerLastName
         self.amount = amount
         self.currency = currency
         self.country = country
@@ -49,12 +49,12 @@ struct SessionRequestData {
     
     func toDictionary() -> [String: CustomStringConvertible] {
         var dict: [String: CustomStringConvertible] = [
-            "merchantId": merchantID,
             "customerId": customerID
         ]
         
+        dict["customerFirstName"] = customerFirstName
+        dict["customerLastName"] = customerLastName
         dict["action"] = action
-        dict["password"] = merchantPassword
         dict["amount"] = amount
         dict["currency"] = currency
         dict["country"] = country

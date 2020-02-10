@@ -629,6 +629,7 @@
 				CODE_SIGN_ENTITLEMENTS = "evo-web-example/evo-web-example.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LN495DX92Z;
 				INFOPLIST_FILE = "$(SRCROOT)/evo-web-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -652,6 +653,7 @@
 				CODE_SIGN_ENTITLEMENTS = "evo-web-example/evo-web-example.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LN495DX92Z;
 				INFOPLIST_FILE = "$(SRCROOT)/evo-web-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
