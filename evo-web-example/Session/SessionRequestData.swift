@@ -36,10 +36,10 @@ struct SessionRequestData {
          country: String? = nil,
          language: String? = nil,
          
-        //Using same default values as android
-         merchantNotificationUrl: String? = "https://ptsv2.com/t/66i1s-1534805666/post",
-         merchantLandingPageUrl: String? = "https://ptsv2.com/t/ipgmobilesdktest",
-         allowOriginUrl: String? = "http://example.com"
+         //Using same default values as android
+         merchantNotificationUrl: String? = Constants.SessionRequest.merchantNotificationUrl.rawValue,
+         merchantLandingPageUrl: String? = Constants.SessionRequest.merchantLandingPageUrl.rawValue,
+         allowOriginUrl: String? = Constants.SessionRequest.allowOriginUrl.rawValue
         ) {
         self.tokenUrl = URL(string: tokenUrl)!
         
