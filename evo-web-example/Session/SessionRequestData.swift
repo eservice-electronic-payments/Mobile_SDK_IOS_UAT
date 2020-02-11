@@ -19,6 +19,11 @@ struct SessionRequestData {
     let currency: String?
     let country: String?
     let language: String?
+    
+    let merchantNotificationUrl: String?
+    let merchantLandingPageUrl: String?
+    let allowOriginUrl: String?
+    
     let myriadFlowId: String
     
     init(tokenUrl: String,
@@ -29,7 +34,13 @@ struct SessionRequestData {
          amount: Double? = nil,
          currency: String? = nil,
          country: String? = nil,
-         language: String? = nil) {
+         language: String? = nil,
+         
+         //Using same default values as android
+         merchantNotificationUrl: String? = Constants.SessionRequest.merchantNotificationUrl.rawValue,
+         merchantLandingPageUrl: String? = Constants.SessionRequest.merchantLandingPageUrl.rawValue,
+         allowOriginUrl: String? = Constants.SessionRequest.allowOriginUrl.rawValue
+        ) {
         self.tokenUrl = URL(string: tokenUrl)!
         
         self.action = action
@@ -40,6 +51,10 @@ struct SessionRequestData {
         self.currency = currency
         self.country = country
         self.language = language
+        
+        self.merchantNotificationUrl = merchantNotificationUrl
+        self.merchantLandingPageUrl = merchantLandingPageUrl
+        self.allowOriginUrl = allowOriginUrl
         
         let sessionNumber = Int.random(in: 0...0xFFFFFF)
         var flowId = String.init(sessionNumber, radix: 16, uppercase: true)
@@ -59,6 +74,11 @@ struct SessionRequestData {
         dict["currency"] = currency
         dict["country"] = country
         dict["language"] = language
+        
+        dict["merchantNotificationUrl"] = merchantNotificationUrl
+        dict["merchantLandingPageUrl"] = merchantLandingPageUrl
+        dict["allowOriginUrl"] = allowOriginUrl
+        
         dict["myriadFlowId"] = myriadFlowId
         
         return dict

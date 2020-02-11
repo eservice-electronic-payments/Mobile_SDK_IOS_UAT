@@ -14,10 +14,14 @@ public extension Evo {
         public let token: String
         public let merchantId: String
         
+        ///Automatically populated by SDK
+        public let platform: String
+        
         public init(mobileCashierUrl: URL, token: String, merchantId: String) {
             self.mobileCashierUrl = mobileCashierUrl
             self.token = token
             self.merchantId = merchantId
+            self.platform = Evo.Constants.platform.rawValue
         }
     }
 }
