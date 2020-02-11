@@ -41,11 +41,6 @@ private extension EVOWebView {
         
         
         sendApplePayResultToJs(token: payment.token.paymentData)
-        
-        //TODO: Remove
-        //MOCK
-        applePay.onResultReceived(result: .success)
-        //END MOCK
     }
     
 }

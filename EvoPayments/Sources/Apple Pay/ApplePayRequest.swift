@@ -75,29 +75,6 @@ extension Evo {
         let price: String
         let networks: [PKPaymentNetwork]
         let capabilities: PKMerchantCapability
-        
-        //TODO: Readd debug flag
-//        #if DEBUG
-        private init(companyName: String, currencyCode: String, countryCode: String, merchant: String, price: String, networks: [PKPaymentNetwork], capabilities: PKMerchantCapability) {
-            self.companyName = companyName
-            self.currencyCode = currencyCode
-            self.countryCode = countryCode
-            self.merchant = merchant
-            self.price = price
-            self.networks = networks
-            self.capabilities = capabilities
-        }
-        
-        static func dummyData() -> Self {
-            return ApplePayRequest(companyName: "Test",
-                                   currencyCode: "USD",
-                                   countryCode: "US",
-                                   merchant: "merchant.com.evopayments.showcase",
-                                   price: "10.88",
-                                   networks: [.masterCard, .visa],
-                                   capabilities: [.capability3DS, .capabilityCredit, .capabilityDebit])
-        }
-//        #endif
     }
     
 }
