@@ -10,6 +10,6 @@ import Foundation
 
 extension Evo {
     enum Constants: String {
-        case platform = "iOS"
+        case platform = "IOS"
     }
 }
