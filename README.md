@@ -29,7 +29,7 @@ Replace your link to point to your repository and latest version to the version 
 pod repo push REPO_NAME SPEC_NAME.podspec
 ```
 
-7. Add `pod ‘EvoPayments’` to your project pods list as in example below: 
+7. Add `pod ‘SPEC_NAME’` to your project pods list as in example below: 
 
 ```
 source 'PRIVATESPECURL' . 
@@ -37,7 +37,7 @@ source 'https://github.com/CocoaPods/Specs.git' .
 project 'my-app.xcodeproj'   
 platform :ios, '10.0' target 'my-app'   
 do   
-pod 'EvoPayments'   
+pod 'SPEC_NAME'   
 end   
 ```
 
