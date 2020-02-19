@@ -24,6 +24,16 @@ open class EVOWebViewController: UIViewController {
         self.view = evoWebView
     }
     
+    /// Creates a UINavigationController that has this EVOWebViewController set as root
+    /// Also adds `done` button that dismisses the controller
+    open func embedInNavigationController() -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: self)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
+                                                            target: self,
+                                                            action: #selector(dismissController))
+        return navigationController
+    }
+    
     /// Instantiates a EVOWebViewController, containing EVOWebView.
     /// It can be used like any other UIViewController.
     ///
@@ -41,8 +51,16 @@ open class EVOWebViewController: UIViewController {
     }
     
     override open func viewDidLoad() {
-        evoWebView?.start(session: session, statusCallback: { [weak self] status in
+        evoWebView?.start(session: session,
+                          statusCallback: { [weak self] status in
             self?.statusCallback(status)
         })
+    }
+    
+    // MARK: - Private
+    
+    /// Used for done button when embedInNavigationController() is called
+    @objc private func dismissController() {
+        navigationController?.dismiss(animated: true)
     }
 }

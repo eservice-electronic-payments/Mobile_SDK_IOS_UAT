@@ -14,7 +14,7 @@ final class StatusViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var statusDescriptionLabel: UILabel!
     
-    var status: Evo.PaymentStatus!
+    var status: Evo.Status!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,28 @@ final class StatusViewController: UIViewController {
     
     @IBAction func backTapped(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension Evo.Status {
+    var statusText: String {
+        switch self {
+        case .success: return "Success!"
+        case .cancelled: return "Cancelled"
+        case .started: return "Payment started"
+        case .failed, .timeout, .undetermined: return "Oops :("
+        }
+    }
+    
+    var statusDescription: String {
+        switch self {
+        case .success: return "Your payment was accepted."
+        case .cancelled: return "You cancelled the payment."
+        case .failed: return "We could not process your payment."
+        case .timeout: return "Your payment has timed out."
+        case .undetermined: return "We could not determine the result of your payment."
+        case .started: return "Your payment was started. Please be patient."
+        }
     }
 }
 

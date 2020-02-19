@@ -8,9 +8,10 @@
 
 import Foundation
 
+/// Data returned by example token request in SessionProvider
 struct SessionResponseData: Codable {
+    let mobileCashierUrl: URL
     let merchantId: String
-    let cashierUrl: URL
     let token: String
     
     init(data: Data) throws {

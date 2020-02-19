@@ -10,14 +10,18 @@ import Foundation
 
 public extension Evo {
     struct Session {
-        let cashierUrl: URL
-        let token: String
-        let merchantId: String
+        public let mobileCashierUrl: URL
+        public let token: String
+        public let merchantId: String
         
-        public init(cashierUrl: URL, token: String, merchantId: String) {
-            self.cashierUrl = cashierUrl
+        ///Automatically populated by SDK
+        public let platform: String
+        
+        public init(mobileCashierUrl: URL, token: String, merchantId: String) {
+            self.mobileCashierUrl = mobileCashierUrl
             self.token = token
             self.merchantId = merchantId
+            self.platform = Evo.Constants.platform.rawValue
         }
     }
 }

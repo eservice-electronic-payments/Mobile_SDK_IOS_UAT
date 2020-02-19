@@ -9,16 +9,18 @@
 import Foundation
 import EvoPayments
 
+/// Example Evo.Session provider implementation
 final class SessionProvider {
     typealias Result<Response> = Swift.Result<Response, SessionProvider.Error>
     typealias CompletionHandler = ((Result<Evo.Session>) -> Void)?
     private typealias TokenCompletionHandler = ((Result<SessionResponseData>) -> Void)?
     
     enum Error: Swift.Error {
-        case connectionError(Swift.Error?)
+        case connectionError(Swift.Error)
         case invalidStatusCode(Int)
         case buildRequestFailed
         case responseMissing
+        case dataMissing
         case decodingError(Swift.Error)
     }
     
@@ -26,10 +28,7 @@ final class SessionProvider {
     func requestSession(using data: SessionRequestData,
                         completionHandler: CompletionHandler) {
         
-        let parameters: [String: CustomStringConvertible] = [
-            "merchantId": data.merchantId,
-            "customerId": data.customerId
-        ]
+        let parameters = data.toDictionary()
         
         guard let request = sessionTokenRequest(url: data.tokenUrl,
                                                 parameters: parameters) else {
@@ -41,7 +40,7 @@ final class SessionProvider {
         send(request: request) { result in
             switch result {
             case .success(let session):
-                let session = Evo.Session(cashierUrl: session.cashierUrl,
+                let session = Evo.Session(mobileCashierUrl: session.mobileCashierUrl,
                                           token: session.token,
                                           merchantId: session.merchantId)
                 
@@ -61,8 +60,13 @@ final class SessionProvider {
     
     private func send(request: URLRequest, completionHandler: TokenCompletionHandler) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let response = response as? HTTPURLResponse, error == nil else {
+            if let error = error {
                 completionHandler?(.failure(.connectionError(error)))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                completionHandler?(.failure(.responseMissing))
                 return
             }
             
@@ -72,7 +76,7 @@ final class SessionProvider {
             }
             
             guard let data = data else {
-                completionHandler?(.failure(.responseMissing))
+                completionHandler?(.failure(.dataMissing))
                 return
             }
             
@@ -93,7 +97,7 @@ final class SessionProvider {
         guard let url = tokenURL.evo.addingQueryParameters(parameters) else { return nil }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         return request
