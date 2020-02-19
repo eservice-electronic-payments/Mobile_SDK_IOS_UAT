@@ -21,13 +21,13 @@ pod repo push REPO_NAME SPEC_NAME.podspec
 
 5. Add “pod ‘EvoPayments’” to your project pods list as in example below: 
 
-source 'PRIVATESPECURL'
-source 'https://github.com/CocoaPods/Specs.git'
-project 'my-app.xcodeproj' 
-platform :ios, '10.0' target 'my-app' 
-do 
-pod 'EvoPayments' 
-end 
+source 'PRIVATESPECURL' . 
+source 'https://github.com/CocoaPods/Specs.git' . 
+project 'my-app.xcodeproj'   
+platform :ios, '10.0' target 'my-app'   
+do   
+pod 'EvoPayments'   
+end   
 
  Make sure that 'PRIVATESPECURL' points to your spec repository and it is listed ABOVE the official cocoapods spec.
 
