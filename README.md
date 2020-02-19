@@ -18,7 +18,7 @@ Replacing the url and name with the specific ones from your repository.
 
 5. Update the podspec with the link to your private repository. You can use the podspec provided in our repository as a guideline.
 ```
-s.source           = { :git => YOURLINK, :tag => LATESTVERSION }
+s.source           = { :git => YOURLINK, :tag => 1.0 }
 ```
 
 Replace your link to point to your repository and latest version to the version included in the provided podspec file from [Github](https://github.com/eservice-electronic-payments/iOS_SDK)
@@ -37,7 +37,7 @@ source 'https://github.com/CocoaPods/Specs.git' .
 project 'my-app.xcodeproj'   
 platform :ios, '10.0' target 'my-app'   
 do   
-pod 'SPEC_NAME'   
+pod 'SPEC_NAME', '~> 1.0' 
 end   
 ```
 
