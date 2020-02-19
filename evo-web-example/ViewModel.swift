@@ -55,6 +55,7 @@ final class ViewModel {
                 let session = sself.setupSession(responseSession, customCashierURL: customCashierURL)
                 completionHandler(.success(session))
             case .failure(let error):
+                print("Network Error: \(error.localizedDescription)")
                 completionHandler(.failure(.provider(error)))
             }
         }

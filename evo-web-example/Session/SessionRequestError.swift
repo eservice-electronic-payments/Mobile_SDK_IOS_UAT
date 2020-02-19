@@ -13,7 +13,7 @@ enum SessionRequestError: Error {
     case provider(SessionProvider.Error)
     case unknown
     
-    var errorMessage: String {
+    var debugMessage: String {
         let message: String
         
         switch self {
@@ -32,4 +32,9 @@ enum SessionRequestError: Error {
         
         return message
     }
+    
+    var errorMessage: String {
+        return "Failed starting payment process"
+    }
+    
 }
