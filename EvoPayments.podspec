@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "EvoPayments"
-  spec.version      = "0.2.4"
+  spec.version      = "1.0"
   spec.summary      = "A library to easily integrate EvoPayments to your iOS app."
 
   # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Pod::Spec.new do |spec|
   See README.md for more information.
                    DESC
 
-  spec.homepage     = "https://github.com/intelligentpayments/iosSDK"
+  spec.homepage     = "https://github.com/eservice-electronic-payments/iOS_SDK"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -81,7 +81,7 @@ Pod::Spec.new do |spec|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/intelligentpayments/iosSDK.git", :tag => "0.2.4" }
+  spec.source       = { :git => "https://github.com/eservice-electronic-payments/iOS_SDK", :tag => "1.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
