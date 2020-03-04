@@ -13,14 +13,14 @@ struct PKMerchantCapabilityMapper {
     func capability(from array: [String]) -> PKMerchantCapability? {
         var capability: PKMerchantCapability?
         for each in array {
-            if let newCapability = capability(from: each) {
+            if let newCapability = convert(from: each) {
                 capability?.formUnion(newCapability)
             }
         }
         return capability
     }
     
-    private func capability(from string: String) -> PKMerchantCapability? {
+    private func convert(from string: String) -> PKMerchantCapability? {
         switch string {
         case "3DS":
           return .capability3DS
