@@ -55,7 +55,7 @@ extension Evo {
             let paymentNetworks = networks.map{ networkMapper.network(from: $0) }
             self.networks = paymentNetworks
             
-            guard let capabilities: String = json["capabilities"] as? String else {
+            guard let capabilities: [String] = json["capabilities"] as? [String] else {
                 dLog("applePay Request capabilities nil")
                 return nil
             }
