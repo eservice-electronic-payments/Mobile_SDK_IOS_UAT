@@ -23,7 +23,7 @@ extension PKPaymentMethod: Encodable {
         if let network = network?.rawValue {
             try container.encode(network, forKey: .network)
         }
-        try container.encode(type.rawValue, forKey: .type)
+        try container.encode(type.stringValue, forKey: .type)
 
     }
 }
