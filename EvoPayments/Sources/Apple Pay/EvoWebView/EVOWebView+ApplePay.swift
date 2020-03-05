@@ -16,14 +16,25 @@ private extension EVOWebView {
     //MARK: Payment
     
     ///Expose Apple Pay transaction result to JS
-    func sendApplePayResultToJs(token: Data) {
+    func sendApplePayResultToJs(token: PKPaymentToken) {
         //https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
-        
-        //Decode token to Base64 string (UTF8)
-        let tokenString = token.base64EncodedString()
-        
-        //Call back javascript with transaction result
-        webView?.evaluateJavaScript("onApplePayTokenReceived('\(tokenString)')", completionHandler: nil)
+        do {
+            let jsonData = try JSONEncoder().encode(token)
+            
+            guard let jsonString = String(data: jsonData, encoding: .utf8) else {
+                dLog("Error converting Apple Pay Data to json")
+                handleEventType(.status(.failed))
+                return
+            }
+            
+            //Call back javascript with transaction result
+            webView?.evaluateJavaScript("onApplePayTokenReceived('\(jsonString)')", completionHandler: nil)
+            
+        } catch let error {
+            dLog("Error encoding Apple Pay Data")
+            dLog(error)
+            handleEventType(.status(.failed))
+        }
     }
     
     //MARK: Callbacks from Apple Pay
@@ -40,7 +51,7 @@ private extension EVOWebView {
         applePay.applePayAuthorized(callback: handler)
         
         
-        sendApplePayResultToJs(token: payment.token.paymentData)
+        sendApplePayResultToJs(token: payment.token)
     }
     
 }

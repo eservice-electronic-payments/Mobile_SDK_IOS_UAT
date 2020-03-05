@@ -25,6 +25,9 @@
 		6109826A22F32B2F00B9D736 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6109823422F3269400B9D736 /* Assets.xcassets */; };
 		6109826B22F32B2F00B9D736 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6109823922F3269400B9D736 /* LaunchScreen.storyboard */; };
 		6109826C22F32B2F00B9D736 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6109823B22F3269400B9D736 /* Main.storyboard */; };
+		76669ED9240FB04C009ECF4F /* PKPaymentToken+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76669ED8240FB04C009ECF4F /* PKPaymentToken+Codable.swift */; };
+		76669EDB240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76669EDA240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift */; };
+		76669EE0240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76669EDF240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift */; };
 		7679CA4323D0689E0050CE07 /* EvoApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7679CA4223D0689E0050CE07 /* EvoApplePay.swift */; };
 		767C318323F16232006DF419 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C318223F16232006DF419 /* Constants.swift */; };
 		767C318723F16DAD006DF419 /* EVOConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C318623F16DAD006DF419 /* EVOConstants.swift */; };
@@ -92,6 +95,9 @@
 		6109826322F327AD00B9D736 /* URL+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+.swift"; sourceTree = "<group>"; };
 		615CF92B223939CD00631F83 /* evo-web-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "evo-web-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61FD3E64225B7CFE0093F847 /* IPG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IPG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76669ED8240FB04C009ECF4F /* PKPaymentToken+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PKPaymentToken+Codable.swift"; sourceTree = "<group>"; };
+		76669EDA240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PKPaymentMethod+Codable.swift"; sourceTree = "<group>"; };
+		76669EDF240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPaymentMethodTypeMapper.swift; sourceTree = "<group>"; };
 		7679CA4223D0689E0050CE07 /* EvoApplePay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvoApplePay.swift; sourceTree = "<group>"; };
 		767C318223F16232006DF419 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		767C318623F16DAD006DF419 /* EVOConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOConstants.swift; sourceTree = "<group>"; };
@@ -233,6 +239,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		76669EDC240FE6F2009ECF4F /* Codable */ = {
+			isa = PBXGroup;
+			children = (
+				76669ED8240FB04C009ECF4F /* PKPaymentToken+Codable.swift */,
+				76669EDA240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift */,
+			);
+			path = Codable;
+			sourceTree = "<group>";
+		};
+		76669EE1240FE819009ECF4F /* Mapper */ = {
+			isa = PBXGroup;
+			children = (
+				76D79A6323ED5778005A0302 /* PKMerchantCapabilityMapper.swift */,
+				76D79A6723ED5B34005A0302 /* PKPaymentNetworkMapper.swift */,
+				76669EDF240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift */,
+			);
+			path = Mapper;
+			sourceTree = "<group>";
+		};
 		767C318F23F2F237006DF419 /* EvoWebView */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,10 +270,10 @@
 			isa = PBXGroup;
 			children = (
 				767C318F23F2F237006DF419 /* EvoWebView */,
+				76669EDC240FE6F2009ECF4F /* Codable */,
+				76669EE1240FE819009ECF4F /* Mapper */,
 				7679CA4223D0689E0050CE07 /* EvoApplePay.swift */,
 				76D79A6123E965E1005A0302 /* ApplePayRequest.swift */,
-				76D79A6323ED5778005A0302 /* PKMerchantCapabilityMapper.swift */,
-				76D79A6723ED5B34005A0302 /* PKPaymentNetworkMapper.swift */,
 				76D799F123D71F07005A0302 /* URL+ApplePay.swift */,
 				76D79A5A23E9641F005A0302 /* EvoStatus+ApplePay.swift */,
 				76D79A5C23E964DE005A0302 /* ApplePayCompletionKind.swift */,
@@ -403,9 +428,12 @@
 				76D79A6223E965E1005A0302 /* ApplePayRequest.swift in Sources */,
 				C99A574A232998BD00A0AFA0 /* EVOStatus.swift in Sources */,
 				76D79A5B23E9641F005A0302 /* EvoStatus+ApplePay.swift in Sources */,
+				76669ED9240FB04C009ECF4F /* PKPaymentToken+Codable.swift in Sources */,
 				76D79A5D23E964DE005A0302 /* ApplePayCompletionKind.swift in Sources */,
 				767C319123F2F237006DF419 /* EVOWebView+ApplePay.swift in Sources */,
 				6109826822F327AD00B9D736 /* EVOSession.swift in Sources */,
+				76669EE0240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift in Sources */,
+				76669EDB240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
