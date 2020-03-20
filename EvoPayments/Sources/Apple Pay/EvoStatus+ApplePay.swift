@@ -12,7 +12,7 @@ import PassKit
 extension Evo.Status {
     func toApplePayStatus() -> PKPaymentAuthorizationStatus {
         switch self {
-        case .cancelled, .failed, .timeout:
+        case .cancelled, .failed, .timeout, .undetermined:
             return .failure
         case .success:
             return .success
