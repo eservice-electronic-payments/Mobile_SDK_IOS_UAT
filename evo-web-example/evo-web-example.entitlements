@@ -5,6 +5,8 @@
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
 		<string>merchant.com.evopayments.showcase</string>
+		<string>merchant.com.ipg.applepay.qa.app</string>
+		<string>merchant.com.ipg.applepay.test.app</string>
 	</array>
 </dict>
 </plist>
