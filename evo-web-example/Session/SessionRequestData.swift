@@ -20,12 +20,14 @@ struct SessionRequestData {
     let country: String?
     let language: String?
     
+    let additionalParameters: SessionCustomParameter?
+    
     let merchantNotificationUrl: String?
     let merchantLandingPageUrl: String?
     let allowOriginUrl: String?
     
     let myriadFlowId: String
-    
+        
     init(tokenUrl: String,
          action: String? = nil,
          customerID: String,
@@ -36,6 +38,8 @@ struct SessionRequestData {
          country: String? = nil,
          language: String? = nil,
          
+         additionalParameters: [String]? = nil,
+        
          //Using same default values as android
          merchantNotificationUrl: String? = Constants.SessionRequest.merchantNotificationUrl.rawValue,
          merchantLandingPageUrl: String? = Constants.SessionRequest.merchantLandingPageUrl.rawValue,
@@ -51,6 +55,12 @@ struct SessionRequestData {
         self.currency = currency
         self.country = country
         self.language = language
+        
+        if let additionalParameters = additionalParameters {
+            self.additionalParameters = SessionCustomParameter(parameters: additionalParameters)
+        } else {
+            self.additionalParameters = nil
+        }
         
         self.merchantNotificationUrl = merchantNotificationUrl
         self.merchantLandingPageUrl = merchantLandingPageUrl
@@ -74,6 +84,12 @@ struct SessionRequestData {
         dict["currency"] = currency
         dict["country"] = country
         dict["language"] = language
+        
+        if let additionalParameters = additionalParameters {
+            for each in additionalParameters.parameters {
+                dict[each.key] = each.value
+            }
+        }
         
         dict["merchantNotificationUrl"] = merchantNotificationUrl
         dict["merchantLandingPageUrl"] = merchantLandingPageUrl
