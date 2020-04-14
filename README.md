@@ -66,12 +66,32 @@ struct SessionRequestData {
     let country: String?
     let language: String?
     
+    let additionalParameters: SessionCustomParameter?
+    
     let merchantNotificationUrl: String?
     let merchantLandingPageUrl: String?
     let allowOriginUrl: String?
     
     let myriadFlowId: String
 ```
+You can add additional parameters by passing an array of parameters to the initializer of `SessionRequestData`:
+
+```
+let additionalParameters = ["Parameter1","Parameter2"] //create parameter array
+let request = SessionRequestData(
+    tokenUrl: tokenURL,
+    action: action,
+    customerID: customerID,
+    customerFirstName: customerFirstName,
+    customerLastName: customerLastName,
+    amount: amount,
+    currency: currency,
+    country: country,
+    language: language,
+    additionalParameters: additionalParameters //add to request
+)
+```
+
 A full example can be found in `SessionRequestData.swift` of the example app. The response from the server is an `Evo.Session` object.
 
 
