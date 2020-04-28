@@ -92,6 +92,7 @@ final class ViewModel {
         let currency = !content.currency.isEmpty ? content.currency : nil
         let country = !content.country.isEmpty ? content.country : nil
         let language = !content.language.isEmpty ? content.language : nil
+        let additionalParameters = !content.additionalParameters.isEmpty ? content.additionalParameters.split(separator: ",").map{String($0)} : nil
         
         return SessionRequestData(
             tokenUrl: content.tokenURL,
@@ -102,7 +103,8 @@ final class ViewModel {
             amount: amount,
             currency: currency,
             country: country,
-            language: language
+            language: language,
+            additionalParameters: additionalParameters
         )
     }
 }
