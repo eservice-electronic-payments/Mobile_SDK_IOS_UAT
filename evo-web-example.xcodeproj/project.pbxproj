@@ -29,6 +29,7 @@
 		76669EDB240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76669EDA240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift */; };
 		76669EE0240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76669EDF240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift */; };
 		7679CA4323D0689E0050CE07 /* EvoApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7679CA4223D0689E0050CE07 /* EvoApplePay.swift */; };
+		766773AB2440D12B00663882 /* SessionCustomParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766773AA2440D12B00663882 /* SessionCustomParameter.swift */; };
 		767C318323F16232006DF419 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C318223F16232006DF419 /* Constants.swift */; };
 		767C318723F16DAD006DF419 /* EVOConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C318623F16DAD006DF419 /* EVOConstants.swift */; };
 		767C319123F2F237006DF419 /* EVOWebView+ApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C319023F2F237006DF419 /* EVOWebView+ApplePay.swift */; };
@@ -99,6 +100,7 @@
 		76669EDA240FE6E5009ECF4F /* PKPaymentMethod+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PKPaymentMethod+Codable.swift"; sourceTree = "<group>"; };
 		76669EDF240FE816009ECF4F /* PKPaymentMethodTypeMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPaymentMethodTypeMapper.swift; sourceTree = "<group>"; };
 		7679CA4223D0689E0050CE07 /* EvoApplePay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvoApplePay.swift; sourceTree = "<group>"; };
+		766773AA2440D12B00663882 /* SessionCustomParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCustomParameter.swift; sourceTree = "<group>"; };
 		767C318223F16232006DF419 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		767C318623F16DAD006DF419 /* EVOConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOConstants.swift; sourceTree = "<group>"; };
 		767C319023F2F237006DF419 /* EVOWebView+ApplePay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EVOWebView+ApplePay.swift"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				6109823722F3269400B9D736 /* SessionRequestData.swift */,
 				C99A57452329264700A0AFA0 /* SessionRequestError.swift */,
 				6109823822F3269400B9D736 /* SessionProvider.swift */,
+				766773AA2440D12B00663882 /* SessionCustomParameter.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				6109824822F3269400B9D736 /* AppDelegate.swift in Sources */,
 				C99A57482329265800A0AFA0 /* FormContent.swift in Sources */,
 				767C318323F16232006DF419 /* Constants.swift in Sources */,
+				766773AB2440D12B00663882 /* SessionCustomParameter.swift in Sources */,
 				6109824322F3269400B9D736 /* SessionRequestData.swift in Sources */,
 				6109824022F3269400B9D736 /* ViewController.swift in Sources */,
 				6109824222F3269400B9D736 /* SessionResponseData.swift in Sources */,
@@ -673,7 +677,7 @@
 				CODE_SIGN_ENTITLEMENTS = "evo-web-example/evo-web-example.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = LN495DX92Z;
 				INFOPLIST_FILE = "$(SRCROOT)/evo-web-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -697,7 +701,7 @@
 				CODE_SIGN_ENTITLEMENTS = "evo-web-example/evo-web-example.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = LN495DX92Z;
 				INFOPLIST_FILE = "$(SRCROOT)/evo-web-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

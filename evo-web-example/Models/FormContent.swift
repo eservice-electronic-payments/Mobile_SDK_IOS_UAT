@@ -19,4 +19,5 @@ struct FormContent {
     let language: String
     let tokenURL: String
     let mobileCashierURL: String
+    let additionalParameters: String
 }
