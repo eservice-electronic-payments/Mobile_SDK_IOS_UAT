@@ -18,6 +18,7 @@ internal extension Evo {
     enum Action {
         case redirection(URL)
         case close
+        case applePay(Evo.ApplePayRequest)
         
         init?(eventName: String, parameters: [String: Any]) throws {
             switch eventName {
@@ -29,6 +30,12 @@ internal extension Evo {
                 }
             case "close":
                 self = .close
+            case "processApplePayPayment":
+                if let dic = parameters["applePayRequest"] as? [String: Any], let request = ApplePayRequest(json: dic) {
+                    self = .applePay(request)
+                } else {
+                    throw EventError.invalidParameters("Apple Pay parameter not found or invalid")
+                }
             default:
                 return nil
             }

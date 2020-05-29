@@ -25,7 +25,8 @@ final class ViewController: UIViewController {
     
     @IBOutlet private weak var tokenURLTextView: UITextView!
     @IBOutlet private weak var mobileCashierURLTextView: UITextView!
-    
+    @IBOutlet private weak var additionalParametersField: UITextField!
+
     private let viewModel = ViewModel()
     
     private(set) lazy var amountFormatter: NumberFormatter = {
@@ -174,7 +175,8 @@ final class ViewController: UIViewController {
             country: countryField.text ?? "",
             language: languageField.text ?? "",
             tokenURL: tokenURLTextView.text ?? "",
-            mobileCashierURL: mobileCashierURLTextView.text ?? ""
+            mobileCashierURL: mobileCashierURLTextView.text ?? "",
+            additionalParameters: additionalParametersField.text ?? ""
         )
         
         ProgressHUD.show()
