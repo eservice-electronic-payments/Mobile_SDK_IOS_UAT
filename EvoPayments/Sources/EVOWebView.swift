@@ -15,10 +15,13 @@ open class EVOWebView: UIView {
     public typealias StatusCallback = ((Evo.Status) -> Void)
     
     private(set) var webView: WKWebView?
-    private var safariWindow: UIWindow?
+    private var overlayWindow: UIWindow?
     
     private var statusCallback: StatusCallback?
     private var session: Evo.Session?
+    
+    //Needs to be internal due to being accessed from an extension
+    var applePay = Evo.ApplePay()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,8 +59,9 @@ open class EVOWebView: UIView {
         } else {
             url = cashierURL
         }
+        let applePayUrl = url.evo.addingSupportedPayments(isApplePayAvailable: applePay.isAvailable())
         
-        webView?.load(URLRequest(url: url))
+        webView?.load(URLRequest(url: applePayUrl ?? url))
     }
     
     private func setupWebView() {
@@ -101,20 +105,21 @@ extension EVOWebView: WKScriptMessageHandler {
         }
     }
     
-    private func handleEventType(_ eventType: Evo.EventType) {
+    internal func handleEventType(_ eventType: Evo.EventType) {
         switch eventType {
         case .action(let action):
             switch action {
             case .redirection(let url):
                 openSafari(at: url)
                 dLog("Redirecting to \(url)")
-//                dLog("Saari Window Visible After redirect: \(safariWindow?.isKeyWindow)")
+//                dLog("Safari Window Visible After redirect: \(overlayWindow?.isKeyWindow)")
             case .close:
-                closeSafari()
-                break
+                closeOverlay()
+            case .applePay(let request):
+                processApplePayPayment(with: request)
             }
         case .status(let status):
-            closeSafari()
+            closeOverlay()
             
             callStatus(status)
             dLog("Received status: \(status)")
@@ -122,42 +127,121 @@ extension EVOWebView: WKScriptMessageHandler {
     }
     
     private func callStatus(_ status: Evo.Status) {
+        //We need to call on result received each time since apple pay requires us to give it back the result. If no apple pay transaction is taking place this has no effects.
+        applePay.onResultReceived(result: status)
+        
         DispatchQueue.main.async {
             self.statusCallback?(status)
         }
+    }
+    
+    private func getOverlayWindow() -> UIWindow? {
+        closeOverlay()
+        
+        if #available(iOS 13.0, *), let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            overlayWindow = UIWindow(windowScene: scene)
+        } else {
+            overlayWindow = UIWindow(frame: UIScreen.main.bounds)
+        }
+        
+        overlayWindow?.windowLevel = .statusBar + 1
+        
+        return overlayWindow
     }
     
     private func openSafari(at url: URL) {
         let safari = SFSafariViewController(url: url)
         safari.delegate = self
         
-        if #available(iOS 13.0, *), let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            safariWindow = UIWindow(windowScene: scene)
-        } else {
-            safariWindow = UIWindow(frame: UIScreen.main.bounds)
-        }
-        guard let safariWindow = safariWindow else {
-            dLog("Safari Window nil")
-            assertionFailure()
-            return
-        }
-        safariWindow.windowLevel = .statusBar + 1
-        safariWindow.rootViewController = safari
-        safariWindow.makeKeyAndVisible()
-//        dLog("Safari Window Frame: \(safariWindow.frame)")
-//        dLog("Safari Window Visible: \(safariWindow.isKeyWindow)")
+        showVcOnOverlay(vc: safari)
+//        dLog("Safari Window Frame: \(overlayWindow.frame)")
+//        dLog("Safari Window Visible: \(overlayWindow.isKeyWindow)")
     }
     
-    private func closeSafari() {
-        safariWindow?.isHidden = true
-        safariWindow = nil
+    internal func closeOverlay() {
+        overlayWindow?.isHidden = true
+        overlayWindow = nil
+    }
+    
+    
+    private func showVcOnOverlay(vc: UIViewController) {
+        guard let overlayWindow = getOverlayWindow() else {
+             dLog("Safari Window nil")
+             assertionFailure()
+             return
+         }
+        
+         overlayWindow.rootViewController = vc
+         overlayWindow.makeKeyAndVisible()
+    }
+    
+    private func showAsTopmostController(vc: UIViewController) {
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            // topController should now be your topmost view controller
+            topController.present(vc, animated: true, completion: nil)
+        } else {
+            dLog("Topmost Controller for Apple Pay nil")
+        }
+    }
+    
+    //MARK: Apple Pay Request
+    
+    ///Function called to initiate Apple Pay transaction
+    private func processApplePayPayment(with request: Evo.ApplePayRequest) {
+        //Reset Apple Pay class
+        self.applePay = Evo.ApplePay()
+        
+        //We have a valid session
+        guard let session = session else {
+            dLog("Session nil")
+            handleEventType(.status(.failed))
+            return
+        }
+        //Apple Pay is enabled and available on this device
+        guard applePay.isAvailable() else {
+            dLog("Apple Pay not available")
+            handleEventType(.status(.failed))
+            return
+        }
+        //The User has a valid card for the merchant's supported network and capabilities
+        guard applePay.hasAddedCard(for: request.networks, with: request.capabilities) else {
+            //Prompt to add a valid card
+            applePay.setupCard()
+            return
+        }
+        
+        //Convert response object to valid PKPaymentRequest
+        let paymentRequest = applePay.setupTransaction(session: session, request: request)
+        
+        //Show native Apple Pay screen with configured PKPaymentRequest object
+        guard let vc = applePay.getApplePayController(request: paymentRequest) else {
+            dLog("Error instantiating Apple Pay screen")
+            handleEventType(.status(.failed))
+            return
+        }
+        vc.delegate = self
+        
+        assert(applePay.applePayDidAuthorize == false)
+        assert(vc.delegate != nil)
+        
+        //disable swipe to dismiss
+        if #available(iOS 13.0, *) {
+            vc.isModalInPresentation = true
+        }
+        
+        showAsTopmostController(vc: vc)
     }
 }
+
+//MARK: Redirection
 
 extension EVOWebView: SFSafariViewControllerDelegate {
     ///User pressed done button, cancel transaction
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        closeSafari()
+        closeOverlay()
         handleEventType(.status(.cancelled))
     }
 }
