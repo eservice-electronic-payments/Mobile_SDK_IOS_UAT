@@ -25,7 +25,7 @@ struct PKPaymentNetworkMapper {
                 fallthrough
             }
         default:
-          dLog("Unrecognized payment network: \(string)")
+//          dLog("Using default Apple initializer for payment network: \(string)")
           return PKPaymentNetwork(string)
         }
     }
