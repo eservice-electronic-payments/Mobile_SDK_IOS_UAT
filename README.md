@@ -2,6 +2,14 @@
 
 #### Integrating the SDK with the Project 
 
+##### Manually
+
+1. Download the tagged source files by downloading "Source code (.zip)" from the "releases" tab of the repository.
+
+2. Drag the "EvoPayments" folder inside your Xcode project.
+
+##### Using a Private Cocoapods
+
 1. Install CocoaPods if not present
 
 2. Create a new repository to host your private pod spec
