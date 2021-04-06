@@ -1,0 +1,412 @@
+//
+//  ThreeDS2Mocks.swift
+//  EvoPaymentsTests
+//
+//  Created by Adrian Zyga on 06/10/2020.
+//  Copyright © 2020 Intelligent Payments. All rights reserved.
+//
+
+import XCTest
+import ipworks3ds_sdk
+@testable import EvoPayments
+
+/// It is used only to test the error paths of the system under test
+private struct TestError: LocalizedError {
+    var errorDescription: String? {
+        return NSLocalizedString("Test error for unit tests", comment: "")
+    }
+}
+
+/**
+ * This is the main mock that has implementation of the `TransactionBuilderProtocol` and validates
+ * both it's own methods and methods of the internal mocks that are used by it (such as `TransactionProtocol`)
+ */
+final class TransactionBuilderMock: TransactionBuilderProtocol {
+
+    /// Setting this to true will throw error when `initialize` function is invoked
+    var shouldThrowOnInitialize: Bool = false
+
+    /// Setting this to true will throw error when `createTransactionProtocol` function is invoked
+    var shouldThrowOnGeneratingTransaction: Bool = false
+
+    /// Setting this to true will throw error when private `TransactionMock` object will invoke `doChallenge` function
+    var shouldThrowOnDoingChallange: Bool = false {
+        didSet {
+            transactionMock?.shouldThrowOnDoingChallange = shouldThrowOnDoingChallange
+        }
+    }
+
+    /// Counter of calls to `createTransactionProtocol` method
+    private var createTransactionProtocolCount = 0
+
+    /// Counter of calls to `initialize` method
+    private var initializeCount = 0
+
+    /// Property extracted from system under test
+    private var configParametersValue: ConfigParameters?
+
+    /// Property extracted from system under test
+    private var localeValue: String?
+
+    /// Property extracted from system under test
+    private var clientEventListenerValue: ClientEventListener?
+
+    /// Property used to spy on and validate a transaction
+    private var transactionMock: TransactionMock?
+
+    /**
+     * Spy method that counts the number of invocations and gathers data passed in parameters
+     * - Parameters:
+     *     - directoryServerID: Dummy value needed for the protocol. Not used in tests.
+     *     - messageVersion: Dummy value needed for the protocol. Not used in tests.
+     * - Throws: `TestError` when forced by `shouldThrowOnGeneratingTransaction` property
+     * - Returns:
+     *    `TransactionMock` instance hidden under `TransactionProtocol`.
+     *    Returned value of this function is also passed to the `transactionMock` property.
+     *    That allows to test the transaction itself.
+     */
+    func createTransactionProtocol(
+        _ directoryServerID: String,
+        _ messageVersion: String?
+    ) throws -> TransactionProtocol {
+        createTransactionProtocolCount += 1
+        guard !shouldThrowOnGeneratingTransaction else {
+            throw TestError()
+        }
+        let transaction = TransactionMock()
+        transaction.shouldThrowOnDoingChallange = self.shouldThrowOnDoingChallange
+        transactionMock = transaction
+        return transaction
+    }
+
+    /**
+     * Spy method that counts the number of invocations and gathers data passed in parameters
+     * - Parameters:
+     *    - configParameters: Parameters that are extracted from the system under test.
+     *    - locale: String with the current locale that is extracted from the system under test.
+     *    - uiCustomization: Dummy value needed for the protocol. Not used in tests.
+     *    - clientEventListener: Listener extracted from the system under test.
+     * - Throws: `TestError` when forced by `shouldThrowOnInitialize` property
+     * - Returns:
+     *    `TransactionMock` instance hidden under `TransactionProtocol`.
+     *    Returned value of this function is also passed to the `transactionMock` property.
+     *    That allows to test the transaction itself.
+     */
+    func initialize(
+        configParameters: ConfigParameters?,
+        locale: String?,
+        uiCustomization: UiCustomization?,
+        clientEventListener: ClientEventListener?,
+        securityEventListener: SecurityEventListener?
+    ) throws {
+        initializeCount += 1
+        guard !shouldThrowOnInitialize else {
+            throw TestError()
+        }
+
+        configParametersValue = configParameters
+        localeValue = locale
+        clientEventListenerValue = clientEventListener
+    }
+
+    /**
+     * Veryfies data gathered by `initialize` method, along with the calls count number
+     * - Parameters:
+     *    - initializeCount: Number of calls of `initialize` method that SUT were supposed to invoke.
+     *    - configParameters: Parameters that will be compared with SUT.
+     *    - locale: String with the current locale that is extracted from the system under test.
+     *    - clientEventListener: Exactly the same instance of  client listener that is used by the SUT
+     * - Throws: Errors generated by extracting parameters values
+     */
+    func verifyInitialization(
+        initializeCount: Int,
+        configParameters: [String: String]? = nil,
+        locale: String? = nil,
+        clientEventListener: ClientEventListener? = nil
+    ) throws {
+
+        let paramName = configParameters?.first?.key ?? UUID().uuidString
+        let configParameterExampleValue = try configParametersValue?.getParamValue(
+            group: nil,
+            paramName: paramName
+        )
+
+        if let configParameters = configParameters {
+            XCTAssertNotNil(
+                configParameterExampleValue,
+                "Dictionary with config parameters to test needs to have at least one key/value"
+            )
+            XCTAssertEqual(configParameters[paramName], configParameterExampleValue)
+        }
+
+        XCTAssertEqual(initializeCount, self.initializeCount)
+        XCTAssertEqual(locale, localeValue)
+        XCTAssertTrue(clientEventListener === clientEventListenerValue)
+    }
+
+    /**
+     * Veryfies data gathered by `createTransactionProtocol` method, along with the calls count number
+     * - Parameters:
+     *    - paymentRequest: Payment request that will be compared with SUT.
+     *    - createTransactionCount: Number of calls of `createTransactionProtocol`
+     *        method that SUT were supposed to invoke.
+     */
+    func verifyGeneratingRequest(paymentRequest: PaymentRequest?, createTransactionCount: Int) throws {
+        XCTAssertEqual(createTransactionCount, self.createTransactionProtocolCount)
+
+        if shouldThrowOnGeneratingTransaction {
+            XCTAssertNil(paymentRequest, "Transaction should not exists, because generating transaction thrown error")
+        }
+
+        if let request = paymentRequest {
+            XCTAssertEqual(request.deviceData, "correct DeviceData")
+            XCTAssertEqual(request.sdkTransactionId, "correct SDKTransactionID")
+            XCTAssertEqual(request.sdkAppId, "correct SDKAppID")
+            XCTAssertEqual(request.sdkReferenceNumber, "correct SDKReferenceNumber")
+            let stringEphemeralPublicKeyData = try XCTUnwrap(
+                """
+                    {
+                        \"kty\":\"corretct kty\",
+                        \"crv\":\"corretct crv\",
+                        \"x\":\"corretct x\",
+                        \"y\":\"corretct y\",
+                        \"d\":\"corretct d\"
+                    }
+                """
+                    .data(using: .utf8)
+            )
+            let correctEphemeralPublicKeyJSONString = try SDKEphemeralPublicKey(data: stringEphemeralPublicKeyData)
+                .convertToJSONString()
+            let testedEphemeralPublicKeyJSONString = try request.sdkEphemeralPublicKey.convertToJSONString()
+            XCTAssertEqual(testedEphemeralPublicKeyJSONString, correctEphemeralPublicKeyJSONString)
+        }
+    }
+
+    /**
+     * Method that wraps around `verifyStartingChallange` method from the `transactionMock` property.
+     * Veryfies data gathered by `transactionMock`'s `doChallenge` method, along with the calls count number
+     * - Parameters:
+     *    - paymentStatus: Payment request that will be compared with one generated by the SUT.
+     *    - error: Error that will be comapred with the error thrown by the SUT.
+     *    - doChallangeCount: Number of calls of `doChallangeCount` method that SUT were supposed to invoke.
+     *    - getAuthenticationRequestParametersCount: Number of calls of `getAuthenticationRequestParametersProtocol`
+     *        method that SUT were supposed to invoke.
+     */
+    func verifyStartingChallange(
+        paymentStatus: ThreeDS2PaymentStatus?,
+        error: Error?,
+        doChallangeCount: Int,
+        getAuthenticationRequestParametersCount: Int
+    ) {
+        guard let transaction = transactionMock else {
+            XCTFail("Transaction should exist")
+            return
+        }
+        transaction.verifyStartingChallange(
+            paymentStatus: paymentStatus,
+            error: error,
+            doChallangeCount: doChallangeCount,
+            getAuthenticationRequestParametersCount: getAuthenticationRequestParametersCount
+        )
+    }
+
+    /**
+     * Method that wraps around `verifyClose` method from the `transactionMock` property.
+     * Veryfies the calls count number
+     * - Parameters:
+     *    - closeCount: Number of calls of `close` method that SUT were supposed to invoke.
+     */
+    func verifyCloseTransaction(closeCount: Int) {
+        guard let transaction = transactionMock else {
+            XCTFail("Transaction should exist")
+            return
+        }
+        transaction.verifyClose(closeCount: closeCount)
+    }
+
+    /// Mock method to trigger all the ` ClientEventListener` methods
+    func triggerClientEventListening() {
+        let data = "correct test data".data(using: .utf8)!
+        clientEventListenerValue?.onDataPacketIn(data)
+        clientEventListenerValue?.onDataPacketOut(data)
+        clientEventListenerValue?.onError(1, "correct log on error")
+        clientEventListenerValue?.onLog(1, "correct log message", "correct log type")
+        clientEventListenerValue?.onSSLServerAuthentication(
+            data,
+            "correct subject",
+            "correct cert issuer",
+            "currect status",
+            UnsafeMutablePointer(bitPattern: 10)!
+        )
+        clientEventListenerValue?.onSSLStatus("correct SSL status message")
+    }
+}
+
+/// Mock object that is used internaly by TransactionBuilderMock for both spying and validation
+fileprivate final class TransactionMock: TransactionProtocol {
+
+    /**
+     * Setting this to true will throw error when `doChallenge` function is invoked.
+     * This property can be also set through `TransactionBuilderMock`'s property with the same name
+     * - SeeAlso: `TransactionBuilderMock`
+     */
+    var shouldThrowOnDoingChallange: Bool = false
+
+    /// Counter of calls to `getAuthenticationRequestParametersProtocol` method
+    private var getAuthenticationRequestParametersCount = 0
+
+    /// Counter of calls to `doChallange` method
+    private var doChallangeCount = 0
+
+    /// Counter of calls to `close` method
+    private var closeCount = 0
+
+    /**
+     * Spy method that counts the number of invocations
+     * - Throws: This implementation should not throw, but needs the keyword for the protocol conformance
+     * - Returns:
+     *    `AuthenticationRequestParametersFake` instance hidden under
+     *    `AuthenticationRequestParametersProtocol`, that provides easly testable parameters.
+     */
+    func getAuthenticationRequestParametersProtocol() throws -> AuthenticationRequestParametersProtocol {
+        getAuthenticationRequestParametersCount += 1
+        return AuthenticationRequestParametersFake()
+    }
+
+    /**
+     * Spy method that counts the number of invocations and gathers data passed in parameters
+     * - Parameters:
+     *    - rootViewController: Dummy value needed for the protocol. Not used in tests.
+     *    - challengeParameters: Parameters that are extracted from the system under test.
+     *    - challengeStatusReceiver: Reciver extracted from the system under test, used to trigger status or timeout.
+     *    - timeout: Number that indicates whetever timeout should happen.
+     *        For test porpuses timout only triggers for numbers below 1
+     * - Throws: `TestError` when forced by `shouldThrowOnDoingChallange` property
+     * - Warning: This method can only **trigger** timeout and cancelling, as triggering
+     * `challengeStatusReceiver.completed`, `challengeStatusReceiver.protocolError`
+     *  or `challengeStatusReceiver.runtimeError` is not possible as NSoftware `ChallengeStatusReceiver`
+     *  is a protocol that requires the following closed sourced binary objects: `ipworks3ds_sdk.CompletionEvent`,
+     *  `ipworks3ds_sdk.ProtocolErrorEvent`, `ipworks3ds_sdk.RuntimeErrorEvent`,
+     *  `ipworks3ds_sdk.ErrorMessage`. This `NSObjects` cannot be mocked or initialised in any way as:
+     *      * init throws fatal error
+     *      * they do not have any other initializers
+     *      * they are not dynamic, hence cannot be replace with swizzling
+     *      * they are not open but public, hence cannot be be subclassed
+     */
+    func doChallenge(
+        rootViewController: UIViewController,
+        challengeParameters: ChallengeParameters,
+        challengeStatusReceiver: ChallengeStatusReceiver,
+        timeout: Int
+    ) throws {
+        doChallangeCount += 1
+
+        guard !shouldThrowOnDoingChallange else {
+            throw TestError()
+        }
+
+        guard timeout > 0 else {
+            challengeStatusReceiver.timedout()
+            return
+        }
+
+        challengeStatusReceiver.cancelled()
+    }
+
+    /**
+     * Spy method that counts the number of invocations
+     * - Throws: This implementation should not throw, but needs the keyword for the protocol conformance
+     */
+    func close() throws {
+        closeCount += 1
+    }
+
+    /**
+     * Veryfies data gathered by `doChallenge` method, along with the calls count number.
+     * As only `TransactionBuilderMock` has access to `TransactionMock`,
+     * this method is invoked indirectly in the tests by `TransactionBuilderMock`
+     * - Parameters:
+     *    - paymentStatus: Payment request that will be compared with one generated by the SUT.
+     *    - error: Error that will be comapred with the error thrown by the SUT.
+     *    - doChallangeCount: Number of calls of `doChallangeCount` method that SUT were supposed to invoke.
+     *    - getAuthenticationRequestParametersCount: Number of calls of `getAuthenticationRequestParametersProtocol`
+     *        method that SUT were supposed to invoke.
+     * - Warning: This method can only **verify** timeout and cancelling, as triggering
+     * `challengeStatusReceiver.completed`, `challengeStatusReceiver.protocolError`
+     *  or `challengeStatusReceiver.runtimeError` is not possible as NSoftware `ChallengeStatusReceiver`
+     *  is a protocol that requires the following closed sourced binary objects: `ipworks3ds_sdk.CompletionEvent`,
+     *  `ipworks3ds_sdk.ProtocolErrorEvent`, `ipworks3ds_sdk.RuntimeErrorEvent`,
+     *  `ipworks3ds_sdk.ErrorMessage`. This `NSObjects` cannot be mocked or initialised in any way as:
+     *      * init throws fatal error
+     *      * they do not have any other initializers
+     *      * they are not dynamic, hence cannot be replace with swizzling
+     *      * they are not open but public, hence cannot be be subclassed
+     */
+    func verifyStartingChallange(
+        paymentStatus: ThreeDS2PaymentStatus?,
+        error: Error?,
+        doChallangeCount: Int,
+        getAuthenticationRequestParametersCount: Int
+    ) {
+        XCTAssertEqual(doChallangeCount, self.doChallangeCount)
+        XCTAssertEqual(getAuthenticationRequestParametersCount, self.getAuthenticationRequestParametersCount)
+        XCTAssertNil(paymentStatus)
+    }
+
+    /**
+     * Mock method that is responsible for the verification of number of `close` method invocations
+     * As only `TransactionBuilderMock` has access to `TransactionMock`,
+     * this method is invoked indirectly in the tests by `TransactionBuilderMock`
+     */
+    func verifyClose(closeCount: Int) {
+        XCTAssertEqual(closeCount, self.closeCount)
+    }
+}
+
+/// Fake that returns AuthenticationRequestParameters valid only for tests
+final class AuthenticationRequestParametersFake: AuthenticationRequestParametersProtocol {
+
+    /// Returns fake data
+    func getDeviceData() -> String {
+        return "correct DeviceData"
+    }
+
+    /// Returns fake data
+    func getSDKTransactionID() -> String {
+        return "correct SDKTransactionID"
+    }
+
+    /// Returns fake data
+    func getSDKAppID() -> String {
+        return "correct SDKAppID"
+    }
+
+    /// Returns fake data
+    func getSDKReferenceNumber() -> String {
+        return "correct SDKReferenceNumber"
+    }
+
+    /// Returns fake data
+    func getSDKEphemeralPublicKey() -> String {
+        return """
+        {
+            \"kty\":\"corretct kty\",
+            \"crv\":\"corretct crv\",
+            \"x\":\"corretct x\",
+            \"y\":\"corretct y\",
+            \"d\":\"corretct d\"
+        }
+        """
+    }
+
+    /// Returns fake data
+    func getMessageVersion() -> String {
+        return "correct MessageVersion"
+    }
+
+    /// Returns fake data
+    func getAuthRequest() -> String {
+        return "correct AuthRequest"
+    }
+    // swiftlint:disable:next file_length
+}
