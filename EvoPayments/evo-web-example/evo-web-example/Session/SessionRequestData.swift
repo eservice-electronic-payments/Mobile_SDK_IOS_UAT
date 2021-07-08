@@ -38,7 +38,7 @@ struct SessionRequestData {
 
     let myriadFlowId: String
 
-    init(tokenUrl: String,
+    init(tokenUrl: URL,
          action: String? = nil,
          customerID: String,
          customerFirstName: String? = nil,
@@ -65,7 +65,7 @@ struct SessionRequestData {
          merchantLandingPageUrl: String? = Constants.SessionRequest.merchantLandingPageUrl.rawValue,
          allowOriginUrl: String? = Constants.SessionRequest.allowOriginUrl.rawValue
         ) {
-        self.tokenUrl = URL(string: tokenUrl)!
+        self.tokenUrl = tokenUrl
 
         self.action = action
         self.customerID = customerID

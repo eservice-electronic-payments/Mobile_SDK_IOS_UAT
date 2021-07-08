@@ -25,6 +25,7 @@ enum SessionRequestError: Error {
             case .invalidStatusCode(let statusCode): message = "Invalid status code \(statusCode)"
             case .responseMissing: message = "Response not received"
             case .dataMissing: message = "Response data not received"
+            case .invalidParamTokenUrl(let url): message = "Invalid token URL [\(url)]"
             }
         case .unknown:
             message = "An error has occurred"

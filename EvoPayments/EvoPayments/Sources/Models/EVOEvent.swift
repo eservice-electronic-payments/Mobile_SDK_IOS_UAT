@@ -19,7 +19,7 @@ enum Action {
     case close
     case applePay(ApplePayRequest)
     case threeDS2ConfigReceived(ThreeDS2Config)
-    case start3DS2Challange(ThreeDS2Challange)
+    case start3DS2Challenge(ThreeDS2Challenge)
 
     init?(eventName: String, parameters: [String: Any]) throws {
         switch eventName {
@@ -54,8 +54,8 @@ enum Action {
             else {
                 throw EventError.invalidParameters("Could not get 3DS2 challenge")
             }
-            let challange = try JSONDecoder().decode(ThreeDS2Challange.self, from: json)
-            self = .start3DS2Challange(challange)
+            let challenge = try JSONDecoder().decode(ThreeDS2Challenge.self, from: json)
+            self = .start3DS2Challenge(challenge)
         default:
             return nil
         }

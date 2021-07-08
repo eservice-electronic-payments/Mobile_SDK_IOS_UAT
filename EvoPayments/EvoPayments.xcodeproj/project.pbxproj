@@ -16,7 +16,7 @@
 		F80DD1E2251507960041AC74 /* ThreeDS2Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80DD1E1251507960041AC74 /* ThreeDS2Config.swift */; };
 		F82FF74024F955AD001F458A /* EvoPayments.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82FF73624F955AD001F458A /* EvoPayments.framework */; };
 		F8409FA724FFBA04006CAB8E /* TransactionBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8409FA624FFBA04006CAB8E /* TransactionBuilderProtocol.swift */; };
-		F851D4D6252352E700CB1449 /* ThreeDS2Challange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F851D4D5252352E600CB1449 /* ThreeDS2Challange.swift */; };
+		F851D4D6252352E700CB1449 /* ThreeDS2Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F851D4D5252352E600CB1449 /* ThreeDS2Challenge.swift */; };
 		F851D4DA252352FD00CB1449 /* ThreeDS2PaymentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F851D4D9252352FD00CB1449 /* ThreeDS2PaymentStatus.swift */; };
 		F851D4E12524BAD600CB1449 /* Encodable+convertToJSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F851D4E02524BAD600CB1449 /* Encodable+convertToJSONString.swift */; };
 		F8C1CBCE24F9586D006DBB24 /* EVOWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBCC24F9586D006DBB24 /* EVOWebViewController.swift */; };
@@ -67,7 +67,7 @@
 		F82FF73F24F955AD001F458A /* EvoPaymentsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvoPaymentsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F82FF74624F955AD001F458A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8409FA624FFBA04006CAB8E /* TransactionBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionBuilderProtocol.swift; sourceTree = "<group>"; };
-		F851D4D5252352E600CB1449 /* ThreeDS2Challange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2Challange.swift; sourceTree = "<group>"; };
+		F851D4D5252352E600CB1449 /* ThreeDS2Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2Challenge.swift; sourceTree = "<group>"; };
 		F851D4D9252352FD00CB1449 /* ThreeDS2PaymentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2PaymentStatus.swift; sourceTree = "<group>"; };
 		F851D4E02524BAD600CB1449 /* Encodable+convertToJSONString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+convertToJSONString.swift"; sourceTree = "<group>"; };
 		F8C1CBCC24F9586D006DBB24 /* EVOWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EVOWebViewController.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 				F80DD1DD2514FE8F0041AC74 /* PaymentRequest.swift */,
 				F80DD1E1251507960041AC74 /* ThreeDS2Config.swift */,
 				F851D4D9252352FD00CB1449 /* ThreeDS2PaymentStatus.swift */,
-				F851D4D5252352E600CB1449 /* ThreeDS2Challange.swift */,
+				F851D4D5252352E600CB1449 /* ThreeDS2Challenge.swift */,
 				F80DD1D72514FD850041AC74 /* ThreeDS2Error.swift */,
 			);
 			path = Models;
@@ -421,7 +421,7 @@
 				F8C1CBD824F9588B006DBB24 /* EvoApplePay.swift in Sources */,
 				F8409FA724FFBA04006CAB8E /* TransactionBuilderProtocol.swift in Sources */,
 				F80DD1E2251507960041AC74 /* ThreeDS2Config.swift in Sources */,
-				F851D4D6252352E700CB1449 /* ThreeDS2Challange.swift in Sources */,
+				F851D4D6252352E700CB1449 /* ThreeDS2Challenge.swift in Sources */,
 				F8DD4A902507978400AB3C94 /* Verification3DServiceData.swift in Sources */,
 				F8086659252C97030071864B /* AuthenticationRequestParametersProtocol.swift in Sources */,
 				F8C1CBF524F9591B006DBB24 /* EVO.swift in Sources */,
@@ -582,7 +582,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -595,7 +595,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.evopayments.sdk.EvoPayments.EvoPayments;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -611,7 +611,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -624,7 +624,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.evopayments.sdk.EvoPayments.EvoPayments;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

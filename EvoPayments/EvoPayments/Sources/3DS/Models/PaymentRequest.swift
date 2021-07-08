@@ -10,7 +10,7 @@ import Foundation
 
 /**
  * Structure designed to gether all the data from the `TransactionProtocol` instance,
- * for the webview, so that the webview can generate a challange. This Request should be generted by using
+ * for the webview, so that the webview can generate a challenge. This Request should be generted by using
  * `generateRequest()` method of `ThreeDS2VerificationServiceProtocol`
  * For more info look at [Nsofware SDK documentation](http://cdn.nsoftware.com/help/TS2/mac/default.htm)
  */

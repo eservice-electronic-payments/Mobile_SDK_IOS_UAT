@@ -18,6 +18,7 @@ final class SessionProvider {
     enum Error: Swift.Error {
         case connectionError(Swift.Error)
         case invalidStatusCode(Int)
+        case invalidParamTokenUrl(String)
         case buildRequestFailed
         case responseMissing
         case dataMissing

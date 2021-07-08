@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5T4-6N-Pyx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5T4-6N-Pyx">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="5H0-8o-sCt">
-                                        <rect key="frame" x="0.0" y="24" width="375" height="1590"/>
+                                        <rect key="frame" x="0.0" y="24" width="375" height="1566.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ubz-eG-BgG">
                                                 <rect key="frame" x="83.5" y="0.0" width="208.5" height="69.5"/>
@@ -387,54 +387,57 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HNN-NM-i7Q">
-                                                <rect key="frame" x="24" y="1459.5" width="327" height="130.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HNN-NM-i7Q">
+                                                <rect key="frame" x="24" y="1459.5" width="327" height="107"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="gss-Nl-8Vx">
-                                                        <rect key="frame" x="0.0" y="0.0" width="327" height="69.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="9mm-yc-Zu8">
+                                                        <rect key="frame" x="0.0" y="0.0" width="327" height="54"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCf-Ul-9Xg">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MSS URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vF7-7c-AIn">
                                                                 <rect key="frame" x="0.0" y="0.0" width="327" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" systemColor="systemGrayColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="https://cashier-api.secure.eservice.com.pl/merchant/initializePayment" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BSz-9g-hVS">
-                                                                <rect key="frame" x="0.0" y="20" width="327" height="49.5"/>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <color key="textColor" systemColor="labelColor"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WrF-a0-ANv" customClass="PickerTextField" customModule="evo_web_example" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="20" width="327" height="34"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL"/>
-                                                            </textView>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="3f8-M9-LuS">
-                                                        <rect key="frame" x="0.0" y="77.5" width="327" height="53"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="gss-Nl-8Vx">
+                                                        <rect key="frame" x="0.0" y="54" width="327" height="53"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GeL-4r-0sI">
-                                                                <rect key="frame" x="0.0" y="0.0" width="327" height="18"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="3f8-M9-LuS">
+                                                                <rect key="frame" x="0.0" y="0.0" width="327" height="53"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="Cashier URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iK4-l9-Ide">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="85" height="18"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" systemColor="systemGrayColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(leave empty to use server config)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgu-Dp-RVP">
-                                                                        <rect key="frame" x="89" y="4" width="238" height="13.5"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                                        <color key="textColor" systemColor="systemGrayColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GeL-4r-0sI">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="327" height="18"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="Cashier URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iK4-l9-Ide">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="85" height="18"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <color key="textColor" systemColor="systemGrayColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(leave empty to use server config)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgu-Dp-RVP">
+                                                                                <rect key="frame" x="89" y="4" width="238" height="13.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                                <color key="textColor" systemColor="systemGrayColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QEX-Ax-k2t">
+                                                                        <rect key="frame" x="0.0" y="20" width="327" height="33"/>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <color key="textColor" systemColor="labelColor"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL"/>
+                                                                    </textView>
                                                                 </subviews>
                                                             </stackView>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QEX-Ax-k2t">
-                                                                <rect key="frame" x="0.0" y="20" width="327" height="33"/>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <color key="textColor" systemColor="labelColor"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL"/>
-                                                            </textView>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -488,10 +491,10 @@
                         <outlet property="customerPhoneField" destination="ik4-KP-ija" id="z2g-dp-vCX"/>
                         <outlet property="languageField" destination="pbQ-Gw-3BS" id="zGR-ke-lsd"/>
                         <outlet property="mobileCashierURLTextView" destination="QEX-Ax-k2t" id="qSH-C5-WSY"/>
+                        <outlet property="mssUrlField" destination="WrF-a0-ANv" id="sNY-rG-MfT"/>
                         <outlet property="orderIDField" destination="IVK-Yh-5ws" id="bw6-Mw-woO"/>
                         <outlet property="scrollView" destination="4hT-hC-d9R" id="ixf-6P-Jzh"/>
                         <outlet property="startButton" destination="T4a-mb-KnD" id="zzp-Sh-ArG"/>
-                        <outlet property="tokenURLTextView" destination="BSz-9g-hVS" id="2OG-3C-FeP"/>
                         <outlet property="userDeviceField" destination="Ylf-Ud-KfP" id="3ac-Rw-EJ4"/>
                         <outlet property="webUITestButton" destination="SCM-r7-iJz" id="atd-yh-fNh"/>
                         <segue destination="adi-Nt-cxF" kind="show" identifier="StatusSegue" id="luH-bY-1cL"/>
@@ -499,7 +502,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1028" y="133"/>
+            <point key="canvasLocation" x="1026.8115942028987" y="132.58928571428572"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="J8j-eQ-4Im">

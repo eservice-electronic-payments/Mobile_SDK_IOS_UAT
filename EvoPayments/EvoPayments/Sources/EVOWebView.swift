@@ -75,6 +75,9 @@ open class EVOWebView: UIView {
 
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
+        if #available(iOS 14.0, *) {
+            config.limitsNavigationsToAppBoundDomains = true
+        }
 
         let webView = WKWebView(frame: bounds, configuration: config)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,8 +128,8 @@ extension EVOWebView: WKScriptMessageHandler {
             case .threeDS2ConfigReceived(let config):
                 initialize3DS2Service(using: config)
                 continuePayment()
-            case .start3DS2Challange(let challange):
-                start(challange: challange)
+            case .start3DS2Challenge(let challenge):
+                start(challenge: challenge)
             }
         case .status(let status):
             closeOverlay()
@@ -176,8 +179,9 @@ extension EVOWebView: WKScriptMessageHandler {
     private func openSafari(at url: URL) {
         let safariViewController = SFSafariViewController(url: url)
         safariViewController.delegate = self
-
-        showOnOverlay(viewController: safariViewController)
+        
+        // a navigationController is needed for the safariView hireachy
+        showOnOverlay(viewController: safariViewController, isNavControllerNeeded: true)
     }
 
     internal func closeOverlay() {
@@ -185,15 +189,17 @@ extension EVOWebView: WKScriptMessageHandler {
         overlayWindow = nil
     }
 
-    private func showOnOverlay(viewController: UIViewController) {
+    private func showOnOverlay(viewController: UIViewController, isNavControllerNeeded: Bool = false) {
         guard let overlayWindow = getOverlayWindow() else {
-             dLog("Safari Window nil")
-             assertionFailure()
-             return
-         }
-
-         overlayWindow.rootViewController = viewController
-         overlayWindow.makeKeyAndVisible()
+            dLog("Safari Window nil")
+            assertionFailure()
+            return
+        }
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.isNavigationBarHidden = true
+        
+        overlayWindow.rootViewController = isNavControllerNeeded ? navController : viewController
+        overlayWindow.makeKeyAndVisible()
     }
 
     private func showAsTopmostController(_ viewController: UIViewController) {
@@ -312,25 +318,25 @@ extension EVOWebView: WKScriptMessageHandler {
         }
     }
 
-    private func start(challange: ThreeDS2Challange) {
+    private func start(challenge: ThreeDS2Challenge) {
         guard let threeDS2VerificationService = threeDS2VerificationService else {
             dLog("threeDS2VerificationService is nil")
             handleEventType(.status(.failed))
             return
         }
 
-        threeDS2VerificationService.startChallange(challange, timeout: 30) { [weak self] result in
+        threeDS2VerificationService.startChallenge(challenge, timeout: 30) { [weak self] result in
             switch result {
             case .success(let paymentStatus):
                 self?.finalizePayment(paymentStatus: paymentStatus)
             case .failure(let error):
-                self?.handleChallangeError(error)
+                self?.handleChallengeError(error)
             }
         }
     }
 
-    private func handleChallangeError(_ error: Error) {
-        dLog("Error with a challange: \(error)")
+    private func handleChallengeError(_ error: Error) {
+        dLog("Error with a challenge: \(error)")
         let threeDS2Error = error as? ThreeDS2Error ?? .unknown(error)
         let paymentInfo = threeDS2Error.paymentInfo
         handleEventType(paymentInfo.eventType)

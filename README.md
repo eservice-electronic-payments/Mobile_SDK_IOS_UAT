@@ -187,3 +187,30 @@ Please note that the call from the Merchant Server to the IPG Gateway API for ob
     ```
 
     In some cases, the payment process will take more than one step to finish, as with 3DSecure or other authentication methods. This will not need to be handled by your application and it is taken care automatically for you by the framework.
+
+## Good security practices in addition to functions
+
+While using the SDK, `App-Bound Domains` feature should be configured to preserve user privacy by limiting the domains on which an app can utilize powerful APIs to track users during in-app browsing through `WKWebView`. 
+
+*In the example app, for the flexibility to test amongst different cashier URLs that can be retrieved, `App-Bond Domains` was not implemented. However, such control is highly recommended for a production app.*
+
+To configure `App-Bound Domains`:
+1. Add the cashier URLs to WKAppBoundDomains in the project `info.plist` file. For example:
+```swift
+	<key>WKAppBoundDomains</key>
+	<array>
+		<string>test.secure.eservice.com.pl</string>
+		<string>test.myriadpayments.com</string>
+	</array>
+```
+
+2. Set limitsNavigationsToAppBoundDomains flag in the WKWebView configuration. **This part has already been added to the SDK in `EVOWebView.swift`**:
+```swift
+	if #available(iOS 14.0, *) {
+		config.limitsNavigationsToAppBoundDomains = true
+	}
+```
+
+Keep in mind that this feature is only available since iOS 14.0 and iPadOS 14.0.
+
+To read more about `App-Bonund Domains` in [here](https://webkit.org/blog/10882/app-bound-domains/).

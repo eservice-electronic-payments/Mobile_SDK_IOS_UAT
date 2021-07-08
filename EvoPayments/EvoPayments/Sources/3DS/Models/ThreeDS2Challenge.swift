@@ -1,5 +1,5 @@
 //
-//  ThreeDS2Challange.swift
+//  ThreeDS2Challenge.swift
 //  EvoPayments
 //
 //  Created by Adrian Zyga on 29/09/2020.
@@ -7,10 +7,10 @@
 //
 
 /**
- * Data to initiate the challange recived from the webview
+ * Data to initiate the challenge recived from the webview
  * For more info look at [Nsofware SDK documentation](http://cdn.nsoftware.com/help/TS2/mac/default.htm)
  */
-struct ThreeDS2Challange: Codable {
+struct ThreeDS2Challenge: Codable {
     let threeDSServerTransactionID: String
     let acsTransactionID: String
     let acsRefNumber: String

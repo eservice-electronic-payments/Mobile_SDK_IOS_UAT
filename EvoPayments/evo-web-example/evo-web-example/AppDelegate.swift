@@ -20,4 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier) -> Bool {
+        if extensionPointIdentifier == .keyboard {
+            return false
+        }
+        return true
+    }
 }
