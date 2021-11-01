@@ -32,7 +32,7 @@ private extension EVOWebView {
         }
     }
 
-    func onPaymentAuthorized(payment: PKPayment, handler: ApplePayCompletionKind) {
+    func onPaymentAuthorized(payment: PKPayment, handler: ApplePayCompletionHandler) {
         applePay.applePayAuthorized(callback: handler)
 
         sendApplePayResultToJs(token: payment.token)
@@ -62,7 +62,7 @@ extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate, PKPaymentAut
         didAuthorizePayment payment: PKPayment,
         completion: @escaping (PKPaymentAuthorizationStatus) -> Void
     ) {
-        onPaymentAuthorized(payment: payment, handler: .completion(completion))
+        onPaymentAuthorized(payment: payment, handler: ApplePayCompletionHandler(completion: completion))
     }
 
     @available(iOS 11.0, *)
@@ -71,6 +71,6 @@ extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate, PKPaymentAut
         didAuthorizePayment payment: PKPayment,
         handler: @escaping (PKPaymentAuthorizationResult) -> Void
     ) {
-        onPaymentAuthorized(payment: payment, handler: .handler(handler))
+        onPaymentAuthorized(payment: payment, handler: ApplePayCompletionHandler(completion: handler))
     }
 }

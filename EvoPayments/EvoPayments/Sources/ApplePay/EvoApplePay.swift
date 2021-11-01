@@ -17,7 +17,7 @@ final class ApplePay {
     private(set) var applePayDidAuthorize = false
 
     //After we send the result to the server and get the response we need to callback to Apple Pay with the result
-    private var successCallback: ApplePayCompletionKind?
+    private var successCallback: ApplePayCompletionHandler?
 
     private var paymentRequest: PKPaymentRequest?
     public weak var applePayViewController: PKPaymentAuthorizationViewController?
@@ -88,7 +88,7 @@ final class ApplePay {
     // MARK: Callback
 
     //Success callback from apple pay
-    func applePayAuthorized(callback: ApplePayCompletionKind) {
+    func applePayAuthorized(callback: ApplePayCompletionHandler) {
         applePayDidAuthorize = true
         successCallback = callback
     }

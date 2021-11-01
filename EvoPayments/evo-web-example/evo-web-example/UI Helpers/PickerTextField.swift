@@ -41,6 +41,8 @@ final class PickerTextField: UITextField, ScrollingFormToolbarEquippedTextField 
             selectDefaultItem()
         }
     }
+    
+    var inputType: InputType = .picker
 
     var selectAction: ((Index) -> Void)?
 
@@ -65,6 +67,18 @@ final class PickerTextField: UITextField, ScrollingFormToolbarEquippedTextField 
         self.resignFirstResponder()
 
         selectAction?(index)
+    }
+    
+    func toggleKeyboard() {
+        if inputType == .picker {
+            inputType = .keyboard
+            self.inputView = nil
+            self.reloadInputViews()
+        } else {
+            inputType = .picker
+            self.inputView = picker
+            self.reloadInputViews()
+        }
     }
 
     // MARK: - Private

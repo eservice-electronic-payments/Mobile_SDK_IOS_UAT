@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2A9A7CE271D8677008A2F22 /* ApplePayCompletionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A9A7CD271D8677008A2F22 /* ApplePayCompletionHandler.swift */; };
 		F808664D252C963A0071864B /* ThreeDS2VerificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F808664C252C963A0071864B /* ThreeDS2VerificationServiceTests.swift */; };
 		F8086651252C964E0071864B /* ThreeDS2Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8086650252C964E0071864B /* ThreeDS2Mocks.swift */; };
 		F8086655252C96E20071864B /* TransactionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8086654252C96E20071864B /* TransactionProtocol.swift */; };
@@ -24,7 +25,6 @@
 		F8C1CBD624F9588B006DBB24 /* EvoStatus+ApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBD124F9588B006DBB24 /* EvoStatus+ApplePay.swift */; };
 		F8C1CBD724F9588B006DBB24 /* ApplePayRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBD224F9588B006DBB24 /* ApplePayRequest.swift */; };
 		F8C1CBD824F9588B006DBB24 /* EvoApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBD324F9588B006DBB24 /* EvoApplePay.swift */; };
-		F8C1CBD924F9588B006DBB24 /* ApplePayCompletionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBD424F9588B006DBB24 /* ApplePayCompletionKind.swift */; };
 		F8C1CBDA24F9588B006DBB24 /* URL+ApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBD524F9588B006DBB24 /* URL+ApplePay.swift */; };
 		F8C1CBDF24F958C1006DBB24 /* PKPaymentToken+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBDE24F958C1006DBB24 /* PKPaymentToken+Codable.swift */; };
 		F8C1CBE124F958D1006DBB24 /* EVOWebView+ApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1CBE024F958D1006DBB24 /* EVOWebView+ApplePay.swift */; };
@@ -55,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A2A9A7CD271D8677008A2F22 /* ApplePayCompletionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayCompletionHandler.swift; sourceTree = "<group>"; };
 		F808664C252C963A0071864B /* ThreeDS2VerificationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2VerificationServiceTests.swift; sourceTree = "<group>"; };
 		F8086650252C964E0071864B /* ThreeDS2Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2Mocks.swift; sourceTree = "<group>"; };
 		F8086654252C96E20071864B /* TransactionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionProtocol.swift; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		F8C1CBD124F9588B006DBB24 /* EvoStatus+ApplePay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EvoStatus+ApplePay.swift"; sourceTree = "<group>"; };
 		F8C1CBD224F9588B006DBB24 /* ApplePayRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayRequest.swift; sourceTree = "<group>"; };
 		F8C1CBD324F9588B006DBB24 /* EvoApplePay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvoApplePay.swift; sourceTree = "<group>"; };
-		F8C1CBD424F9588B006DBB24 /* ApplePayCompletionKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayCompletionKind.swift; sourceTree = "<group>"; };
 		F8C1CBD524F9588B006DBB24 /* URL+ApplePay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+ApplePay.swift"; sourceTree = "<group>"; };
 		F8C1CBDE24F958C1006DBB24 /* PKPaymentToken+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PKPaymentToken+Codable.swift"; sourceTree = "<group>"; };
 		F8C1CBE024F958D1006DBB24 /* EVOWebView+ApplePay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EVOWebView+ApplePay.swift"; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				F8C1CBD224F9588B006DBB24 /* ApplePayRequest.swift */,
 				F8C1CBD524F9588B006DBB24 /* URL+ApplePay.swift */,
 				F8C1CBD124F9588B006DBB24 /* EvoStatus+ApplePay.swift */,
-				F8C1CBD424F9588B006DBB24 /* ApplePayCompletionKind.swift */,
+				A2A9A7CD271D8677008A2F22 /* ApplePayCompletionHandler.swift */,
 			);
 			path = ApplePay;
 			sourceTree = "<group>";
@@ -417,6 +417,7 @@
 				F8C1CBD724F9588B006DBB24 /* ApplePayRequest.swift in Sources */,
 				F8C1CBE124F958D1006DBB24 /* EVOWebView+ApplePay.swift in Sources */,
 				F8C1CBF224F9591B006DBB24 /* EVOEvent.swift in Sources */,
+				A2A9A7CE271D8677008A2F22 /* ApplePayCompletionHandler.swift in Sources */,
 				F8C1CBCE24F9586D006DBB24 /* EVOWebViewController.swift in Sources */,
 				F8C1CBD824F9588B006DBB24 /* EvoApplePay.swift in Sources */,
 				F8409FA724FFBA04006CAB8E /* TransactionBuilderProtocol.swift in Sources */,
@@ -431,7 +432,6 @@
 				F8086655252C96E20071864B /* TransactionProtocol.swift in Sources */,
 				F8C1CBDA24F9588B006DBB24 /* URL+ApplePay.swift in Sources */,
 				F8C1CBDF24F958C1006DBB24 /* PKPaymentToken+Codable.swift in Sources */,
-				F8C1CBD924F9588B006DBB24 /* ApplePayCompletionKind.swift in Sources */,
 				F8C1CBF124F9591B006DBB24 /* EVOConstants.swift in Sources */,
 				F8C1CBEB24F9590C006DBB24 /* URL+Evo.swift in Sources */,
 			);
