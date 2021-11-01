@@ -19,6 +19,9 @@ final class InputAccessoryToolbar: UIToolbar {
     }
 
     private var action: (() -> Void)?
+    private var toggleInputView: (() -> Void)?
+    private var toggleButtonItem: UIBarButtonItem?
+    private var inputType: InputType = .keyboard
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -28,9 +31,20 @@ final class InputAccessoryToolbar: UIToolbar {
         super.init(frame: frame)
     }
 
-    convenience init(kind: Kind = .next, action: @escaping (() -> Void)) {
+    convenience init(kind: Kind = .next, toggleInputAction: (() -> Void)?, action: @escaping (() -> Void)) {
         self.init(frame: .zero)
-
+        var barButtonItems:[UIBarButtonItem] = []
+        // check whether to add toggle button
+        if let toggleAction = toggleInputAction {
+            let toggleButton = UIBarButtonItem(title: "Keyboard", style: .done, target: self, action: #selector(toggleInputViewAction))
+            barButtonItems.append(toggleButton)
+            
+            toggleButtonItem = toggleButton
+            toggleInputView = toggleAction
+            
+            inputType = .picker
+        }
+        
         let actionButton: UIBarButtonItem
 
         switch kind {
@@ -47,10 +61,11 @@ final class InputAccessoryToolbar: UIToolbar {
             actionButton = UIBarButtonItem(customView: nextButton)
         }
 
-        self.items = [
+        barButtonItems.append(contentsOf: [
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             actionButton
-        ]
+        ])
+        self.items = barButtonItems
         self.sizeToFit()
 
         self.action = action
@@ -62,6 +77,19 @@ final class InputAccessoryToolbar: UIToolbar {
 
     @objc private func nextTapAction(_ sender: UIButton) {
         action?()
+    }
+    
+    @objc private func toggleInputViewAction() {
+        switch inputType {
+        case .picker:
+            inputType = .keyboard
+            toggleButtonItem?.title = "Selection"
+        case .keyboard:
+            inputType = .picker
+            toggleButtonItem?.title = "Keyboard"
+        }
+        
+        toggleInputView?()
     }
 
 }

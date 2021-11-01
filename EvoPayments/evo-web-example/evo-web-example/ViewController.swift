@@ -220,6 +220,14 @@ final class ViewController: UIViewController {
             showAlert(withTitle: "Error", message: "Please enter valid amount")
             return
         }
+        
+        // Get token url
+        let mssItem = viewModel.mssUrls[viewModel.selectedMssUrlIndex ?? 0]
+        var tokenUrl = mssItem.value
+        if let manualInput = mssUrlField.text,
+           manualInput != mssItem.title {
+            tokenUrl = manualInput
+        }
 
         let content = FormContent(
             action: actionField.text ?? "",
@@ -231,7 +239,7 @@ final class ViewController: UIViewController {
             country: countryField.text ?? "",
             language: languageField.text ?? "",
             userDevice: userDeviceField.text ?? "",
-            tokenURL: viewModel.mssUrls[viewModel.selectedMssUrlIndex ?? 0].value ,
+            tokenURL: tokenUrl,
             mobileCashierURL: mobileCashierURLTextView.text ?? "",
             additionalParameters: additionalParametersField.text ?? "",
             customerAddressHouseName: customerAddressHouseNameField.text ?? "",

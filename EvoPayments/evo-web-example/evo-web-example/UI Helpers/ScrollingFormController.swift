@@ -14,7 +14,14 @@ protocol ScrollingFormTextField: UIView {
 }
 
 /// use to attach UIToolbar to custom UITextFields subclasses
-protocol ScrollingFormToolbarEquippedTextField: UITextField {}
+protocol ScrollingFormToolbarEquippedTextField: UITextField {
+    func toggleKeyboard()
+}
+
+enum InputType {
+    case keyboard
+    case picker
+}
 
 /// Manages UITextFields within scrollView
 ///
@@ -161,7 +168,11 @@ final class ScrollingFormController: NSObject {
     private func attachInputAccessoryToolbar(to field: Field, isLastField: Bool = false) {
         let buttonKind: InputAccessoryToolbar.Kind = (isLastField ? .done : .next)
 
-        field.inputAccessoryView = InputAccessoryToolbar(kind: buttonKind) { [unowned self, unowned field] in
+        field.inputAccessoryView = InputAccessoryToolbar(kind: buttonKind, toggleInputAction: {
+            if let field = field as? ScrollingFormToolbarEquippedTextField {
+                field.toggleKeyboard()
+            }
+        }) { [unowned self, unowned field] in
             // Will resign if no subsequent text field found
             self.focusNextResponder(for: field)
         }
