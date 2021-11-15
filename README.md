@@ -1,7 +1,17 @@
 
 # EvoPayments
 
+```markdown
+**DEPRECATION WARNING**
+
+Note: We have ended support for iOS 10 and iOS 11.
+As from the next release, the minimum supported iOS version will be iOS 12.
+```
+
+
+
 ## Pre-condition
+
 Please note that the call from the Merchant Server to the IPG Gateway API for obtaining an IPG Gateway “Session Token” has been updated. (This update is due to additional data fields mandated by 3DS-Version 2 compliance). It is a prerequisite that the Session Token passed to the Mobile SDK is obtained from that updated Get Session Token API endpoint.
 
 ## Integrating the SDK with the Project 
