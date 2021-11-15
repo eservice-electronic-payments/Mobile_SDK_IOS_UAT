@@ -78,7 +78,8 @@ final class ThreeDS2VerificationService: ThreeDS2VerificationServiceProtocol {
                 directoryServerInfoList: directoryServerInfoList,
                 runtimeLicense: verificationData.runtimeLicense,
                 deviceParameterBlacklist: nil,
-                clientConfig: clientConfigs
+                clientConfig: clientConfigs,
+                appBundleID: ""
             )
             let configParameters = try builder.build()
             directoryServerID = verificationData.directoryServerID
