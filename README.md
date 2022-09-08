@@ -35,7 +35,7 @@ Cocoapods
 4. Add new pod to your `Podfile`
 
     ```ruby
-    pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_IOS_UAT'
+    pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_iOS'
     ```
     So your `Podfile` looks as in the example:
 
@@ -48,7 +48,7 @@ Cocoapods
       use_frameworks!
     
       # Pods for ProjectName
-      pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_IOS_UAT'
+      pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_iOS'
     end
     
     ```
@@ -63,7 +63,7 @@ Manual
 
 1. Clone repository
     ```
-    git clone https://github.com/eservice-electronic-payments/Mobile_SDK_IOS_UAT.git
+    git clone https://github.com/eservice-electronic-payments/Mobile_SDK_iOS.git
     ```
 
 2. Open your iOS project from Xcode. Drag EvoPayments.xcodeproj into Xcode. 
