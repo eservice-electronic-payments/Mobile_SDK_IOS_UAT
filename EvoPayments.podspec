@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "EvoPayments"
-  spec.version      = "2.0"
+  spec.version      = "2.1.4"
   spec.summary      = "A library to easily integrate EvoPayments to your iOS app."
 
   spec.description  = <<-DESC
@@ -13,10 +13,9 @@ Pod::Spec.new do |spec|
   spec.author             = "Intelligent Payments Ltd."
   spec.platform     = :ios, "10.0"
   spec.source       = { :git => "https://github.com/eservice-electronic-payments/Mobile_SDK_IOS_UAT", :tag => "2.0" }
-  # spec.source_files  = "EvoPayments/EvoPayments/*.plist","EvoPayments/EvoPayments/Sources/**/*.swift"
   spec.source_files  = "EvoPayments/EvoPayments/Sources/**/*.swift"
   spec.vendored_frameworks = "EvoPayments/EvoPayments/Sources/Libraries/ipworks3ds_sdk.xcframework"
   spec.swift_version = "5.0"
-  # spec.resources = 'Info.plist'
+  spec.resources = 'EvoPayments/Info.plist'
   spec.pod_target_xcconfig = { 'INFOPLIST_FILE' => '${PODS_TARGET_SRCROOT}/EvoPayments/EvoPayments/Info.plist' }
 end
