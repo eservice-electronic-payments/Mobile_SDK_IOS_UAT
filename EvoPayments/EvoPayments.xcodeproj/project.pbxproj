@@ -160,7 +160,6 @@
 		F82FF73824F955AD001F458A /* EvoPayments */ = {
 			isa = PBXGroup;
 			children = (
-				F82FF73A24F955AD001F458A /* Info.plist */,
 				F8C1CBC924F95845006DBB24 /* Sources */,
 			);
 			path = EvoPayments;
@@ -179,6 +178,7 @@
 		F8C1CBC924F95845006DBB24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F82FF73A24F955AD001F458A /* Info.plist */,
 				F8C1CBCD24F9586D006DBB24 /* EVOWebView.swift */,
 				F8C1CBCC24F9586D006DBB24 /* EVOWebViewController.swift */,
 				F8C1CBE924F958F6006DBB24 /* Extensions */,
@@ -589,7 +589,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = EvoPayments/Info.plist;
+				INFOPLIST_FILE = EvoPayments/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -618,7 +618,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = EvoPayments/Info.plist;
+				INFOPLIST_FILE = EvoPayments/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
