@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "EvoPayments"
-  spec.version      = "2.0"
+  spec.version      = "2.1.4"
   spec.summary      = "A library to easily integrate EvoPayments to your iOS app."
 
   spec.description  = <<-DESC
