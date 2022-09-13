@@ -16,5 +16,4 @@ Pod::Spec.new do |spec|
   spec.source_files  = "EvoPayments/EvoPayments/Sources/**/*.swift"
   spec.vendored_frameworks = "EvoPayments/EvoPayments/Sources/Libraries/ipworks3ds_sdk.xcframework"
   spec.swift_version = "5.0"
-  spec.pod_target_xcconfig = { 'INFOPLIST_FILE' => '' }
 end
