@@ -18,5 +18,17 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>WKAppBoundDomains</key>
+	<array>
+		<string>secure.eservice.com</string>
+		<string>cardpayaa.com</string>
+		<string>propayportal.com</string>
+		<string>evomexico.mx</string>
+		<string>universalpay.es</string>
+		<string>evopaymentgateway.com</string>
+		<string>intelligent-payments.com</string>
+		<string>myriadpayments.com</string>
+		<string>boipapaymentgateway.com</string>
+	</array>
 </dict>
 </plist>
