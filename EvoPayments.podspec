@@ -29,7 +29,7 @@ Pod::Spec.new do |spec|
   }
 =======
   spec.resources = 'EvoPayments/EvoPayments/Assets/*'
-  spec.pod_target_xcconfig = { 'INFOPLIST_FILE' => '${PODS_TARGET_SRCROOT}/Assets/Info.plist' }
+  spec.pod_target_xcconfig = { 'INFOPLIST_FILE' => '${PODS_TARGET_SRCROOT}/EvoPayments/EvoPayments/Resources/Info.plist' }
 
 >>>>>>> 747f685 (info.plist change)
 end
