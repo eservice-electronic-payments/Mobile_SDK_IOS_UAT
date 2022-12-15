@@ -76,7 +76,7 @@ open class EVOWebView: UIView {
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
         if #available(iOS 14.0, *) {
-            config.limitsNavigationsToAppBoundDomains = false
+            config.limitsNavigationsToAppBoundDomains = true
         }
 
         let webView = WKWebView(frame: bounds, configuration: config)
