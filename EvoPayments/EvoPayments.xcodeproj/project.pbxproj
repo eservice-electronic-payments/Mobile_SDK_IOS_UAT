@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A2A9A7CE271D8677008A2F22 /* ApplePayCompletionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A9A7CD271D8677008A2F22 /* ApplePayCompletionHandler.swift */; };
+		EB599867293F460E003F999A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB599866293F460E003F999A /* Info.plist */; };
 		F808664D252C963A0071864B /* ThreeDS2VerificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F808664C252C963A0071864B /* ThreeDS2VerificationServiceTests.swift */; };
 		F8086651252C964E0071864B /* ThreeDS2Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8086650252C964E0071864B /* ThreeDS2Mocks.swift */; };
 		F8086655252C96E20071864B /* TransactionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8086654252C96E20071864B /* TransactionProtocol.swift */; };
@@ -56,7 +57,7 @@
 
 /* Begin PBXFileReference section */
 		A2A9A7CD271D8677008A2F22 /* ApplePayCompletionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayCompletionHandler.swift; sourceTree = "<group>"; };
-		EB7C176A293F35FE00B70A30 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Assets/Info.plist; sourceTree = "<group>"; };
+		EB599866293F460E003F999A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		F808664C252C963A0071864B /* ThreeDS2VerificationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2VerificationServiceTests.swift; sourceTree = "<group>"; };
 		F8086650252C964E0071864B /* ThreeDS2Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2Mocks.swift; sourceTree = "<group>"; };
 		F8086654252C96E20071864B /* TransactionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionProtocol.swift; sourceTree = "<group>"; };
@@ -160,7 +161,7 @@
 		F82FF73824F955AD001F458A /* EvoPayments */ = {
 			isa = PBXGroup;
 			children = (
-				EB7C176A293F35FE00B70A30 /* Info.plist */,
+				EB599866293F460E003F999A /* Info.plist */,
 				F8C1CBC924F95845006DBB24 /* Sources */,
 			);
 			path = EvoPayments;
@@ -365,6 +366,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB599867293F460E003F999A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
