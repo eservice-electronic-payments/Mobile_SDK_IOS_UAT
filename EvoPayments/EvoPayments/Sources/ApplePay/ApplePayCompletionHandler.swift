@@ -16,8 +16,7 @@ typealias ApplePayCompletion = ((PKPaymentAuthorizationStatus) -> Void)
 
 class ApplePayCompletionHandler {
     // MARK: Completion handler for different ApplePay result type
-    private var completionHandler: Any? = nil
-    
+    private var completionHandler: Any?
     var statusHandler: ApplePayCompletion? {
         get {
             return completionHandler as? ApplePayCompletion
@@ -26,7 +25,6 @@ class ApplePayCompletionHandler {
             completionHandler = newValue
         }
     }
-    
     @available(iOS 11.0, *)
     var resultHandler: ApplePayHandler? {
         get {
@@ -36,12 +34,10 @@ class ApplePayCompletionHandler {
             completionHandler = newValue
         }
     }
-    
     init(completion: Any) {
         self.completionHandler = completion
     }
-    
-    ///Convert the result from the server to a result that can be sent back to ApplePay and sends it
+    ///  Convert the result from the server to a result that can be sent back to ApplePay and sends it
     func execute(with result: Status) {
         if #available(iOS 11.0, *),
            let resultHandler = resultHandler {

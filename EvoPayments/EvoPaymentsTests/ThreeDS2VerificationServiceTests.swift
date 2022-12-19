@@ -47,14 +47,14 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
     /// Checks if initializing SUT works correctly
     func testInitializingServiceCreatesAValidThreeDS2VerificationService() throws {
 
-        //WHEN
+        //  WHEN
         sut = ThreeDS2VerificationService(
             verificationData: verificationData,
             transactionBuilder: transactionBuilderMock,
             viewControler: viewControllerFake
         )
 
-        //THEN
+        //  THEN
         try transactionBuilderMock.verifyInitialization(
             initializeCount: 1,
             configParameters: verificationData.configParameters,
@@ -65,34 +65,34 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
 
     /// Checks if initializing SUT returns `nil` when transactionBuilder throws errors
     func testInitializingWithErrorThrowsError() throws {
-        //GIVEN
+        //  GIVEN
         transactionBuilderMock.shouldThrowOnInitialize = true
 
-        //WHEN
+        //  WHEN
         sut = ThreeDS2VerificationService(
             verificationData: verificationData,
             transactionBuilder: transactionBuilderMock,
             viewControler: viewControllerFake
         )
 
-        //THEN
+        //  THEN
         XCTAssertNil(sut)
         try transactionBuilderMock.verifyInitialization(initializeCount: 1)
     }
 
     /// Checks if generating requests works correctly
     func testGeneratingRequestWhenDataIsValidProducesValidRequest() {
-        //GIVEN
+        //  GIVEN
         sut = ThreeDS2VerificationService(
             verificationData: verificationData,
             transactionBuilder: transactionBuilderMock,
             viewControler: viewControllerFake
         )
 
-        //WHEN
+        //  WHEN
         let request = try? sut.generateRequest()
 
-        //THEN
+        //  THEN
         do {
             try transactionBuilderMock.verifyGeneratingRequest(paymentRequest: request, createTransactionCount: 1)
         } catch {
@@ -102,7 +102,7 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
 
     /// Checks if generating request handles correctly error triggered by close sourced binary
     func testGeneratingRequestWhenRequestThrowsErrorDoesThrowError() {
-        //GIVEN
+        //  GIVEN
         sut = ThreeDS2VerificationService(
             verificationData: verificationData,
             transactionBuilder: transactionBuilderMock,
@@ -111,10 +111,10 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
 
         transactionBuilderMock.shouldThrowOnGeneratingTransaction = true
 
-        //WHEN
+        //  WHEN
         let request = try? sut.generateRequest()
 
-        //THEN
+        //  THEN
         do {
             try transactionBuilderMock.verifyGeneratingRequest(paymentRequest: request, createTransactionCount: 1)
         } catch {
@@ -124,7 +124,7 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
 
     /// Check if starting the challange with currect data is handling timeout correctly
     func testStartingChallangeWithChallangeTimeoutIsStartingTransactionAndClosingTransactionWithTimeout() {
-        //GIVEN
+        //  GIVEN
         sut = ThreeDS2VerificationService(
             verificationData: verificationData,
             transactionBuilder: transactionBuilderMock,
@@ -138,12 +138,12 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
             acsSignedContent: "testACSSignedContent_success"
         )
 
-        //WHEN
+        //  WHEN
         let request = try? sut.generateRequest()
         XCTAssertNotNil(request)
         let (status, error) = start(challange: challange, shouldTimeout: true)
 
-        //THEN
+        //  THEN
         XCTAssertNil(status, "Challange should timeout but it succeeded ")
         XCTAssertNotNil(error)
         transactionBuilderMock.verifyStartingChallange(
@@ -157,7 +157,7 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
 
     /// Check if starting the challange with currect data is handling cancellation correctly
     func testStartingChallangeWithChallangeCancelledIsStartingTransactionAndClosingTransaction() {
-        //GIVEN
+        //  GIVEN
         sut = ThreeDS2VerificationService(
             verificationData: verificationData,
             transactionBuilder: transactionBuilderMock,
@@ -171,12 +171,12 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
             acsSignedContent: "testACSSignedContent_canceled"
         )
 
-        //WHEN
+        //  WHEN
         let request = try? sut.generateRequest()
         XCTAssertNotNil(request)
         let (status, error) = start(challange: challange)
 
-        //THEN
+        //  THEN
         XCTAssertNil(status, "Challange should be cancelled but it succeeded ")
         XCTAssertNotNil(error)
         transactionBuilderMock.verifyStartingChallange(
@@ -194,18 +194,18 @@ class ThreeDS2VerificationServiceTests: XCTestCase {
      * this test does not have any asserts.
      */
     func testListenerProvidesLogsWithoutFatalErrors() {
-        //GIVEN
+        //  GIVEN
         sut = ThreeDS2VerificationService(
             verificationData: verificationData,
             transactionBuilder: transactionBuilderMock,
             viewControler: viewControllerFake
         )
 
-        //WHEN
+        //  WHEN
         transactionBuilderMock.triggerClientEventListening()
 
-        //THEN
-        //No fatal errors accured when invoking ClientEventListening methods
+        //  THEN
+        //  No fatal errors accured when invoking ClientEventListening methods
     }
 
     override func tearDown() {

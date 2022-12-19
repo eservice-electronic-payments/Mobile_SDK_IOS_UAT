@@ -28,7 +28,7 @@ extension PKPaymentMethodType {
 
 #if DEBUG
 
-//Can't have automatic conformance
+//  Can't have automatic conformance
 extension PKPaymentMethodType: CaseIterable {
     public static var allCases: [PKPaymentMethodType] {
         return [.credit, .debit, .prepaid, .store, .unknown]
@@ -36,8 +36,8 @@ extension PKPaymentMethodType: CaseIterable {
 }
 
 struct PKPaymentTypeMapper {
-    //Debug only - To be able to initialize from a rawValue each time Apple adds a new card
-    //it needs to be mapped on the server to be able to be passed in to the sdk.
+    //  Debug only - To be able to initialize from a rawValue each time Apple adds a new card
+    //  it needs to be mapped on the server to be able to be passed in to the sdk.
     static func debugPrint() {
         for each in PKPaymentMethodType.allCases {
             print(each.rawValue)

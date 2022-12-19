@@ -15,7 +15,7 @@ private extension EVOWebView {
 
     // MARK: Payment
 
-    ///Expose Apple Pay transaction result to JS
+    ///  Expose Apple Pay transaction result to JS
     func sendApplePayResultToJs(token: PKPaymentToken) {
         // swiftlint:disable:next line_length
         //https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
@@ -44,19 +44,21 @@ private extension EVOWebView {
 
 extension EVOWebView: PKPaymentAuthorizationViewControllerDelegate, PKPaymentAuthorizationControllerDelegate {
 
-    //Called in any case - Either Cancelled or Authorized.
-    //Because of that we need to keep track of the status of the  transaction and do not cancel it if it got authorized
+    //  Called in any case - Either Cancelled or Authorized.
+    /*  Because of that we need to keep track of the status of the
+    transaction and do not cancel it if it got authorized  */
     public func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
         onFinish()
     }
 
-    //Called in any case - Either Cancelled or Authorized.
-    //Because of that we need to keep track of the status of the  transaction and do not cancel it if it got authorized
+    //  Called in any case - Either Cancelled or Authorized.
+    /*  Because of that we need to keep track of the status of the
+    transaction and do not cancel it if it got authorized  */
     public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         onFinish()
     }
 
-    ///Transaction Authorized
+    ///  Transaction Authorized
     public func paymentAuthorizationViewController(
         _ controller: PKPaymentAuthorizationViewController,
         didAuthorizePayment payment: PKPayment,

@@ -21,7 +21,7 @@ open class EVOWebView: UIView {
     private var statusCallback: StatusCallback?
     private var session: Session?
 
-    //Needs to be internal due to being accessed from an extension
+    //  Needs to be internal due to being accessed from an extension
     lazy var applePay = ApplePay()
     var threeDS2VerificationService: ThreeDS2VerificationServiceProtocol?
 
@@ -153,8 +153,8 @@ extension EVOWebView: WKScriptMessageHandler {
     }
 
     private func callStatus(_ status: Status) {
-        //We need to call on result received each time since apple pay requires us to give it back the result.
-        //If no apple pay transaction is taking place this has no effects.
+        //  We need to call on result received each time since apple pay requires us to give it back the result.
+        //  If no apple pay transaction is taking place this has no effects.
         applePay.onResultReceived(result: status)
 
         DispatchQueue.main.async {
@@ -179,7 +179,6 @@ extension EVOWebView: WKScriptMessageHandler {
     private func openSafari(at url: URL) {
         let safariViewController = SFSafariViewController(url: url)
         safariViewController.delegate = self
-        
         // a navigationController is needed for the safariView hireachy
         showOnOverlay(viewController: safariViewController, isNavControllerNeeded: true)
     }
@@ -197,7 +196,6 @@ extension EVOWebView: WKScriptMessageHandler {
         }
         let navController = UINavigationController(rootViewController: viewController)
         navController.isNavigationBarHidden = true
-        
         overlayWindow.rootViewController = isNavControllerNeeded ? navController : viewController
         overlayWindow.makeKeyAndVisible()
     }
@@ -221,34 +219,34 @@ extension EVOWebView: WKScriptMessageHandler {
 
     // MARK: Apple Pay Request
 
-    ///Function called to initiate Apple Pay transaction
+    ///  Function called to initiate Apple Pay transaction
     private func processApplePayPayment(with request: ApplePayRequest) {
-        //Reset Apple Pay class
+        //  Reset Apple Pay class
         self.applePay = ApplePay()
 
-        //We have a valid session
+        //  We have a valid session
         guard let session = session else {
             dLog("Session nil")
             handleEventType(.status(.failed))
             return
         }
-        //Apple Pay is enabled and available on this device
+        //  Apple Pay is enabled and available on this device
         guard applePay.isAvailable() else {
             dLog("Apple Pay not available")
             handleEventType(.status(.failed))
             return
         }
-        //The User has a valid card for the merchant's supported network and capabilities
+        //  The User has a valid card for the merchant's supported network and capabilities
         guard applePay.hasAddedCard(for: request.networks, with: request.capabilities) else {
-            //Prompt to add a valid card
+            //  Prompt to add a valid card
             applePay.setupCard()
             return
         }
 
-        //Convert response object to valid PKPaymentRequest
+        //  Convert response object to valid PKPaymentRequest
         let paymentRequest = applePay.setupTransaction(session: session, request: request)
 
-        //Show native Apple Pay screen with configured PKPaymentRequest object
+        //  Show native Apple Pay screen with configured PKPaymentRequest object
         guard let viewController = applePay.getApplePayController(request: paymentRequest) else {
             dLog("Error instantiating Apple Pay screen")
             handleEventType(.status(.failed))
@@ -259,7 +257,7 @@ extension EVOWebView: WKScriptMessageHandler {
         assert(applePay.applePayDidAuthorize == false)
         assert(viewController.delegate != nil)
 
-        //disable swipe to dismiss
+        //  disable swipe to dismiss
         if #available(iOS 13.0, *) {
             viewController.isModalInPresentation = true
         }
@@ -347,9 +345,9 @@ extension EVOWebView: WKScriptMessageHandler {
 
     private func handleChallengeError(_ error: Error) {
         dLog("Error with a challenge: \(error)")
-        let payload = ThreeDS2PaymentStatus(transactionID: "", status: "", errorCode: "", errorDescription: "", errorDetails: "", errorMessage: "")
+        let payload = ThreeDS2PaymentStatus(transactionID: "", status: "",
+                                            errorCode: "", errorDescription: "", errorDetails: "", errorMessage: "")
         finalizePayment(paymentStatus: payload)
-        
         let threeDS2Error = error as? ThreeDS2Error ?? .unknown(error)
         let paymentInfo = threeDS2Error.paymentInfo
         handleEventType(paymentInfo.eventType)
@@ -363,7 +361,7 @@ extension EVOWebView: WKScriptMessageHandler {
 // MARK: Redirection
 
 extension EVOWebView: SFSafariViewControllerDelegate {
-    ///User pressed done button, cancel transaction
+    ///  User pressed done button, cancel transaction
     public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         closeOverlay()
         handleEventType(.status(.cancelled))

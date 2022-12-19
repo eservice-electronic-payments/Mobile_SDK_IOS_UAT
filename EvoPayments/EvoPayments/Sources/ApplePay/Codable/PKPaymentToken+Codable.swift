@@ -22,7 +22,7 @@ extension PKPaymentToken: Encodable {
         try container.encode(paymentMethod, forKey: .paymentMethod)
         try container.encode(transactionIdentifier, forKey: .transactionIdentifier)
 
-        //Decode token to Base64 string (UTF8)
+        //  Decode token to Base64 string (UTF8)
         let tokenString = paymentData.base64EncodedString()
         try container.encode(tokenString, forKey: .paymentData)
 

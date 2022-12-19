@@ -13,7 +13,7 @@ public struct Session {
     public let token: String
     public let merchantId: String
 
-    ///Automatically populated by SDK
+    ///  Automatically populated by SDK
     public let platform: String
     public let supported3DS2: String
 

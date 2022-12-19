@@ -8,7 +8,7 @@
 
 import UIKit
 
-///The view controller used by the NSoftware SDK for the challenge process.
+///  The view controller used by the NSoftware SDK for the challenge process.
 protocol ViewControllerProtocol: UIViewController {}
 
 extension UIViewController: ViewControllerProtocol {}

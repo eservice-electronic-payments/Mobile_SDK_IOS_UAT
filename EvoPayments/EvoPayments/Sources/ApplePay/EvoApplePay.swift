@@ -12,11 +12,11 @@ import PassKit
 //https://developer.apple.com/library/archive/ApplePay_Guide/Authorization.html#//apple_ref/doc/uid/TP40014764-CH4-SW3
 
 final class ApplePay {
-    //didFinish callback always gets called
-    //so we need to be able to distinguish between a failure and a success state
+    //  didFinish callback always gets called
+    //  so we need to be able to distinguish between a failure and a success state
     private(set) var applePayDidAuthorize = false
 
-    //After we send the result to the server and get the response we need to callback to Apple Pay with the result
+    //  After we send the result to the server and get the response we need to callback to Apple Pay with the result
     private var successCallback: ApplePayCompletionHandler?
 
     private var paymentRequest: PKPaymentRequest?
@@ -24,12 +24,12 @@ final class ApplePay {
 
     // MARK: Setup
 
-    ///Is Apple Pay supported
+    ///  Is Apple Pay supported
     func isAvailable() -> Bool {
         return PKPaymentAuthorizationViewController.canMakePayments()
     }
 
-    ///Does the user have a card with merchant's supported network and capabilities
+    ///  Does the user have a card with merchant's supported network and capabilities
     func hasAddedCard(for network: [PKPaymentNetwork], with capabilities: PKMerchantCapability) -> Bool {
         return PKPaymentAuthorizationViewController.canMakePayments(
             usingNetworks: network,
@@ -37,12 +37,12 @@ final class ApplePay {
         )
     }
 
-    ///Show form to setup a new card
+    ///  Show form to setup a new card
     func setupCard() {
         PKPassLibrary().openPaymentSetup()
     }
 
-    ///Converts Server response into PKPaymentRequest
+    ///  Converts Server response into PKPaymentRequest
     func setupTransaction(session: Session, request: ApplePayRequest) -> PKPaymentRequest {
         let transaction = PKPaymentRequest()
         transaction.currencyCode = request.currencyCode
@@ -53,14 +53,14 @@ final class ApplePay {
         transaction.supportedNetworks = request.networks
 
         if #available(iOS 11.0, *) {
-            //Not required
+            //  Not required
             transaction.requiredShippingContactFields = Set<PKContactField>()
             transaction.requiredBillingContactFields = Set<PKContactField>()
         }
 
         let locale = Locale(identifier: "en_US_POSIX")
-        //Decimal from string would not work with numbers having any kind of decimal separator
-        //2,333.33 would become 2 even if using en_US_POSIX or en_US locale
+        //  Decimal from string would not work with numbers having any kind of decimal separator
+        //  2,333.33 would become 2 even if using en_US_POSIX or en_US locale
         let fixedString = request.price.replacingOccurrences(of: ",", with: "")
         let subtotal = NSDecimalNumber(string: fixedString, locale: locale)
 
@@ -73,13 +73,13 @@ final class ApplePay {
         return transaction
     }
 
-    ///Sets up and returns Apple PKPaymentAuthorizationViewController for specified transaction request
+    ///  Sets up and returns Apple PKPaymentAuthorizationViewController for specified transaction request
     func getApplePayController(request: PKPaymentRequest) -> PKPaymentAuthorizationViewController? {
         guard let viewController = PKPaymentAuthorizationViewController(paymentRequest: request) else {
             return nil
         }
 
-        //we keep a weak reference to the controller to be able to dismiss it if necessary
+        //  we keep a weak reference to the controller to be able to dismiss it if necessary
         self.applePayViewController = viewController
 
         return viewController
@@ -87,13 +87,13 @@ final class ApplePay {
 
     // MARK: Callback
 
-    //Success callback from apple pay
+    //  Success callback from apple pay
     func applePayAuthorized(callback: ApplePayCompletionHandler) {
         applePayDidAuthorize = true
         successCallback = callback
     }
 
-    //Callback from JS After sendingpayment token
+    //  Callback from JS After sendingpayment token
     func onResultReceived(result: Status) {
         guard applePayDidAuthorize else {
             return
@@ -102,7 +102,7 @@ final class ApplePay {
         successCallback?.execute(with: result)
     }
 
-    //Callback after failure, cancellation or finihed transaction
+    //  Callback after failure, cancellation or finihed transaction
     func dismissPaymentController() {
         DispatchQueue.main.async {
             self.applePayViewController?.dismiss(animated: true, completion: { [weak self] in

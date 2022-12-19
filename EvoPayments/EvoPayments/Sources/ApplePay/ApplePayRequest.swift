@@ -11,7 +11,7 @@ import PassKit
 
 struct ApplePayRequest {
 
-    ///Init from JSON object
+    ///  Init from JSON object
     init?(json: [String: Any]) {
         guard let companyName: String = json["companyName"] as? String else {
             dLog("companapplePay Request yName nil")
@@ -19,21 +19,21 @@ struct ApplePayRequest {
         }
         self.companyName = companyName
 
-        //3 digits
+        //  3 digits
         guard let currencyCode: String = json["currencyCode"] as? String else {
             dLog("currencapplePay Request yCode nil")
             return nil
         }
         self.currencyCode = currencyCode
 
-        //2 digits
+        //  2 digits
         guard let countryCode: String = json["countryCode"] as? String else {
             dLog("countrapplePay Request yCode nil")
             return nil
         }
         self.countryCode = countryCode
 
-        //Merchant needs to match the apple merchant identifier
+        //  Merchant needs to match the apple merchant identifier
         guard let merchant: String = json["merchant"] as? String else {
             dLog("merapplePay Request chant nil")
             return nil
