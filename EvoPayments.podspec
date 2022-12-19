@@ -26,5 +26,4 @@ Pod::Spec.new do |spec|
       'boipapaymentgateway.com'
     ]
   }
-
 end
