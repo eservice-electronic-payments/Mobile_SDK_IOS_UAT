@@ -56,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		A2A9A7CD271D8677008A2F22 /* ApplePayCompletionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplePayCompletionHandler.swift; sourceTree = "<group>"; };
+		EB112C2A293DE92600A78464 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F808664C252C963A0071864B /* ThreeDS2VerificationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2VerificationServiceTests.swift; sourceTree = "<group>"; };
 		F8086650252C964E0071864B /* ThreeDS2Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2Mocks.swift; sourceTree = "<group>"; };
 		F8086654252C96E20071864B /* TransactionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionProtocol.swift; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		F80DD1DD2514FE8F0041AC74 /* PaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRequest.swift; sourceTree = "<group>"; };
 		F80DD1E1251507960041AC74 /* ThreeDS2Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDS2Config.swift; sourceTree = "<group>"; };
 		F82FF73624F955AD001F458A /* EvoPayments.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EvoPayments.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F82FF73A24F955AD001F458A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F82FF73F24F955AD001F458A /* EvoPaymentsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvoPaymentsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F82FF74624F955AD001F458A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8409FA624FFBA04006CAB8E /* TransactionBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionBuilderProtocol.swift; sourceTree = "<group>"; };
@@ -160,6 +160,7 @@
 		F82FF73824F955AD001F458A /* EvoPayments */ = {
 			isa = PBXGroup;
 			children = (
+				EB112C2A293DE92600A78464 /* Info.plist */,
 				F8C1CBC924F95845006DBB24 /* Sources */,
 			);
 			path = EvoPayments;
@@ -178,7 +179,6 @@
 		F8C1CBC924F95845006DBB24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				F82FF73A24F955AD001F458A /* Info.plist */,
 				F8C1CBCD24F9586D006DBB24 /* EVOWebView.swift */,
 				F8C1CBCC24F9586D006DBB24 /* EVOWebViewController.swift */,
 				F8C1CBE924F958F6006DBB24 /* Extensions */,
@@ -591,7 +591,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/EvoPayments/Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/EvoPayments/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -621,7 +621,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/EvoPayments/Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/EvoPayments/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
