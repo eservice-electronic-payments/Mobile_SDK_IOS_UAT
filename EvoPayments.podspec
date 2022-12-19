@@ -16,6 +16,7 @@ Pod::Spec.new do |spec|
   spec.source_files  = "EvoPayments/EvoPayments/Sources/**/*.swift"
   spec.vendored_frameworks = "EvoPayments/EvoPayments/Sources/Libraries/ipworks3ds_sdk.xcframework"
   spec.swift_version = "5.0"
+<<<<<<< HEAD
   spec.info_plist = {
     'WKAppBoundDomains' => [
       'secure.eservice.com.pl',
@@ -26,4 +27,9 @@ Pod::Spec.new do |spec|
       'boipapaymentgateway.com'
     ]
   }
+=======
+  spec.resources = 'EvoPayments/EvoPayments/Assets/*'
+  spec.pod_target_xcconfig = { 'INFOPLIST_FILE' => '${PODS_TARGET_SRCROOT}/Assets/Info.plist' }
+
+>>>>>>> 747f685 (info.plist change)
 end
