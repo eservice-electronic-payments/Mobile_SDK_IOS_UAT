@@ -179,6 +179,7 @@
 		F8C1CBC924F95845006DBB24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F82FF73A24F955AD001F458A /* Info.plist */,
 				F8C1CBCD24F9586D006DBB24 /* EVOWebView.swift */,
 				F8C1CBCC24F9586D006DBB24 /* EVOWebViewController.swift */,
 				F8C1CBE924F958F6006DBB24 /* Extensions */,
