@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A2A9A7CE271D8677008A2F22 /* ApplePayCompletionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A9A7CD271D8677008A2F22 /* ApplePayCompletionHandler.swift */; };
-		EB79F82F293DF2490058F64C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB79F82E293DF2490058F64C /* Info.plist */; };
 		F808664D252C963A0071864B /* ThreeDS2VerificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F808664C252C963A0071864B /* ThreeDS2VerificationServiceTests.swift */; };
 		F8086651252C964E0071864B /* ThreeDS2Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8086650252C964E0071864B /* ThreeDS2Mocks.swift */; };
 		F8086655252C96E20071864B /* TransactionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8086654252C96E20071864B /* TransactionProtocol.swift */; };
@@ -366,7 +365,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB79F82F293DF2490058F64C /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
