@@ -194,6 +194,8 @@ While using the SDK, `App-Bound Domains` feature should be configured to preserv
 
 *In the example app, for the flexibility to test amongst different cashier URLs that can be retrieved, `App-Bond Domains` was not implemented. However, such control is highly recommended for a production app.*
 
+Note it is the responsibility of the merchant to integrate the plist file and to populate it accordingly with domains. The plist must be populated in order to prevent any security issues
+
 To configure `App-Bound Domains`:
 1. Add the cashier URLs to WKAppBoundDomains in the project `info.plist` file. For example:
 ```swift
