@@ -160,6 +160,7 @@
 		F82FF73824F955AD001F458A /* EvoPayments */ = {
 			isa = PBXGroup;
 			children = (
+				EB79F82E293DF2490058F64C /* Info.plist */,
 				F8C1CBC924F95845006DBB24 /* Sources */,
 			);
 			path = EvoPayments;
@@ -178,7 +179,6 @@
 		F8C1CBC924F95845006DBB24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				EB79F82E293DF2490058F64C /* Info.plist */,
 				F8C1CBCD24F9586D006DBB24 /* EVOWebView.swift */,
 				F8C1CBCC24F9586D006DBB24 /* EVOWebViewController.swift */,
 				F8C1CBE924F958F6006DBB24 /* Extensions */,
