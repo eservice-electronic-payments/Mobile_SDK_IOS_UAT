@@ -18,12 +18,20 @@ Pod::Spec.new do |spec|
   spec.swift_version = "5.0"
   spec.info_plist = {
     'WKAppBoundDomains' => [
+<<<<<<< HEAD
       'secure.eservice.com.pl',
       'universalpaygateway.com',
       'evomexico.mx',
       'evopaymentgateway.com',
       'myriadpayments.com',
       'boipapaymentgateway.com'
+=======
+      0 => "secure.eservice.com"
+      1 => "cardpayaa.com"
+      2 => "propayportal.com"
+      3 => "evomexico.mx"
+      4 => "universalpay.es"
+>>>>>>> d90819f (info.plist)
     ]
   }
 
