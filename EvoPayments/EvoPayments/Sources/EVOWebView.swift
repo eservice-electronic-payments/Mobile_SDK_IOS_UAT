@@ -203,7 +203,12 @@ extension EVOWebView: WKScriptMessageHandler {
     }
 
     private func showAsTopmostController(_ viewController: UIViewController) {
-        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+        let keyWindow = UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .compactMap({$0 as? UIWindowScene})
+                .first?.windows
+                .filter({$0.isKeyWindow}).first
+        if var topController = keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
             }
@@ -265,7 +270,12 @@ extension EVOWebView: WKScriptMessageHandler {
     // MARK: 3DS2 Verification
 
     private func initialize3DS2Service(using config: ThreeDS2Config) {
-        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+        let keyWindow = UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .compactMap({$0 as? UIWindowScene})
+                .first?.windows
+                .filter({$0.isKeyWindow}).first
+        if var topController = keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
             }
