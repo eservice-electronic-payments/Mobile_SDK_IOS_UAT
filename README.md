@@ -35,7 +35,7 @@ Cocoapods
 4. Add new pod to your `Podfile`
 
     ```ruby
-    pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_iOS'
+    pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_IOS_UAT.git'
     ```
     So your `Podfile` looks as in the example:
 
@@ -48,7 +48,7 @@ Cocoapods
       use_frameworks!
     
       # Pods for ProjectName
-      pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_iOS'
+      pod 'EvoPayments', :git => 'https://github.com/eservice-electronic-payments/Mobile_SDK_IOS_UAT.git'
     end
     
     ```
