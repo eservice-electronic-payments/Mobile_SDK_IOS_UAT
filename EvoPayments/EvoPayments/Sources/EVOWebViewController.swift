@@ -28,9 +28,6 @@ open class EVOWebViewController: UIViewController {
     /// Also adds `done` button that dismisses the controller
     open func embedInNavigationController() -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: self)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
-                                                            target: self,
-                                                            action: #selector(dismissController))
         return navigationController
     }
 
